@@ -38,5 +38,11 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.499" />
 
+    <fragment
+        android:name="com.example.myapplication.DrawingOverlay"
+        android:id="@+id/drawingOverlay"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

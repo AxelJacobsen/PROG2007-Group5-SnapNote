@@ -11,6 +11,7 @@ import android.provider.MediaStore
 import android.widget.Button
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import java.util.jar.Manifest
 
 class MainActivity : AppCompatActivity() {
 
@@ -32,7 +33,6 @@ class MainActivity : AppCompatActivity() {
         AddImageButton.setOnClickListener {
             uploadFromGallery()
         }
-
     }
 
     private fun takeAPic(){
