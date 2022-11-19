@@ -4,6 +4,7 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.core.widget.addTextChangedListener
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 
 class MenuActivity : AppCompatActivity() {
@@ -16,7 +17,7 @@ class MenuActivity : AppCompatActivity() {
         setContentView(R.layout.activity_menu)
         //Bind interactables
         noteListRecycler = findViewById(R.id.recyclerMenuList)
-
+        noteListRecycler.layoutManager = GridLayoutManager(this, 2);
         //Set adapter
         val adapter = MenuAdapter(noteList){ outItem, _ ->
             //Starts ItemDisplay class with a parcelable of the item clicked
@@ -33,6 +34,16 @@ class MenuActivity : AppCompatActivity() {
     }
     // Adds "New Note" item into the list
     fun addNewNoteButton(){
+        noteList.add(NoteListItem(
+            menuItemName = "New note",
+            isFirstItem = true,
+            menuItemThumbnail = R.drawable.new_note
+        ))
+        noteList.add(NoteListItem(
+            menuItemName = "New note",
+            isFirstItem = true,
+            menuItemThumbnail = R.drawable.new_note
+        ))
         noteList.add(NoteListItem(
             menuItemName = "New note",
             isFirstItem = true,
