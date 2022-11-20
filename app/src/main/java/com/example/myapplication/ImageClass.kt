@@ -5,6 +5,9 @@ import android.net.Uri
 import android.os.Parcel
 import android.os.Parcelable
 
+/**
+ * Stores imagedata as a parcel
+ */
 data class ImageClass(var bitmap: Bitmap?, var uri: Uri?) : Parcelable {
     constructor(parcel: Parcel) : this(
         parcel.readParcelable(Bitmap::class.java.classLoader),
