@@ -1,22 +1,26 @@
 package com.example.myapplication
 
 import android.content.Context
-import android.graphics.Canvas
-import android.graphics.Color
-import android.graphics.Paint
-import android.graphics.Path
+import android.graphics.*
 import android.os.Parcelable
 import android.util.AttributeSet
 import android.util.Log
 import android.view.MotionEvent
 import android.view.View
-import kotlin.math.log
+import androidx.annotation.ColorInt
+import androidx.core.graphics.set
+import kotlin.math.*
 
 /**
  * Class for drawing strokes onto a Canvas.
  */
 class DrawingCanvas : View {
     private var strokes: ArrayList<Stroke> = ArrayList()
+
+    // Color wheel
+    private var colorWheel: Bitmap? = null
+    private var colorWheelX: Float = -1f
+    private var colorWheelY: Float = -1f
 
     // Current stroke information
     private var strokePaint: Paint = Paint()
@@ -40,6 +44,44 @@ class DrawingCanvas : View {
         strokePaint.strokeWidth   = 5f
         strokePaint.strokeJoin    = Paint.Join.ROUND
         strokePaint.strokeCap     = Paint.Cap.ROUND
+
+        // Init colorwheel
+        generateColorWheel(100f, 100f, 250)
+    }
+
+    /**
+     * Undoes the last stroke.
+     */
+    fun undo() {
+        if (strokes.size <= 0) return
+        strokes.removeLast()
+        invalidate()
+    }
+
+    fun generateColorWheel(x: Float, y: Float, radius: Int) {
+        var bitmap: Bitmap = Bitmap.createBitmap(radius*2, radius*2, Bitmap.Config.ARGB_8888)
+
+        for (yLocal in -radius until radius) {
+            for (xLocal in -radius until radius) {
+                val dist = sqrt((xLocal*xLocal + yLocal*yLocal).toDouble())
+                if (dist > radius) continue
+
+                // Calculate HSV
+                val h   = (atan2(yLocal.toDouble(), xLocal.toDouble()) / PI) * 180.0 + 180.0
+                val s   = dist / radius
+                val v   = 1f
+                val hsv = floatArrayOf(h.toFloat(), s.toFloat(), v.toFloat())
+
+                // Push pixel to bitmap
+                val col = Color.HSVToColor(hsv)
+                bitmap[xLocal+radius, yLocal+radius] = col//Color.parseColor(color)
+            }
+        }
+
+        // Return
+        colorWheel = bitmap
+        colorWheelX = x
+        colorWheelY = y
     }
 
     /**
@@ -54,6 +96,13 @@ class DrawingCanvas : View {
         // Apply each stroke onto the canvas
         for (stroke in strokes) {
             canvas.drawPath(stroke.path, stroke.paint)
+        }
+
+        // Draw colorwheel
+        if (colorWheel != null) {
+            var matrix = Matrix()
+            matrix.setTranslate(colorWheelX,colorWheelY)
+            canvas.drawBitmap(colorWheel!!, matrix, strokePaint)
         }
     }
 
