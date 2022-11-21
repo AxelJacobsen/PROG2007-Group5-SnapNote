@@ -4,8 +4,13 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.core.widget.addTextChangedListener
+import androidx.fragment.app.FragmentManager
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 
+/**
+ * This activity controls the initial menu where you select your desired note
+ */
 class MenuActivity : AppCompatActivity() {
     lateinit var noteListRecycler: RecyclerView
 
@@ -16,11 +21,19 @@ class MenuActivity : AppCompatActivity() {
         setContentView(R.layout.activity_menu)
         //Bind interactables
         noteListRecycler = findViewById(R.id.recyclerMenuList)
-
+        //Set gridlayout
+        noteListRecycler.layoutManager = GridLayoutManager(this, 2);
         //Set adapter
         val adapter = MenuAdapter(noteList){ outItem, _ ->
-            //Starts ItemDisplay class with a parcelable of the item clicked
-            startActivity(Intent(this, NoteDisplay::class.java).putExtra("extraData", outItem))
+            //Opens Camera button display
+            if (outItem.isFirstItem) {
+                val dialogManager = supportFragmentManager
+                CameraButtonFragment().show(
+                    dialogManager, "Camera Dialog")
+            } else {
+                //Initiates NoteDisplay activity with data from iten clicked
+                startActivity(Intent(this, NoteDisplay::class.java).putExtra("extraData", outItem))
+            }
         }
         noteListRecycler.adapter = adapter
         addNewNoteButton()      //fill recipeList
@@ -33,6 +46,16 @@ class MenuActivity : AppCompatActivity() {
     }
     // Adds "New Note" item into the list
     fun addNewNoteButton(){
+        noteList.add(NoteListItem(
+            menuItemName = "New note",
+            isFirstItem = true,
+            menuItemThumbnail = R.drawable.new_note
+        ))
+        noteList.add(NoteListItem(
+            menuItemName = "New note",
+            isFirstItem = true,
+            menuItemThumbnail = R.drawable.new_note
+        ))
         noteList.add(NoteListItem(
             menuItemName = "New note",
             isFirstItem = true,

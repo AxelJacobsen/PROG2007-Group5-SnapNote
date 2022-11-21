@@ -13,7 +13,7 @@ class NoteActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_note)
         imageView = findViewById(R.id.imageView)
-
+        //Recieves parcel and binds image data
         val image = intent.getParcelableExtra<ImageClass>("picture")
 
         if (image != null) {
