@@ -5,6 +5,8 @@ import android.app.AlertDialog
 import android.app.Dialog
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.graphics.Bitmap
+import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
 import android.widget.Toast
@@ -21,6 +23,10 @@ import java.lang.Thread.sleep
  * Opens a dialog asking the user if they wish to take a picture or load from gallery
  */
 class CameraButtonFragment : DialogFragment() {
+
+    val CAMER_PERM = 1
+    val GALLERY_PERM = 2
+
     override fun onCreateDialog(savedInstanceState: Bundle?) : Dialog {
         return activity?.let{
             val builder = AlertDialog.Builder(it)
@@ -39,7 +45,7 @@ class CameraButtonFragment : DialogFragment() {
      * Requests permission for camera use and opens the camera
      */
     private fun takeAPic(){
-        createPermissionRequest(android.Manifest.permission.CAMERA, 1){ gotPermission ->
+        createPermissionRequest(android.Manifest.permission.CAMERA, CAMER_PERM){ gotPermission ->
             if (gotPermission){
                 val takePicIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
                 getResult.launch(takePicIntent)
@@ -53,7 +59,7 @@ class CameraButtonFragment : DialogFragment() {
      * Requests permission for gallery use and opens the gallery
      */
     private fun uploadFromGallery(){
-        createPermissionRequest(android.Manifest.permission.READ_EXTERNAL_STORAGE, 2) { gotPermission ->
+        createPermissionRequest(android.Manifest.permission.READ_EXTERNAL_STORAGE, GALLERY_PERM) { gotPermission ->
             if (gotPermission) {
                 val galleryIntent =
                     Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
@@ -89,4 +95,20 @@ class CameraButtonFragment : DialogFragment() {
         }
         else onSuccess(true)
     }
+
+    /**
+     * Creates a permissions request and returns synchronously
+
+        override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        var image = ImageClass(null, null)
+        if(requestCode==CAMER_PERM && resultCode == Activity.RESULT_OK){
+            image.bitmap = data?.extras?.get("data") as Bitmap
+        }else if (requestCode == GALLERY_PERM && resultCode == Activity.RESULT_OK){
+            image.uri = data?.data as Uri
+        }
+        super.onActivityResult(requestCode, resultCode, data)
+        val intent = Intent(this, NoteActivity::class.java)
+        intent.putExtra("picture", image)
+        startActivity(intent)
+    }*/
 }
