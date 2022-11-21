@@ -1,0 +1,235 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/edit_bottom_sheet_layout"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/menu_background"
+    android:orientation="vertical"
+    app:behavior_hideable="false"
+    app:behavior_peekHeight="30dp"
+    app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior">
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/edit_bsl_top_row"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/menu_background_dark"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/iwMenuSliderCircle"
+            android:layout_width="50dp"
+            android:layout_height="30dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/menu_rectangle_circle" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <HorizontalScrollView
+        android:id="@+id/horizontalScrollView"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/edit_bsl_top_row"
+        app:layout_constraintVertical_bias="0.0">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/edit_bsl_menu_items"
+            style="@style/TextAppearance.AppCompat.Widget.Button.Colored"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/iwMenuSliderCircle"
+            app:srcCompat="@drawable/placeholder">
+
+            <ImageView
+                android:id="@+id/iwMenuDraw"
+                android:layout_width="100dp"
+                android:layout_height="80dp"
+                android:layout_margin="7dp"
+                android:padding="5dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/menu_draw" />
+
+            <TextView
+                android:id="@+id/twMenuDraw"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="3dp"
+                android:padding="5dp"
+                android:shadowColor="@color/black"
+                android:shadowDx="1.7"
+                android:shadowDy="1.7"
+                android:shadowRadius="2"
+                android:text="@string/draw"
+                android:textColor="@color/white"
+                android:textSize="18sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="@+id/iwMenuDraw"
+                app:layout_constraintStart_toStartOf="@+id/iwMenuDraw"
+                app:layout_constraintTop_toBottomOf="@+id/iwMenuDraw" />
+
+            <ImageView
+                android:id="@+id/iwMenuWidgets"
+                android:layout_width="100dp"
+                android:layout_height="80dp"
+                android:layout_margin="7dp"
+                android:padding="5dp"
+                app:layout_constraintBottom_toBottomOf="@+id/iwMenuDraw"
+                app:layout_constraintStart_toEndOf="@+id/iwMenuDraw"
+                app:layout_constraintTop_toTopOf="@+id/iwMenuDraw"
+                app:srcCompat="@drawable/menu_widgets" />
+
+            <TextView
+                android:id="@+id/twMenuWidgets"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="3dp"
+                android:padding="5dp"
+                android:shadowColor="@color/black"
+                android:shadowDx="1.7"
+                android:shadowDy="1.7"
+                android:shadowRadius="2"
+                android:text="@string/widgets"
+                android:textColor="@color/white"
+                android:textSize="18sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="@+id/iwMenuWidgets"
+                app:layout_constraintStart_toStartOf="@+id/iwMenuWidgets"
+                app:layout_constraintTop_toBottomOf="@+id/iwMenuWidgets" />
+
+            <ImageView
+                android:id="@+id/iwMenuImage"
+                android:layout_width="100dp"
+                android:layout_height="80dp"
+                android:layout_margin="7dp"
+                android:padding="5dp"
+                app:layout_constraintBottom_toBottomOf="@+id/iwMenuDraw"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toEndOf="@+id/iwMenuWidgets"
+                app:layout_constraintTop_toTopOf="@+id/iwMenuDraw"
+                app:srcCompat="@drawable/menu_image" />
+
+            <TextView
+                android:id="@+id/twMenuImage"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="3dp"
+                android:padding="5dp"
+                android:shadowColor="@color/black"
+                android:shadowDx="1.7"
+                android:shadowDy="1.7"
+                android:shadowRadius="2"
+                android:text="@string/image"
+                android:textColor="@color/white"
+                android:textSize="18sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="@+id/iwMenuImage"
+                app:layout_constraintStart_toStartOf="@+id/iwMenuImage"
+                app:layout_constraintTop_toBottomOf="@+id/iwMenuImage" />
+
+            <ImageView
+                android:id="@+id/iwMenuText"
+                android:layout_width="100dp"
+                android:layout_height="80dp"
+                android:layout_margin="7dp"
+                android:padding="5dp"
+                app:layout_constraintBottom_toBottomOf="@+id/iwMenuDraw"
+                app:layout_constraintStart_toEndOf="@+id/iwMenuImage"
+                app:layout_constraintTop_toTopOf="@+id/iwMenuDraw"
+                app:srcCompat="@drawable/menu_text" />
+
+            <TextView
+                android:id="@+id/twMenuText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="3dp"
+                android:padding="5dp"
+                android:shadowColor="@color/black"
+                android:shadowDx="1.7"
+                android:shadowDy="1.7"
+                android:shadowRadius="2"
+                android:text="@string/text"
+                android:textColor="@color/white"
+                android:textSize="18sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="@+id/iwMenuText"
+                app:layout_constraintStart_toEndOf="@+id/iwMenuImage"
+                app:layout_constraintTop_toBottomOf="@+id/iwMenuWidgets" />
+
+            <ImageView
+                android:id="@+id/twMenuEditItem"
+                android:layout_width="100dp"
+                android:layout_height="80dp"
+                android:layout_margin="7dp"
+                android:padding="5dp"
+                app:layout_constraintBottom_toBottomOf="@+id/iwMenuDraw"
+                app:layout_constraintStart_toEndOf="@+id/iwMenuText"
+                app:layout_constraintTop_toTopOf="@+id/iwMenuDraw"
+                app:srcCompat="@drawable/menu_bin" />
+
+            <TextView
+                android:id="@+id/iwMenuEditItem"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="3dp"
+                android:padding="5dp"
+                android:shadowColor="@color/black"
+                android:shadowDx="1.7"
+                android:shadowDy="1.7"
+                android:shadowRadius="2"
+                android:text="@string/editItem"
+                android:textColor="@color/white"
+                android:textSize="18sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="@+id/twMenuEditItem"
+                app:layout_constraintStart_toStartOf="@+id/twMenuEditItem"
+                app:layout_constraintTop_toBottomOf="@+id/iwMenuWidgets" />
+
+            <ImageView
+                android:id="@+id/iwMenuCut"
+                android:layout_width="100dp"
+                android:layout_height="80dp"
+                android:layout_margin="7dp"
+                android:padding="5dp"
+                app:layout_constraintBottom_toBottomOf="@+id/iwMenuDraw"
+                app:layout_constraintStart_toEndOf="@+id/twMenuEditItem"
+                app:layout_constraintTop_toTopOf="@+id/iwMenuDraw"
+                app:srcCompat="@drawable/menu_bin" />
+
+            <TextView
+                android:id="@+id/twMenuCut"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="3dp"
+                android:padding="5dp"
+                android:shadowColor="@color/black"
+                android:shadowDx="1.7"
+                android:shadowDy="1.7"
+                android:shadowRadius="2"
+                android:text="@string/cut"
+                android:textColor="@color/white"
+                android:textSize="18sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/twMenuEditItem"
+                app:layout_constraintTop_toBottomOf="@+id/iwMenuWidgets" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </HorizontalScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

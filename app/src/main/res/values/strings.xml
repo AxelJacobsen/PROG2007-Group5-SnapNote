@@ -4,4 +4,19 @@
     <!-- Strings used for fragments for navigation -->
     <string name="next">Next</string>
     <string name="previous">Previous</string>
+
+    <!-- View menu -->
+    <string name="back">Back</string>
+    <string name="delete">Delete</string>
+    <string name="newPage">New Page</string>
+    <string name="save">Save</string>
+    <string name="edit">Edit</string>
+
+    <!-- Edit menu -->
+    <string name="draw">Draw</string>
+    <string name="widgets">Widgets</string>
+    <string name="image">Image</string>
+    <string name="text">Text</string>
+    <string name="editItem">Edit Item</string>
+    <string name="cut">Cut</string>
 </resources>
