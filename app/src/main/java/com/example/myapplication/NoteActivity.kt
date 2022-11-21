@@ -12,7 +12,7 @@ class NoteActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_note)
-        imageView = findViewById(R.id.imageView)
+        imageView = findViewById(R.id.noteBackground)
         //Recieves parcel and binds image data
         val image = intent.getParcelableExtra<ImageClass>("picture")
 
