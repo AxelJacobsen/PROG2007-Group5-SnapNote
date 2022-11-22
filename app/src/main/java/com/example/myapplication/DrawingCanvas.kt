@@ -8,6 +8,7 @@ import android.util.Log
 import android.view.MotionEvent
 import android.view.View
 import androidx.annotation.ColorInt
+import androidx.core.graphics.get
 import androidx.core.graphics.set
 import kotlin.math.*
 
@@ -18,11 +19,14 @@ class DrawingCanvas : View {
     private var strokes: ArrayList<Stroke> = ArrayList()
 
     // Color wheel
+    private var colorWheelEnabled: Boolean = true
     private var colorWheel: Bitmap? = null
-    private var colorWheelX: Float = -1f
-    private var colorWheelY: Float = -1f
+    private var colorWheelR: Int    = -1
+    private var colorWheelX: Float  = -1f
+    private var colorWheelY: Float  = -1f
 
     // Current stroke information
+    private var drawing: Boolean = false
     private var strokePaint: Paint = Paint()
     private var strokeType: StrokeType = StrokeType.PAINT
 
@@ -41,12 +45,12 @@ class DrawingCanvas : View {
         strokePaint.color         = Color.RED
         strokePaint.isAntiAlias   = true
         strokePaint.style         = Paint.Style.STROKE
-        strokePaint.strokeWidth   = 5f
+        strokePaint.strokeWidth   = 50f
         strokePaint.strokeJoin    = Paint.Join.ROUND
         strokePaint.strokeCap     = Paint.Cap.ROUND
 
         // Init colorwheel
-        generateColorWheel(100f, 100f, 250)
+        generateColorWheel(150f, 150f, 250)
     }
 
     /**
@@ -58,7 +62,11 @@ class DrawingCanvas : View {
         invalidate()
     }
 
-    fun generateColorWheel(x: Float, y: Float, radius: Int) {
+    /**
+     * Generates the colorwheel at the given position.
+     * x and y can be changed later without calling this function by changing [colorWheelX] and [colorWheelY].
+     */
+    private fun generateColorWheel(x: Float, y: Float, radius: Int) {
         var bitmap: Bitmap = Bitmap.createBitmap(radius*2, radius*2, Bitmap.Config.ARGB_8888)
 
         for (yLocal in -radius until radius) {
@@ -69,19 +77,27 @@ class DrawingCanvas : View {
                 // Calculate HSV
                 val h   = (atan2(yLocal.toDouble(), xLocal.toDouble()) / PI) * 180.0 + 180.0
                 val s   = dist / radius
-                val v   = 1f
+                val v   = 1.0
                 val hsv = floatArrayOf(h.toFloat(), s.toFloat(), v.toFloat())
 
                 // Push pixel to bitmap
                 val col = Color.HSVToColor(hsv)
-                bitmap[xLocal+radius, yLocal+radius] = col//Color.parseColor(color)
+                bitmap[xLocal+radius, yLocal+radius] = col
             }
         }
 
         // Return
         colorWheel = bitmap
+        colorWheelR = radius
         colorWheelX = x
         colorWheelY = y
+    }
+
+    /**
+     * Sets the brush size.
+     */
+    fun setBrushSize(size: Float) {
+        strokePaint.strokeWidth = size
     }
 
     /**
@@ -119,16 +135,43 @@ class DrawingCanvas : View {
         when (action) {
             // Touch begin
             MotionEvent.ACTION_DOWN -> {
-                var strokePath: Path = Path()
-                strokePath.moveTo(x, y)
-                strokePath.lineTo(x, y)
-                strokes.add(Stroke(strokePaint, strokePath))
+                var dontDraw = false
+
+                // Check if the touch is within the color wheel, if it's enabled and generated
+                if (colorWheelEnabled && colorWheel != null) {
+                    val xLocal = x - colorWheelX - colorWheelR
+                    val yLocal = y - colorWheelY - colorWheelR
+                    val d = sqrt(xLocal*xLocal + yLocal*yLocal)
+                    if (d < colorWheelR) {
+                        dontDraw = true
+
+                        // Fetch the right color from the color wheel, and change stroke color
+                        val colorInt: Int = colorWheel!![(x-colorWheelX).toInt(), (y-colorWheelY).toInt()]
+                        strokePaint.color = colorInt
+                    }
+                }
+
+                if (!dontDraw) {
+                    var strokePath: Path = Path()
+                    strokePath.moveTo(x, y)
+                    strokePath.lineTo(x, y)
+                    strokes.add(Stroke(Paint(strokePaint), strokePath))
+
+                    drawing = true
+                }
             }
 
             // Touch during
             MotionEvent.ACTION_MOVE -> {
-                var stroke: Stroke = strokes.last()
-                stroke.path.lineTo(x, y)
+                if (drawing) {
+                    var stroke: Stroke = strokes.last()
+                    stroke.path.lineTo(x, y)
+                }
+            }
+
+            // Touch end
+            MotionEvent.ACTION_UP -> {
+                drawing = false
             }
         }
 
