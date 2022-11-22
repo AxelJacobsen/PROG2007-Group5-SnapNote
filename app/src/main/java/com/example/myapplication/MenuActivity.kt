@@ -1,16 +1,11 @@
 package com.example.myapplication
 
-import android.R.attr.button
-import android.annotation.SuppressLint
+import android.app.Activity
 import android.content.Intent
-import android.graphics.Color
-import android.graphics.Color.GREEN
-import android.graphics.drawable.GradientDrawable
+import android.graphics.Bitmap
+import android.net.Uri
 import android.os.Bundle
-import android.widget.Button
-import android.widget.LinearLayout
 import androidx.appcompat.app.AppCompatActivity
-import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 
@@ -71,4 +66,24 @@ class MenuActivity : AppCompatActivity() {
             menuItemThumbnail = R.drawable.new_note
         ))
     }
+
+    /**
+     * This is hell, and should not work. Why it works is a mystery
+     */
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        var image = ImageClass(null, null)
+        if (resultCode == Activity.RESULT_OK) {
+            if (image.uri == null) {
+                image.bitmap = data?.extras?.get("data") as Bitmap
+            } else {
+                image.uri = data?.data as Uri
+            }
+        }
+        val intent = Intent(this, NoteActivity::class.java)
+        intent.putExtra("picture", image)
+        startActivity(intent)
+        super.onActivityResult(requestCode, resultCode, data)
+    }
+
 }
+
