@@ -5,10 +5,11 @@ import android.os.Bundle
 import android.widget.ImageView
 import android.widget.TextView
 
-// class Displays a single recipe page, and recieves data from pracel
+/**
+ * class Displays a single recipe page, and recieves data from pracel
+ */
 class NoteDisplay : AppCompatActivity() {
     //Define interactables
-    // var noteNameDisplay: TextView
     lateinit var noteImageDisplay: ImageView
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -18,10 +19,8 @@ class NoteDisplay : AppCompatActivity() {
         val noteData: NoteListItem? = intent.getParcelableExtra("extraData")
         val actualData: NoteListItem = noteData!!
         //Bind intractables
-        //noteNameDisplay = findViewById(R.id.noteName)
         noteImageDisplay = findViewById(R.id.noteBackground)
         //Set Data from parcel
-        //noteNameDisplay.text = actualData.menuItemName
         noteImageDisplay.setImageResource(actualData.menuItemThumbnail)
     }
 }

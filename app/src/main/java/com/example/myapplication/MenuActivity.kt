@@ -1,10 +1,11 @@
 package com.example.myapplication
 
+import android.app.Activity
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
+import android.graphics.Bitmap
+import android.net.Uri
 import android.os.Bundle
-import androidx.core.widget.addTextChangedListener
-import androidx.fragment.app.FragmentManager
+import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 
@@ -62,4 +63,24 @@ class MenuActivity : AppCompatActivity() {
             menuItemThumbnail = R.drawable.new_note
         ))
     }
+
+    /**
+     * This is hell, and should not work. Why it works is a mystery
+     */
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        var image = ImageClass(null, null)
+        if (resultCode == Activity.RESULT_OK) {
+            if (image.uri == null) {
+                image.bitmap = data?.extras?.get("data") as Bitmap
+            } else {
+                image.uri = data?.data as Uri
+            }
+        }
+        val intent = Intent(this, NoteActivity::class.java)
+        intent.putExtra("picture", image)
+        startActivity(intent)
+        super.onActivityResult(requestCode, resultCode, data)
+    }
+
 }
+
