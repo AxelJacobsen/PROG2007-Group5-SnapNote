@@ -24,4 +24,12 @@
         app:layout_constraintTop_toTopOf="parent"
         tools:layout_editor_absoluteX="60dp" />
 
+    <ImageButton
+        android:id="@+id/undoButton"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_margin="250dp"
+        android:scaleType="fitXY"
+        android:src="@drawable/undo" />
+
 </FrameLayout>

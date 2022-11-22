@@ -6,8 +6,10 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
+import android.view.View.OnClickListener
 import android.view.View.OnTouchListener
 import android.view.ViewGroup
+import android.widget.ImageButton
 import android.widget.SeekBar
 import android.widget.SeekBar.OnSeekBarChangeListener
 import androidx.fragment.app.Fragment
@@ -20,6 +22,7 @@ import androidx.fragment.app.Fragment
 class DrawingOverlay : Fragment() {
     private lateinit var drawingCanvas: DrawingCanvas
     private lateinit var seekBar: SeekBar
+    private lateinit var undoButton: ImageButton
 
     /**
      * When the fragment is created.
@@ -53,8 +56,9 @@ class DrawingOverlay : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         // Fetch views and holders
-        drawingCanvas = view.findViewById(R.id.drawingCanvas)
-        seekBar = view.findViewById(R.id.seekBar)
+        drawingCanvas   = view.findViewById(R.id.drawingCanvas)
+        seekBar         = view.findViewById(R.id.seekBar)
+        undoButton      = view.findViewById(R.id.undoButton)
 
         // Attach listeners
         drawingCanvas.setBrushSize(seekBar.progress.toFloat())
@@ -69,6 +73,10 @@ class DrawingOverlay : Fragment() {
             // Handle Seekbar touch events.
             v.onTouchEvent(event)
             true
+        })
+
+        undoButton.setOnClickListener(OnClickListener {
+            drawingCanvas.undo()
         })
     }
 }
