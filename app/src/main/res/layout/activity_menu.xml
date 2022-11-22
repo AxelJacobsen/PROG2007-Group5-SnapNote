@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/cardview_dark_background"
+    android:id="@+id/menuActivity"
     tools:context=".MenuActivity">
 
     <TextView
@@ -12,7 +13,7 @@
         android:layout_width="390dp"
         android:layout_height="50dp"
         android:text="My Library"
-        android:textColor="#BDBDBD"
+        android:textColor="#ACACAC"
         android:textSize="34sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -33,4 +34,11 @@
         app:layout_constraintVertical_bias="0.0"
         tools:itemCount="4"
         tools:listitem="@layout/content_note_list_item" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/menuActivity2"
+        tools:context=".MenuActivity">
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
