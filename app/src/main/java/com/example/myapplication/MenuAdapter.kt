@@ -5,6 +5,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
 
 /**
@@ -20,11 +21,13 @@ class MenuAdapter(var dataList: List<NoteListItem>, val onClick:(NoteListItem, I
             itemImage = view.findViewById(R.id.menuThumbnail)
         }
     }
+
     //Creates a viewholder to wrap the item recieved
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.content_note_list_item, parent, false)
         return  ItemViewHolder(view)
     }
+
     //Gets data from item and sends it to where it was originally clicked
     override fun onBindViewHolder(holder: ItemViewHolder, position: Int) {
         val item = dataList[holder.adapterPosition]
@@ -38,6 +41,7 @@ class MenuAdapter(var dataList: List<NoteListItem>, val onClick:(NoteListItem, I
     override fun getItemCount(): Int {
         return  dataList.size
     }
+
     //Updates list with new list
     fun updateData(updatedDataList: List<NoteListItem>){
         dataList = updatedDataList

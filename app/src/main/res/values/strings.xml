@@ -19,4 +19,10 @@
     <string name="text">Text</string>
     <string name="editItem">Edit Item</string>
     <string name="cut">Cut</string>
+
+    <!-- Widgets menu -->
+    <string name="sCh3ckbox">Checkbox</string>
+    <string name="sSw1tch">Switch</string>
+    <!-- image defined above -->
+
 </resources>

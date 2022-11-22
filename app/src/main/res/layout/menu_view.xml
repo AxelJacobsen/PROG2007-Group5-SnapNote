@@ -130,7 +130,7 @@
             app:layout_constraintTop_toBottomOf="@+id/iwMenuPlus" />
 
         <ImageView
-            android:id="@+id/iwMenuDraw"
+            android:id="@+id/iwMenuCheckbox"
             android:layout_width="40dp"
             android:layout_height="40dp"
             app:layout_constraintEnd_toStartOf="@+id/iwMenuPlus"
@@ -145,9 +145,9 @@
             android:text="@string/delete"
             android:textColor="@color/white"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="@+id/iwMenuDraw"
-            app:layout_constraintStart_toStartOf="@+id/iwMenuDraw"
-            app:layout_constraintTop_toBottomOf="@+id/iwMenuDraw" />
+            app:layout_constraintEnd_toEndOf="@+id/iwMenuCheckbox"
+            app:layout_constraintStart_toStartOf="@+id/iwMenuCheckbox"
+            app:layout_constraintTop_toBottomOf="@+id/iwMenuCheckbox" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

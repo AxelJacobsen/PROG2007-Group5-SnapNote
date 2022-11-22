@@ -9,8 +9,8 @@
     android:orientation="vertical"
     app:behavior_hideable="false"
     app:behavior_peekHeight="30dp"
+    app:behavior_skipCollapsed="true"
     app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior">
-
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/edit_bsl_top_row"
@@ -73,7 +73,7 @@
                 android:shadowDx="1.7"
                 android:shadowDy="1.7"
                 android:shadowRadius="2"
-                android:text="@string/draw"
+                android:text="@string/sCh3ckbox"
                 android:textColor="@color/white"
                 android:textSize="18sp"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -102,7 +102,7 @@
                 android:shadowDx="1.7"
                 android:shadowDy="1.7"
                 android:shadowRadius="2"
-                android:text="@string/widgets"
+                android:text="@string/sSw1tch"
                 android:textColor="@color/white"
                 android:textSize="18sp"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -140,93 +140,6 @@
                 app:layout_constraintEnd_toEndOf="@+id/iwMenuImage2"
                 app:layout_constraintStart_toStartOf="@+id/iwMenuImage2"
                 app:layout_constraintTop_toBottomOf="@+id/iwMenuImage2" />
-
-            <ImageView
-                android:id="@+id/iwMenuText"
-                android:layout_width="100dp"
-                android:layout_height="80dp"
-                android:layout_margin="7dp"
-                android:padding="5dp"
-                app:layout_constraintBottom_toBottomOf="@+id/iwMenuCheckbox"
-                app:layout_constraintStart_toEndOf="@+id/iwMenuImage2"
-                app:layout_constraintTop_toTopOf="@+id/iwMenuCheckbox"
-                app:srcCompat="@drawable/menu_text" />
-
-            <TextView
-                android:id="@+id/twMenuText"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="3dp"
-                android:padding="5dp"
-                android:shadowColor="@color/black"
-                android:shadowDx="1.7"
-                android:shadowDy="1.7"
-                android:shadowRadius="2"
-                android:text="@string/text"
-                android:textColor="@color/white"
-                android:textSize="18sp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="@+id/iwMenuText"
-                app:layout_constraintStart_toEndOf="@+id/iwMenuImage2"
-                app:layout_constraintTop_toBottomOf="@+id/iwMenuSwitch" />
-
-            <ImageView
-                android:id="@+id/twMenuEditItem"
-                android:layout_width="100dp"
-                android:layout_height="80dp"
-                android:layout_margin="7dp"
-                android:padding="5dp"
-                app:layout_constraintBottom_toBottomOf="@+id/iwMenuCheckbox"
-                app:layout_constraintStart_toEndOf="@+id/iwMenuText"
-                app:layout_constraintTop_toTopOf="@+id/iwMenuCheckbox"
-                app:srcCompat="@drawable/menu_bin" />
-
-            <TextView
-                android:id="@+id/iwMenuEditItem"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="3dp"
-                android:padding="5dp"
-                android:shadowColor="@color/black"
-                android:shadowDx="1.7"
-                android:shadowDy="1.7"
-                android:shadowRadius="2"
-                android:text="@string/editItem"
-                android:textColor="@color/white"
-                android:textSize="18sp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="@+id/twMenuEditItem"
-                app:layout_constraintStart_toStartOf="@+id/twMenuEditItem"
-                app:layout_constraintTop_toBottomOf="@+id/iwMenuSwitch" />
-
-            <ImageView
-                android:id="@+id/iwMenuCut"
-                android:layout_width="100dp"
-                android:layout_height="80dp"
-                android:layout_margin="7dp"
-                android:padding="5dp"
-                app:layout_constraintBottom_toBottomOf="@+id/iwMenuCheckbox"
-                app:layout_constraintStart_toEndOf="@+id/twMenuEditItem"
-                app:layout_constraintTop_toTopOf="@+id/iwMenuCheckbox"
-                app:srcCompat="@drawable/menu_bin" />
-
-            <TextView
-                android:id="@+id/twMenuCut"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="3dp"
-                android:padding="5dp"
-                android:shadowColor="@color/black"
-                android:shadowDx="1.7"
-                android:shadowDy="1.7"
-                android:shadowRadius="2"
-                android:text="@string/cut"
-                android:textColor="@color/white"
-                android:textSize="18sp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/twMenuEditItem"
-                app:layout_constraintTop_toBottomOf="@+id/iwMenuSwitch" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
