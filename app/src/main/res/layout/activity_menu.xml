@@ -34,11 +34,4 @@
         app:layout_constraintVertical_bias="0.0"
         tools:itemCount="4"
         tools:listitem="@layout/content_note_list_item" />
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/menuActivity2"
-        tools:context=".MenuActivity">
-    </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

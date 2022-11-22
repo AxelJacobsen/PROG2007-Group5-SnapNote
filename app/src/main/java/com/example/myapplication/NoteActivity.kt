@@ -1,6 +1,5 @@
 package com.example.myapplication
 
-import android.graphics.Bitmap
 import android.os.Bundle
 import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
@@ -11,7 +10,7 @@ class NoteActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_note)
+        setContentView(R.layout.activity_display_note)
         imageView = findViewById(R.id.noteBackground)
         //Recieves parcel and binds image data
         val image = intent.getParcelableExtra<ImageClass>("picture")

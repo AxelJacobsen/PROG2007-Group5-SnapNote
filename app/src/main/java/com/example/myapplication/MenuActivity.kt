@@ -44,12 +44,6 @@ class MenuActivity : AppCompatActivity() {
             }*/
         }
 
-        val mainLayout = findViewById<ConstraintLayout>(R.id.menuActivity2)
-        mainLayout.setOnClickListener {
-            println("FFFFFFFFFFFFFFFFFFFFUCKKKK")
-            createButtonDynamically(mainLayout, 0, "Dynamic Button", 300.0f, 500.0f)
-        }
-
         noteListRecycler.adapter = adapter
         addNewNoteButton()      //fill recipeList
         //Update
@@ -76,41 +70,5 @@ class MenuActivity : AppCompatActivity() {
             isFirstItem = true,
             menuItemThumbnail = R.drawable.new_note
         ))
-    }
-
-    @SuppressLint("SetTextI18n")
-    private fun createButtonDynamically(
-        mainLayout: ConstraintLayout,
-        id : Int,
-        text : String,
-        posx : Float,
-        posy : Float,
-        red: Int = 255,
-        green: Int = 255,
-        blue: Int = 255
-    ) {
-        // creating the button
-        val dynamicButton = Button(this)
-        // setting layout_width and layout_height using layout parameters
-        dynamicButton.layoutParams = LinearLayout.LayoutParams(
-            LinearLayout.LayoutParams.WRAP_CONTENT,
-            LinearLayout.LayoutParams.WRAP_CONTENT,
-        )
-        dynamicButton.x = posx
-        dynamicButton.y = posy
-        dynamicButton.text = text
-        dynamicButton.id = id
-
-        val color = Color.rgb(red, green, blue) //red for example
-        val radius = 15 //radius will be 5px
-        val strokeWidth = 2
-        val gradientDrawable = GradientDrawable()
-        gradientDrawable.setColor(color)
-        gradientDrawable.cornerRadius = radius.toFloat()
-        gradientDrawable.setStroke(strokeWidth, color)
-        dynamicButton.background = gradientDrawable
-
-        // add Button to LinearLayout
-        mainLayout.addView(dynamicButton)
     }
 }
