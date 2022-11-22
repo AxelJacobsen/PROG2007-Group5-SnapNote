@@ -17,6 +17,8 @@ import kotlin.math.*
  */
 class DrawingCanvas : View {
     private var strokes: ArrayList<Stroke> = ArrayList()
+    private var cacheCanvas: Canvas? = null
+    private var cacheBitmap: Bitmap? = null
 
     // Color wheel
     private var colorWheelEnabled: Boolean = true
@@ -41,6 +43,11 @@ class DrawingCanvas : View {
      * Initializes the member's variables.
      */
     private fun init() {
+        // Init canvas bitmap
+        cacheBitmap = Bitmap.createBitmap(1080, 2440, Bitmap.Config.ARGB_8888)
+        cacheCanvas = Canvas()
+        cacheCanvas!!.setBitmap(cacheBitmap)
+
         // Init default paint
         strokePaint.color         = Color.RED
         strokePaint.isAntiAlias   = true
@@ -59,7 +66,35 @@ class DrawingCanvas : View {
     fun undo() {
         if (strokes.size <= 0) return
         strokes.removeLast()
+
+        // Clear cache and request redraw
+        for (stroke in strokes) {
+            stroke.addedToCache = false
+        }
+        cacheCanvas?.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR)
+
         invalidate()
+    }
+
+    /**
+     * Sets the brush size.
+     */
+    fun setBrushSize(size: Float) {
+        strokePaint.strokeWidth = size
+    }
+
+    /**
+     * Changes the brush mode.
+     * (If its in paint-mode, set to erase. Otherwise, set to paint-mode.)
+     */
+    fun changeBrushMode() {
+        if (strokeType == StrokeType.PAINT) {
+            strokeType = StrokeType.ERASE
+            strokePaint.xfermode = PorterDuffXfermode(PorterDuff.Mode.CLEAR)
+        } else {
+            strokeType = StrokeType.PAINT
+            strokePaint.xfermode = PorterDuffXfermode(PorterDuff.Mode.SRC_OVER)
+        }
     }
 
     /**
@@ -94,31 +129,39 @@ class DrawingCanvas : View {
     }
 
     /**
-     * Sets the brush size.
-     */
-    fun setBrushSize(size: Float) {
-        strokePaint.strokeWidth = size
-    }
-
-    /**
      * When the canvas is drawn to the screen.
      */
     override fun onDraw(
         canvas: Canvas?
     ) {
         super.onDraw(canvas)
-        if (canvas == null) return
+        if (canvas == null || cacheCanvas == null) return
+
+        canvas.drawBitmap(cacheBitmap!!, Matrix(), null)
 
         // Apply each stroke onto the canvas
         for (stroke in strokes) {
-            canvas.drawPath(stroke.path, stroke.paint)
+            // If the stroke isn't complete yet, apply it directly to the canvas
+            if (!stroke.completed && strokeType == StrokeType.PAINT) {
+                canvas.drawPath(stroke.path, stroke.paint)
+                continue
+            }
+
+            // Otherwise, cache it once.
+            if (!stroke.addedToCache) {
+                cacheCanvas!!.drawPath(stroke.path, stroke.paint)
+                if (strokeType == StrokeType.PAINT) stroke.addedToCache = true
+            }
         }
 
         // Draw colorwheel
         if (colorWheel != null) {
             var matrix = Matrix()
             matrix.setTranslate(colorWheelX,colorWheelY)
-            canvas.drawBitmap(colorWheel!!, matrix, strokePaint)
+            var colorWheelPaint = Paint()
+            colorWheelPaint.isAntiAlias   = true
+            colorWheelPaint.style         = Paint.Style.STROKE
+            canvas.drawBitmap(colorWheel!!, matrix, colorWheelPaint)
         }
     }
 
@@ -171,7 +214,11 @@ class DrawingCanvas : View {
 
             // Touch end
             MotionEvent.ACTION_UP -> {
-                drawing = false
+                if (drawing) {
+                    var stroke: Stroke = strokes.last()
+                    stroke.completed = true
+                    drawing = false
+                }
             }
         }
 
@@ -192,6 +239,8 @@ class DrawingCanvas : View {
      */
     data class Stroke(
         val paint: Paint,
-        val path: Path
+        val path: Path,
+        var completed: Boolean = false,
+        var addedToCache: Boolean = false
     )
 }

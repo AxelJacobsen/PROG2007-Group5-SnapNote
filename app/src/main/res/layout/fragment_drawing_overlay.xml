@@ -29,7 +29,17 @@
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:layout_margin="250dp"
+        android:contentDescription="undo button"
         android:scaleType="fitXY"
         android:src="@drawable/undo" />
+
+    <ImageButton
+        android:id="@+id/brushModeButton"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_margin="200dp"
+        android:contentDescription="change brush mode button"
+        android:scaleType="fitXY"
+        android:src="@drawable/eraser" />
 
 </FrameLayout>

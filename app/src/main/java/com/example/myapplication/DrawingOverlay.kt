@@ -23,6 +23,7 @@ class DrawingOverlay : Fragment() {
     private lateinit var drawingCanvas: DrawingCanvas
     private lateinit var seekBar: SeekBar
     private lateinit var undoButton: ImageButton
+    private lateinit var brushModeButton: ImageButton
 
     /**
      * When the fragment is created.
@@ -59,8 +60,9 @@ class DrawingOverlay : Fragment() {
         drawingCanvas   = view.findViewById(R.id.drawingCanvas)
         seekBar         = view.findViewById(R.id.seekBar)
         undoButton      = view.findViewById(R.id.undoButton)
+        brushModeButton = view.findViewById(R.id.brushModeButton)
 
-        // Attach listeners
+        // Brush size listener
         drawingCanvas.setBrushSize(seekBar.progress.toFloat())
         seekBar.setOnTouchListener(OnTouchListener { v, event ->
             when (event.action) {
@@ -75,8 +77,14 @@ class DrawingOverlay : Fragment() {
             true
         })
 
+        // Undo button listener
         undoButton.setOnClickListener(OnClickListener {
             drawingCanvas.undo()
+        })
+
+        // Change brush mode listener
+        brushModeButton.setOnClickListener(OnClickListener {
+            drawingCanvas.changeBrushMode()
         })
     }
 }
