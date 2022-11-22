@@ -10,7 +10,6 @@ import android.widget.Button
 import android.widget.ImageView
 import android.widget.LinearLayout
 import androidx.constraintlayout.widget.ConstraintLayout
-import com.google.android.material.bottomsheet.BottomSheetBehavior
 
 /**
  * class Displays a single recipe page, and recieves data from pracel
@@ -33,15 +32,12 @@ class NoteDisplay : AppCompatActivity() {
         val addWidgetButton = findViewById<ImageView>(R.id.iwMenuSwitch)
         val widgetLayout = findViewById<ConstraintLayout>(R.id.widgetLayout)
 
-        val coordlayout = findViewById<View>(R.id.coordinatorlayout)
-        val coordlayout2 = findViewById<View>(R.id.coordinatorlayout2)
+        val editMenuLayout = findViewById<View>(R.id.coordinatorlayout)
+        val widgetMenuLayout = findViewById<View>(R.id.coordinatorlayout2)
         addWidgetButton.setOnClickListener {
-            println("FFFFFFFFFFFFFFFFFFFFUCKKKK")
             createButtonDynamically(widgetLayout, 0, "Dynamic Button", 300.0f, 500.0f)
-
-            //val login_layout = R.id.coordinatorlayout as View //note : from import android.view.View
-            coordlayout.visibility = View.GONE
-            coordlayout2.visibility = View.VISIBLE
+            editMenuLayout.visibility = View.GONE
+            widgetMenuLayout.visibility = View.VISIBLE
         }
     }
 

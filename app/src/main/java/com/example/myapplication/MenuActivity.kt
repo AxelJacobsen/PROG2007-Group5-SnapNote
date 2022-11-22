@@ -28,15 +28,14 @@ class MenuActivity : AppCompatActivity() {
         //Set adapter
         val adapter = MenuAdapter(noteList){ outItem, _ ->
             //Opens Camera button display
-            startActivity(Intent(this, NoteDisplay::class.java).putExtra("extraData", outItem))
-            /*if (outItem.isFirstItem) {
+            if (outItem.isFirstItem) {
                 val dialogManager = supportFragmentManager
                 CameraButtonFragment().show(
                     dialogManager, "Camera Dialog")
             } else {
                 //Initiates NoteDisplay activity with data from iten clicked
                 startActivity(Intent(this, NoteDisplay::class.java).putExtra("extraData", outItem))
-            }*/
+            }
         }
 
         noteListRecycler.adapter = adapter
@@ -53,7 +52,7 @@ class MenuActivity : AppCompatActivity() {
         noteList.add(NoteListItem(
             menuItemName = "New note",
             isFirstItem = true,
-            menuItemThumbnail = R.drawable.placeholder
+            menuItemThumbnail = R.drawable.new_note
         ))
         noteList.add(NoteListItem(
             menuItemName = "New note",
