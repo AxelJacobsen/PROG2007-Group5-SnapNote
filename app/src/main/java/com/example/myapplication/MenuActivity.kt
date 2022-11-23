@@ -71,8 +71,9 @@ class MenuActivity : AppCompatActivity() {
      */
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         var image = ImageClass(null, null)
+        println(requestCode)
         if (resultCode == Activity.RESULT_OK) {
-            if (image.uri == null) {
+            if (data?.data == null) {
                 image.bitmap = data?.extras?.get("data") as Bitmap
             } else {
                 image.uri = data?.data as Uri
@@ -83,6 +84,5 @@ class MenuActivity : AppCompatActivity() {
         startActivity(intent)
         super.onActivityResult(requestCode, resultCode, data)
     }
-
 }
 
