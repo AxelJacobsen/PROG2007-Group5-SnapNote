@@ -44,7 +44,6 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/edit_bsl_menu_items"
-            style="@style/TextAppearance.AppCompat.Widget.Button.Colored"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -54,7 +53,7 @@
             app:srcCompat="@drawable/placeholder">
 
             <ImageView
-                android:id="@+id/iwMenuCheckbox"
+                android:id="@+id/iwMenuDraw"
                 android:layout_width="100dp"
                 android:layout_height="80dp"
                 android:layout_margin="7dp"
@@ -64,7 +63,7 @@
                 app:srcCompat="@drawable/menu_draw" />
 
             <TextView
-                android:id="@+id/twMenuCheckbox"
+                android:id="@+id/twMenuDraw"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="3dp"
@@ -77,23 +76,23 @@
                 android:textColor="@color/white"
                 android:textSize="18sp"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="@+id/iwMenuCheckbox"
-                app:layout_constraintStart_toStartOf="@+id/iwMenuCheckbox"
-                app:layout_constraintTop_toBottomOf="@+id/iwMenuCheckbox" />
+                app:layout_constraintEnd_toEndOf="@+id/iwMenuDraw"
+                app:layout_constraintStart_toStartOf="@+id/iwMenuDraw"
+                app:layout_constraintTop_toBottomOf="@+id/iwMenuDraw" />
 
             <ImageView
-                android:id="@+id/iwMenuSwitch"
+                android:id="@+id/iwMenuWidgets"
                 android:layout_width="100dp"
                 android:layout_height="80dp"
                 android:layout_margin="7dp"
                 android:padding="5dp"
-                app:layout_constraintBottom_toBottomOf="@+id/iwMenuCheckbox"
-                app:layout_constraintStart_toEndOf="@+id/iwMenuCheckbox"
-                app:layout_constraintTop_toTopOf="@+id/iwMenuCheckbox"
+                app:layout_constraintBottom_toBottomOf="@+id/iwMenuDraw"
+                app:layout_constraintStart_toEndOf="@+id/iwMenuDraw"
+                app:layout_constraintTop_toTopOf="@+id/iwMenuDraw"
                 app:srcCompat="@drawable/menu_widgets" />
 
             <TextView
-                android:id="@+id/twMenuSwitch"
+                android:id="@+id/twMenuWidgets"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="3dp"
@@ -106,25 +105,25 @@
                 android:textColor="@color/white"
                 android:textSize="18sp"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="@+id/iwMenuSwitch"
-                app:layout_constraintStart_toStartOf="@+id/iwMenuSwitch"
-                app:layout_constraintTop_toBottomOf="@+id/iwMenuSwitch" />
+                app:layout_constraintEnd_toEndOf="@+id/iwMenuWidgets"
+                app:layout_constraintStart_toStartOf="@+id/iwMenuWidgets"
+                app:layout_constraintTop_toBottomOf="@+id/iwMenuWidgets" />
 
             <ImageView
-                android:id="@+id/iwMenuImage2"
+                android:id="@+id/iwMenuImage"
                 android:layout_width="100dp"
                 android:layout_height="80dp"
                 android:layout_margin="7dp"
                 android:padding="5dp"
-                app:layout_constraintBottom_toBottomOf="@+id/iwMenuCheckbox"
+                app:layout_constraintBottom_toBottomOf="@+id/iwMenuDraw"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toEndOf="@+id/iwMenuSwitch"
-                app:layout_constraintTop_toTopOf="@+id/iwMenuCheckbox"
+                app:layout_constraintStart_toEndOf="@+id/iwMenuWidgets"
+                app:layout_constraintTop_toTopOf="@+id/iwMenuDraw"
                 app:srcCompat="@drawable/menu_image" />
 
             <TextView
-                android:id="@+id/twMenuImage2"
+                android:id="@+id/twMenuImage"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="3dp"
@@ -137,9 +136,9 @@
                 android:textColor="@color/white"
                 android:textSize="18sp"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="@+id/iwMenuImage2"
-                app:layout_constraintStart_toStartOf="@+id/iwMenuImage2"
-                app:layout_constraintTop_toBottomOf="@+id/iwMenuImage2" />
+                app:layout_constraintEnd_toEndOf="@+id/iwMenuImage"
+                app:layout_constraintStart_toStartOf="@+id/iwMenuImage"
+                app:layout_constraintTop_toBottomOf="@+id/iwMenuImage" />
 
             <ImageView
                 android:id="@+id/iwMenuText"
@@ -147,9 +146,9 @@
                 android:layout_height="80dp"
                 android:layout_margin="7dp"
                 android:padding="5dp"
-                app:layout_constraintBottom_toBottomOf="@+id/iwMenuCheckbox"
-                app:layout_constraintStart_toEndOf="@+id/iwMenuImage2"
-                app:layout_constraintTop_toTopOf="@+id/iwMenuCheckbox"
+                app:layout_constraintBottom_toBottomOf="@+id/iwMenuDraw"
+                app:layout_constraintStart_toEndOf="@+id/iwMenuImage"
+                app:layout_constraintTop_toTopOf="@+id/iwMenuDraw"
                 app:srcCompat="@drawable/menu_text" />
 
             <TextView
@@ -167,8 +166,8 @@
                 android:textSize="18sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="@+id/iwMenuText"
-                app:layout_constraintStart_toEndOf="@+id/iwMenuImage2"
-                app:layout_constraintTop_toBottomOf="@+id/iwMenuSwitch" />
+                app:layout_constraintStart_toEndOf="@+id/iwMenuImage"
+                app:layout_constraintTop_toBottomOf="@+id/iwMenuWidgets" />
 
             <ImageView
                 android:id="@+id/twMenuEditItem"
@@ -176,9 +175,9 @@
                 android:layout_height="80dp"
                 android:layout_margin="7dp"
                 android:padding="5dp"
-                app:layout_constraintBottom_toBottomOf="@+id/iwMenuCheckbox"
+                app:layout_constraintBottom_toBottomOf="@+id/iwMenuDraw"
                 app:layout_constraintStart_toEndOf="@+id/iwMenuText"
-                app:layout_constraintTop_toTopOf="@+id/iwMenuCheckbox"
+                app:layout_constraintTop_toTopOf="@+id/iwMenuDraw"
                 app:srcCompat="@drawable/menu_bin" />
 
             <TextView
@@ -197,7 +196,7 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="@+id/twMenuEditItem"
                 app:layout_constraintStart_toStartOf="@+id/twMenuEditItem"
-                app:layout_constraintTop_toBottomOf="@+id/iwMenuSwitch" />
+                app:layout_constraintTop_toBottomOf="@+id/iwMenuWidgets" />
 
             <ImageView
                 android:id="@+id/iwMenuCut"
@@ -205,9 +204,9 @@
                 android:layout_height="80dp"
                 android:layout_margin="7dp"
                 android:padding="5dp"
-                app:layout_constraintBottom_toBottomOf="@+id/iwMenuCheckbox"
+                app:layout_constraintBottom_toBottomOf="@+id/iwMenuDraw"
                 app:layout_constraintStart_toEndOf="@+id/twMenuEditItem"
-                app:layout_constraintTop_toTopOf="@+id/iwMenuCheckbox"
+                app:layout_constraintTop_toTopOf="@+id/iwMenuDraw"
                 app:srcCompat="@drawable/menu_bin" />
 
             <TextView
@@ -226,7 +225,7 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/twMenuEditItem"
-                app:layout_constraintTop_toBottomOf="@+id/iwMenuSwitch" />
+                app:layout_constraintTop_toBottomOf="@+id/iwMenuWidgets" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

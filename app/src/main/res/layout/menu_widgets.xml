@@ -61,7 +61,7 @@
                 android:padding="5dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/menu_draw" />
+                app:srcCompat="@drawable/menu_checkbox" />
 
             <TextView
                 android:id="@+id/twMenuCheckbox"
@@ -90,7 +90,7 @@
                 app:layout_constraintBottom_toBottomOf="@+id/iwMenuCheckbox"
                 app:layout_constraintStart_toEndOf="@+id/iwMenuCheckbox"
                 app:layout_constraintTop_toTopOf="@+id/iwMenuCheckbox"
-                app:srcCompat="@drawable/menu_widgets" />
+                app:srcCompat="@drawable/menu_switches" />
 
             <TextView
                 android:id="@+id/twMenuSwitch"
@@ -124,7 +124,7 @@
                 app:srcCompat="@drawable/menu_image" />
 
             <TextView
-                android:id="@+id/twMenuImage2"
+                android:id="@+id/twMenuImage"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="3dp"
