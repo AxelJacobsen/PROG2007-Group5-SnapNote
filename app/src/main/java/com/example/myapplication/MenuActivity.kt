@@ -42,10 +42,6 @@ class MenuActivity : AppCompatActivity() {
         addNewNoteButton()      //fill recipeList
         //Update
         adapter.updateData(noteList)
-        //Handle Searchbar, updates the filter each time a button is clicked
-        /*editText.addTextChangedListener {
-            adapter.updateData(noteList.filter{MenuItemData -> MenuItemData.menuItemName.lowercase().contains(editText.text.toString().lowercase())})
-        }*/
     }
     // Adds "New Note" item into the list
     fun addNewNoteButton(){

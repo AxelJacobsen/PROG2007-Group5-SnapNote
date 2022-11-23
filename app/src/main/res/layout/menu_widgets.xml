@@ -2,7 +2,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/edit_bottom_sheet_layout"
+    android:id="@+id/widget_bottom_sheet_layout"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@color/menu_background"
@@ -54,12 +54,42 @@
             app:srcCompat="@drawable/placeholder">
 
             <ImageView
+                android:id="@+id/iWidgetMenuBackArrow"
+                android:layout_width="100dp"
+                android:layout_height="80dp"
+                android:layout_margin="7dp"
+                android:padding="5dp"
+                app:layout_constraintBottom_toBottomOf="@+id/iwMenuCheckbox"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/iwMenuCheckbox"
+                app:srcCompat="@drawable/menu_back_arrow" />
+
+            <TextView
+                android:id="@+id/twMenuBackArrow"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="3dp"
+                android:padding="5dp"
+                android:shadowColor="@color/black"
+                android:shadowDx="1.7"
+                android:shadowDy="1.7"
+                android:shadowRadius="2"
+                android:text="@string/back"
+                android:textColor="@color/white"
+                android:textSize="18sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="@+id/iWidgetMenuBackArrow"
+                app:layout_constraintStart_toStartOf="@+id/iWidgetMenuBackArrow"
+                app:layout_constraintTop_toBottomOf="@+id/iWidgetMenuBackArrow" />
+
+
+            <ImageView
                 android:id="@+id/iwMenuCheckbox"
                 android:layout_width="100dp"
                 android:layout_height="80dp"
                 android:layout_margin="7dp"
                 android:padding="5dp"
-                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/iWidgetMenuBackArrow"
                 app:layout_constraintTop_toTopOf="parent"
                 app:srcCompat="@drawable/menu_checkbox" />
 
