@@ -13,12 +13,16 @@ import androidx.core.graphics.set
 import kotlin.math.*
 
 /**
- * Class for drawing strokes onto a Canvas.
+ * Class for drawing onto a Canvas.
  */
 class DrawingCanvas : View {
     private var strokes: ArrayList<Stroke> = ArrayList()
     private var cacheCanvas: Canvas? = null
     private var cacheBitmap: Bitmap? = null
+
+    private var loadedCanvas: Canvas? = null
+    private var loadedBitmap: Bitmap? = null
+    private var loadedBitmapOriginal: Bitmap? = null
 
     // Color wheel
     private var colorWheelEnabled: Boolean = true
@@ -67,17 +71,26 @@ class DrawingCanvas : View {
         if (strokes.size <= 0) return
         strokes.removeLast()
 
-        // Clear cache and request redraw
+        // Request redraw of each stroke
         for (stroke in strokes) {
             stroke.addedToCache = false
         }
+
+        // Blank out cache and reset loaded canvas
         cacheCanvas?.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR)
+
+        if (loadedBitmap != null && loadedBitmapOriginal != null) {
+            loadedBitmap = loadedBitmapOriginal!!.copy(loadedBitmapOriginal!!.config, true)
+            loadedCanvas?.setBitmap(loadedBitmap)
+        }
 
         invalidate()
     }
 
     /**
      * Sets the brush size.
+     *
+     * @param size - The new brush size.
      */
     fun setBrushSize(size: Float) {
         strokePaint.strokeWidth = size
@@ -85,7 +98,7 @@ class DrawingCanvas : View {
 
     /**
      * Changes the brush mode.
-     * (If its in paint-mode, set to erase. Otherwise, set to paint-mode.)
+     * (If its in paint-mode, set to erase. Otherwise, set to paint-mode)
      */
     fun changeBrushMode() {
         if (strokeType == StrokeType.PAINT) {
@@ -98,8 +111,53 @@ class DrawingCanvas : View {
     }
 
     /**
+     * Gets the canvas' bitmap as it's displayed.
+     * Does this by merging all buffers into one canvas, then returning that.
+     *
+     * @return A copy of the canvas' bitmap as it's displayed.
+     */
+    fun getBitmap(): Bitmap? {
+        if (cacheBitmap == null && loadedBitmap == null) return null
+
+        // Create copies of all buffers
+        val cacheBitmapCopy  = if (cacheBitmap != null)  cacheBitmap!!.copy(cacheBitmap!!.config, true) else null
+        val loadedBitmapCopy = if (loadedBitmap != null) loadedBitmap!!.copy(loadedBitmap!!.config, true) else null
+        val copyPropsFrom    = cacheBitmapCopy ?: loadedBitmapCopy
+
+        // Draw the buffer contents on top of each other
+        var mergedBitmap = Bitmap.createBitmap(copyPropsFrom!!.width, copyPropsFrom!!.height, copyPropsFrom!!.config)
+        var mergeCanvas  = Canvas(mergedBitmap)
+        if (cacheBitmapCopy != null)    mergeCanvas.drawBitmap(cacheBitmapCopy!!, Matrix(), null)
+        if (loadedBitmapCopy != null)   mergeCanvas.drawBitmap(loadedBitmapCopy!!, Matrix(), null)
+
+        // Recycle the copies and return
+        cacheBitmapCopy?.recycle()
+        loadedBitmapCopy?.recycle()
+        return mergedBitmap
+    }
+
+    /**
+     * Loads a bitmap.
+     * Replaces the previously loaded bitmap, if it exists.
+     *
+     * @param bitmap - The bitmap to load data from.
+     */
+    fun loadBitmap(bitmap: Bitmap) {
+        loadedBitmapOriginal = bitmap.copy(Bitmap.Config.ARGB_8888, true)
+        loadedBitmap = loadedBitmapOriginal!!.copy(Bitmap.Config.ARGB_8888, true)
+        loadedCanvas = Canvas()
+        loadedCanvas?.setBitmap(loadedBitmap)
+
+        invalidate()
+    }
+
+    /**
      * Generates the colorwheel at the given position.
      * x and y can be changed later without calling this function by changing [colorWheelX] and [colorWheelY].
+     *
+     * @param x - Horizontal position, left to right.
+     * @param y - Vertical position, top to bottom.
+     * @param radius - Radius of the colorwheel.
      */
     private fun generateColorWheel(x: Float, y: Float, radius: Int) {
         var bitmap: Bitmap = Bitmap.createBitmap(radius*2, radius*2, Bitmap.Config.ARGB_8888)
@@ -137,20 +195,24 @@ class DrawingCanvas : View {
         super.onDraw(canvas)
         if (canvas == null || cacheCanvas == null) return
 
+        if (loadedBitmap != null) canvas.drawBitmap(loadedBitmap!!, Matrix(), null)
         canvas.drawBitmap(cacheBitmap!!, Matrix(), null)
 
         // Apply each stroke onto the canvas
         for (stroke in strokes) {
-            // If the stroke isn't complete yet, apply it directly to the canvas
+            // If the stroke isn't complete yet, apply it directly to the canvas temporarily
             if (!stroke.completed && strokeType == StrokeType.PAINT) {
                 canvas.drawPath(stroke.path, stroke.paint)
                 continue
             }
 
-            // Otherwise, cache it once.
+            // Otherwise, cache it semi-permanently once.
             if (!stroke.addedToCache) {
                 cacheCanvas!!.drawPath(stroke.path, stroke.paint)
                 if (strokeType == StrokeType.PAINT) stroke.addedToCache = true
+
+                // Erase from loaded canvas directly, as it's restored completely on undo.
+                else if (loadedCanvas != null) loadedCanvas!!.drawPath(stroke.path, stroke.paint)
             }
         }
 
@@ -237,10 +299,11 @@ class DrawingCanvas : View {
     /**
      * A simple dataclass for storing stroke information.
      */
-    data class Stroke(
+    private data class Stroke(
         val paint: Paint,
         val path: Path,
         var completed: Boolean = false,
-        var addedToCache: Boolean = false
+        var addedToCache: Boolean = false,
+        var addedToLoaded: Boolean = false
     )
 }

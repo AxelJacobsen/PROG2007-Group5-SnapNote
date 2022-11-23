@@ -1,8 +1,11 @@
 package com.example.myapplication
 
 import android.annotation.SuppressLint
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.os.Bundle
-import android.util.Log
+import android.os.Environment
+import android.provider.MediaStore
 import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
@@ -11,8 +14,11 @@ import android.view.View.OnTouchListener
 import android.view.ViewGroup
 import android.widget.ImageButton
 import android.widget.SeekBar
-import android.widget.SeekBar.OnSeekBarChangeListener
 import androidx.fragment.app.Fragment
+import java.io.File
+import java.io.FileOutputStream
+import java.io.OutputStream
+
 
 /**
  * A simple [Fragment] subclass for drawing freehand.
@@ -24,6 +30,10 @@ class DrawingOverlay : Fragment() {
     private lateinit var seekBar: SeekBar
     private lateinit var undoButton: ImageButton
     private lateinit var brushModeButton: ImageButton
+
+    // TEMP
+    private lateinit var saveButton: ImageButton
+    private lateinit var loadButton: ImageButton
 
     /**
      * When the fragment is created.
@@ -62,6 +72,10 @@ class DrawingOverlay : Fragment() {
         undoButton      = view.findViewById(R.id.undoButton)
         brushModeButton = view.findViewById(R.id.brushModeButton)
 
+        // TEMP
+        saveButton = view.findViewById(R.id.saveButton)
+        loadButton = view.findViewById(R.id.loadButton)
+
         // Brush size listener
         drawingCanvas.setBrushSize(seekBar.progress.toFloat())
         seekBar.setOnTouchListener(OnTouchListener { v, event ->
@@ -86,5 +100,75 @@ class DrawingOverlay : Fragment() {
         brushModeButton.setOnClickListener(OnClickListener {
             drawingCanvas.changeBrushMode()
         })
+
+        // TEMP
+        saveButton.setOnClickListener(OnClickListener {
+            save()
+        })
+
+        loadButton.setOnClickListener(OnClickListener {
+            load()
+        })
+    }
+
+    /**
+     * Saves the bitmap of the drawing canvas to file.
+     */
+    fun save() {
+        val pictureBitmap = drawingCanvas.getBitmap() ?: return
+
+        //val path = Environment.getExternalStorageDirectory().toString() // Illegal?
+        val path = activity?.getExternalFilesDir(Environment.DIRECTORY_DCIM)
+
+        var fOut: OutputStream? = null
+        val counter = 0
+        val file = File(
+            path,
+            "canvas.PNG"
+        ) // the File to save , append increasing numeric counter to prevent files from getting overwritten.
+
+        fOut = FileOutputStream(file)
+
+        pictureBitmap.compress(
+            Bitmap.CompressFormat.PNG,
+            100,
+            fOut
+        ) // saving the Bitmap to a file compressed as a JPEG with 85% compression rate
+
+        fOut.flush() // Not really required
+        fOut.close() // do not forget to close the stream
+
+
+
+        /*try {
+            FileOutputStream("canvas.PNG").use { out ->
+                bitmap.compress(Bitmap.CompressFormat.PNG, 100, out)
+            }
+        } catch (e: IOException) {
+            e.printStackTrace()
+        }*/
+
+        /*
+        try (val out = FileOutputStream("canvas.PNG")) {
+            bitmap.compress(Bitmap.CompressFormat.PNG, 100, it)
+
+            /*context?.openFileOutput("canvas.PNG", Context.MODE_PRIVATE).use {
+                //it?.write(fileContents.toByteArray())
+                bitmap.compress(Bitmap.CompressFormat.PNG, 100, it)
+            }*/
+        } catch (e: IOException) {
+            e.printStackTrace()
+        }
+        */
+    }
+
+    /**
+     * Loads the bitmap of the drawing canvas from file.
+     */
+    fun load() {
+        //val test = context?.openFileInput("canvas.PNG")?.bufferedReader()
+        val path = activity?.getExternalFilesDir(Environment.DIRECTORY_DCIM) ?: return
+        val bitmap = BitmapFactory.decodeFile(path.absolutePath + "/canvas.PNG") ?: return
+        drawingCanvas.loadBitmap(bitmap)
     }
 }
