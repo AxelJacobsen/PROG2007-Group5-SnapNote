@@ -28,5 +28,7 @@ class NoteDisplay : AppCompatActivity() {
         noteImageDisplay = findViewById(R.id.noteBackground)
         //Set Data from parcel
         noteImageDisplay.setImageResource(actualData.menuItemThumbnail)
+
+
     }
 }

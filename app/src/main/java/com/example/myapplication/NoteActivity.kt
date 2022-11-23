@@ -8,6 +8,8 @@ import android.view.View
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
+import com.google.android.material.bottomsheet.BottomSheetBehavior
+import com.google.android.material.slider.Slider
 
 class NoteActivity : AppCompatActivity() {
 
@@ -27,15 +29,16 @@ class NoteActivity : AppCompatActivity() {
                 imageView.setImageURI(image.uri)
             }
         }
-        /*
-        private lateinit var imageView: ImageView
-        private lateinit var feedBottomSheet: ConstraintLayout
-        private lateinit var bottomSheetBehavior: BottomSheetBehavior<ConstraintLayout>
-        feedBottomSheet = findViewById(R.id.coordinatorlayout)
-        bottomSheetBehavior = BottomSheetBehavior.from(feedBottomSheet)
-        bottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED)
-        //bottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED)
-         */
+
+        // Set state of edit menu to Expanded
+        val editBottomSheet = findViewById<ConstraintLayout>(R.id.edit_bottom_sheet_layout)
+        val editBSBehavior = BottomSheetBehavior.from(editBottomSheet)
+        editBSBehavior.state = BottomSheetBehavior.STATE_EXPANDED
+
+        // Set state of widget menu to Expanded
+        val widgetBottomSheet = findViewById<ConstraintLayout>(R.id.widget_bottom_sheet_layout)
+        val widgetBSBehavior = BottomSheetBehavior.from(widgetBottomSheet)
+        widgetBSBehavior.state = BottomSheetBehavior.STATE_EXPANDED
 
         // Switches menu to widget menu
         val addWidgetButton = findViewById<ImageView>(R.id.iwMenuWidgets)
@@ -46,7 +49,7 @@ class NoteActivity : AppCompatActivity() {
             widgetMenuLayout.visibility = View.VISIBLE
         }
 
-        // define widgetlayout
+        // Define widgetlayout which we will add widgets to
         val widgetLayout = findViewById<ConstraintLayout>(R.id.widgetLayout)
         // add text
         val addTextButton = findViewById<ImageView>(R.id.iwMenuText)
@@ -71,7 +74,6 @@ class NoteActivity : AppCompatActivity() {
 
     }
 
-    @SuppressLint("SetTextI18n")
     private fun createButtonDynamically(
         mainLayout: ConstraintLayout,
         id : Int,
@@ -83,7 +85,7 @@ class NoteActivity : AppCompatActivity() {
         green: Int = 1,
         blue: Int = 1
     ) {
-        val dynamicElement: TextView?
+        var dynamicElement: TextView?
         // creating the button
         if (type == "text")
             dynamicElement = TextView(this)
@@ -91,11 +93,10 @@ class NoteActivity : AppCompatActivity() {
             dynamicElement = CheckBox(this)
         else if (type == "switch")
             dynamicElement = Switch(this)
-        else if (type == "checkbox")
-            dynamicElement = CheckBox(this)
+        else if (type == "slider")
+            dynamicElement = CalendarView(this)
         else
             dynamicElement = TextView(this)
-
 
         // setting layout_width and layout_height using layout parameters
         dynamicElement.layoutParams = LinearLayout.LayoutParams(
