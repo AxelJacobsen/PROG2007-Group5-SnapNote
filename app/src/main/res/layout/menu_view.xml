@@ -2,6 +2,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/view_bottom_sheet_layout"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -31,6 +32,16 @@
             app:srcCompat="@drawable/menu_rectangle_circle"/>
     </androidx.constraintlayout.widget.ConstraintLayout>
 
+    <HorizontalScrollView
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/view_bsl_toprow"
+        app:layout_constraintVertical_bias="0.0">
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/view_bsl_menu_items"
         android:layout_width="match_parent"
@@ -45,9 +56,10 @@
 
         <ImageView
             android:id="@+id/iwMenuEdit"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_marginEnd="25dp"
+            android:layout_width="100dp"
+            android:layout_height="80dp"
+            android:layout_margin="7dp"
+            android:padding="5dp"
             app:layout_constraintBottom_toBottomOf="@+id/iwMenuPlus"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@+id/iwMenuPlus"
@@ -57,8 +69,15 @@
             android:id="@+id/twMenuEdit"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_margin="3dp"
+            android:padding="5dp"
+            android:shadowColor="@color/black"
+            android:shadowDx="1.7"
+            android:shadowDy="1.7"
+            android:shadowRadius="2"
             android:text="@string/edit"
             android:textColor="@color/white"
+            android:textSize="18sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="@+id/iwMenuEdit"
             app:layout_constraintStart_toStartOf="@+id/iwMenuEdit"
@@ -66,31 +85,41 @@
 
 
         <ImageView
-            android:id="@+id/iwMenuBackArrow"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_marginStart="25dp"
-            app:layout_constraintBottom_toBottomOf="parent"
+            android:id="@+id/iViewMenuBackArrow"
+            android:layout_width="100dp"
+            android:layout_height="80dp"
+            android:layout_margin="7dp"
+            android:padding="5dp"
+            app:layout_constraintBottom_toBottomOf="@+id/iwMenuCheckbox"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/iwMenuPlus"
-            app:layout_constraintVertical_bias="0.0"
+            app:layout_constraintTop_toTopOf="@+id/iwMenuCheckbox"
             app:srcCompat="@drawable/menu_back_arrow" />
 
         <TextView
             android:id="@+id/twMenuBackArrow"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_margin="3dp"
+            android:padding="5dp"
+            android:shadowColor="@color/black"
+            android:shadowDx="1.7"
+            android:shadowDy="1.7"
+            android:shadowRadius="2"
             android:text="@string/back"
+            android:textColor="@color/white"
+            android:textSize="18sp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="@+id/iwMenuBackArrow"
-            app:layout_constraintStart_toStartOf="@+id/iwMenuBackArrow"
-            app:layout_constraintTop_toBottomOf="@+id/iwMenuBackArrow" />
+            app:layout_constraintEnd_toEndOf="@+id/iViewMenuBackArrow"
+            app:layout_constraintStart_toStartOf="@+id/iViewMenuBackArrow"
+            app:layout_constraintTop_toBottomOf="@+id/iViewMenuBackArrow" />
 
         <ImageView
             android:id="@+id/iwMenuSave"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            app:layout_constraintBottom_toTopOf="@+id/twMenuPlus"
+            android:layout_width="100dp"
+            android:layout_height="80dp"
+            android:layout_margin="7dp"
+            android:padding="5dp"
+            app:layout_constraintBottom_toBottomOf="@+id/iwMenuPlus"
             app:layout_constraintEnd_toStartOf="@+id/iwMenuEdit"
             app:layout_constraintStart_toEndOf="@+id/iwMenuPlus"
             app:layout_constraintTop_toTopOf="@+id/iwMenuPlus"
@@ -100,8 +129,15 @@
             android:id="@+id/twMenuSave"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_margin="3dp"
+            android:padding="5dp"
+            android:shadowColor="@color/black"
+            android:shadowDx="1.7"
+            android:shadowDy="1.7"
+            android:shadowRadius="2"
             android:text="@string/save"
             android:textColor="@color/white"
+            android:textSize="18sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="@+id/iwMenuSave"
             app:layout_constraintStart_toStartOf="@+id/iwMenuSave"
@@ -109,10 +145,10 @@
 
         <ImageView
             android:id="@+id/iwMenuPlus"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_marginBottom="10dp"
-            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_width="100dp"
+            android:layout_height="80dp"
+            android:layout_margin="7dp"
+            android:padding="5dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -122,8 +158,15 @@
             android:id="@+id/twMenuPlus"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_margin="3dp"
+            android:padding="5dp"
+            android:shadowColor="@color/black"
+            android:shadowDx="1.7"
+            android:shadowDy="1.7"
+            android:shadowRadius="2"
             android:text="@string/newPage"
             android:textColor="@color/white"
+            android:textSize="18sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="@+id/iwMenuPlus"
             app:layout_constraintStart_toStartOf="@+id/iwMenuPlus"
@@ -131,10 +174,13 @@
 
         <ImageView
             android:id="@+id/iwMenuCheckbox"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
+            android:layout_width="100dp"
+            android:layout_height="80dp"
+            android:layout_margin="7dp"
+            android:padding="5dp"
+            app:layout_constraintBottom_toBottomOf="@+id/iwMenuPlus"
             app:layout_constraintEnd_toStartOf="@+id/iwMenuPlus"
-            app:layout_constraintStart_toEndOf="@+id/iwMenuBackArrow"
+            app:layout_constraintStart_toEndOf="@+id/iViewMenuBackArrow"
             app:layout_constraintTop_toTopOf="@+id/iwMenuPlus"
             app:srcCompat="@drawable/menu_bin" />
 
@@ -142,13 +188,21 @@
             android:id="@+id/twMenu_bin"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_margin="3dp"
+            android:padding="5dp"
+            android:shadowColor="@color/black"
+            android:shadowDx="1.7"
+            android:shadowDy="1.7"
+            android:shadowRadius="2"
             android:text="@string/delete"
             android:textColor="@color/white"
+            android:textSize="18sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="@+id/iwMenuCheckbox"
             app:layout_constraintStart_toStartOf="@+id/iwMenuCheckbox"
             app:layout_constraintTop_toBottomOf="@+id/iwMenuCheckbox" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+</HorizontalScrollView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
