@@ -22,7 +22,7 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <ImageView
-            android:id="@+id/iwMenuSliderCircle"
+            android:id="@+id/ivMenuSliderCircle"
             android:layout_width="50dp"
             android:layout_height="30dp"
             app:layout_constraintEnd_toEndOf="parent"
@@ -49,22 +49,22 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/iwMenuSliderCircle"
+            app:layout_constraintTop_toBottomOf="@+id/ivMenuSliderCircle"
             app:srcCompat="@drawable/placeholder">
 
             <ImageView
-                android:id="@+id/iEditMenuBackArrow"
+                android:id="@+id/ivEditMenuBackArrow"
                 android:layout_width="100dp"
                 android:layout_height="80dp"
                 android:layout_margin="7dp"
                 android:padding="5dp"
-                app:layout_constraintBottom_toBottomOf="@+id/iwMenuDraw"
+                app:layout_constraintBottom_toBottomOf="@+id/ivMenuDraw"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/iwMenuDraw"
+                app:layout_constraintTop_toTopOf="@+id/ivMenuDraw"
                 app:srcCompat="@drawable/menu_back_arrow" />
 
             <TextView
-                android:id="@+id/twMenuBackArrow"
+                android:id="@+id/tvMenuBackArrow2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="3dp"
@@ -77,22 +77,22 @@
                 android:textColor="@color/white"
                 android:textSize="18sp"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="@+id/iEditMenuBackArrow"
-                app:layout_constraintStart_toStartOf="@+id/iEditMenuBackArrow"
-                app:layout_constraintTop_toBottomOf="@+id/iEditMenuBackArrow" />
+                app:layout_constraintEnd_toEndOf="@+id/ivEditMenuBackArrow"
+                app:layout_constraintStart_toStartOf="@+id/ivEditMenuBackArrow"
+                app:layout_constraintTop_toBottomOf="@+id/ivEditMenuBackArrow" />
 
             <ImageView
-                android:id="@+id/iwMenuDraw"
+                android:id="@+id/ivMenuDraw"
                 android:layout_width="100dp"
                 android:layout_height="80dp"
                 android:layout_margin="7dp"
                 android:padding="5dp"
-                app:layout_constraintStart_toEndOf="@+id/iEditMenuBackArrow"
+                app:layout_constraintStart_toEndOf="@+id/ivEditMenuBackArrow"
                 app:layout_constraintTop_toTopOf="parent"
                 app:srcCompat="@drawable/menu_draw" />
 
             <TextView
-                android:id="@+id/twMenuDraw"
+                android:id="@+id/tvMenuDraw"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="3dp"
@@ -105,23 +105,23 @@
                 android:textColor="@color/white"
                 android:textSize="18sp"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="@+id/iwMenuDraw"
-                app:layout_constraintStart_toStartOf="@+id/iwMenuDraw"
-                app:layout_constraintTop_toBottomOf="@+id/iwMenuDraw" />
+                app:layout_constraintEnd_toEndOf="@+id/ivMenuDraw"
+                app:layout_constraintStart_toStartOf="@+id/ivMenuDraw"
+                app:layout_constraintTop_toBottomOf="@+id/ivMenuDraw" />
 
             <ImageView
-                android:id="@+id/iwMenuWidgets"
+                android:id="@+id/ivMenuWidgets"
                 android:layout_width="100dp"
                 android:layout_height="80dp"
                 android:layout_margin="7dp"
                 android:padding="5dp"
-                app:layout_constraintBottom_toBottomOf="@+id/iwMenuDraw"
-                app:layout_constraintStart_toEndOf="@+id/iwMenuDraw"
-                app:layout_constraintTop_toTopOf="@+id/iwMenuDraw"
+                app:layout_constraintBottom_toBottomOf="@+id/ivMenuDraw"
+                app:layout_constraintStart_toEndOf="@+id/ivMenuDraw"
+                app:layout_constraintTop_toTopOf="@+id/ivMenuDraw"
                 app:srcCompat="@drawable/menu_widgets" />
 
             <TextView
-                android:id="@+id/twMenuWidgets"
+                android:id="@+id/tvMenuWidgets"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="3dp"
@@ -134,25 +134,25 @@
                 android:textColor="@color/white"
                 android:textSize="18sp"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="@+id/iwMenuWidgets"
-                app:layout_constraintStart_toStartOf="@+id/iwMenuWidgets"
-                app:layout_constraintTop_toBottomOf="@+id/iwMenuWidgets" />
+                app:layout_constraintEnd_toEndOf="@+id/ivMenuWidgets"
+                app:layout_constraintStart_toStartOf="@+id/ivMenuWidgets"
+                app:layout_constraintTop_toBottomOf="@+id/ivMenuWidgets" />
 
             <ImageView
-                android:id="@+id/iwMenuImage"
+                android:id="@+id/ivMenuImage"
                 android:layout_width="100dp"
                 android:layout_height="80dp"
                 android:layout_margin="7dp"
                 android:padding="5dp"
-                app:layout_constraintBottom_toBottomOf="@+id/iwMenuDraw"
+                app:layout_constraintBottom_toBottomOf="@+id/ivMenuDraw"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toEndOf="@+id/iwMenuWidgets"
-                app:layout_constraintTop_toTopOf="@+id/iwMenuDraw"
+                app:layout_constraintStart_toEndOf="@+id/ivMenuWidgets"
+                app:layout_constraintTop_toTopOf="@+id/ivMenuDraw"
                 app:srcCompat="@drawable/menu_image" />
 
             <TextView
-                android:id="@+id/twMenuImage"
+                android:id="@+id/tvMenuImage"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="3dp"
@@ -165,23 +165,23 @@
                 android:textColor="@color/white"
                 android:textSize="18sp"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="@+id/iwMenuImage"
-                app:layout_constraintStart_toStartOf="@+id/iwMenuImage"
-                app:layout_constraintTop_toBottomOf="@+id/iwMenuImage" />
+                app:layout_constraintEnd_toEndOf="@+id/ivMenuImage"
+                app:layout_constraintStart_toStartOf="@+id/ivMenuImage"
+                app:layout_constraintTop_toBottomOf="@+id/ivMenuImage" />
 
             <ImageView
-                android:id="@+id/iwMenuText"
+                android:id="@+id/ivMenuText"
                 android:layout_width="100dp"
                 android:layout_height="80dp"
                 android:layout_margin="7dp"
                 android:padding="5dp"
-                app:layout_constraintBottom_toBottomOf="@+id/iwMenuDraw"
-                app:layout_constraintStart_toEndOf="@+id/iwMenuImage"
-                app:layout_constraintTop_toTopOf="@+id/iwMenuDraw"
+                app:layout_constraintBottom_toBottomOf="@+id/ivMenuDraw"
+                app:layout_constraintStart_toEndOf="@+id/ivMenuImage"
+                app:layout_constraintTop_toTopOf="@+id/ivMenuDraw"
                 app:srcCompat="@drawable/menu_text" />
 
             <TextView
-                android:id="@+id/twMenuText"
+                android:id="@+id/tvMenuText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="3dp"
@@ -194,23 +194,23 @@
                 android:textColor="@color/white"
                 android:textSize="18sp"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="@+id/iwMenuText"
-                app:layout_constraintStart_toEndOf="@+id/iwMenuImage"
-                app:layout_constraintTop_toBottomOf="@+id/iwMenuWidgets" />
+                app:layout_constraintEnd_toEndOf="@+id/ivMenuText"
+                app:layout_constraintStart_toEndOf="@+id/ivMenuImage"
+                app:layout_constraintTop_toBottomOf="@+id/ivMenuWidgets" />
 
             <ImageView
-                android:id="@+id/twMenuEditItem"
+                android:id="@+id/tvMenuEditItem"
                 android:layout_width="100dp"
                 android:layout_height="80dp"
                 android:layout_margin="7dp"
                 android:padding="5dp"
-                app:layout_constraintBottom_toBottomOf="@+id/iwMenuDraw"
-                app:layout_constraintStart_toEndOf="@+id/iwMenuText"
-                app:layout_constraintTop_toTopOf="@+id/iwMenuDraw"
+                app:layout_constraintBottom_toBottomOf="@+id/ivMenuDraw"
+                app:layout_constraintStart_toEndOf="@+id/ivMenuText"
+                app:layout_constraintTop_toTopOf="@+id/ivMenuDraw"
                 app:srcCompat="@drawable/menu_bin" />
 
             <TextView
-                android:id="@+id/iwMenuEditItem"
+                android:id="@+id/ivMenuEditItem"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="3dp"
@@ -223,23 +223,23 @@
                 android:textColor="@color/white"
                 android:textSize="18sp"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="@+id/twMenuEditItem"
-                app:layout_constraintStart_toStartOf="@+id/twMenuEditItem"
-                app:layout_constraintTop_toBottomOf="@+id/iwMenuWidgets" />
+                app:layout_constraintEnd_toEndOf="@+id/tvMenuEditItem"
+                app:layout_constraintStart_toStartOf="@+id/tvMenuEditItem"
+                app:layout_constraintTop_toBottomOf="@+id/ivMenuWidgets" />
 
             <ImageView
-                android:id="@+id/iwMenuCut"
+                android:id="@+id/ivMenuCut"
                 android:layout_width="100dp"
                 android:layout_height="80dp"
                 android:layout_margin="7dp"
                 android:padding="5dp"
-                app:layout_constraintBottom_toBottomOf="@+id/iwMenuDraw"
-                app:layout_constraintStart_toEndOf="@+id/twMenuEditItem"
-                app:layout_constraintTop_toTopOf="@+id/iwMenuDraw"
+                app:layout_constraintBottom_toBottomOf="@+id/ivMenuDraw"
+                app:layout_constraintStart_toEndOf="@+id/tvMenuEditItem"
+                app:layout_constraintTop_toTopOf="@+id/ivMenuDraw"
                 app:srcCompat="@drawable/menu_bin" />
 
             <TextView
-                android:id="@+id/twMenuCut"
+                android:id="@+id/tvMenuCut"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="3dp"
@@ -253,8 +253,8 @@
                 android:textSize="18sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/twMenuEditItem"
-                app:layout_constraintTop_toBottomOf="@+id/iwMenuWidgets" />
+                app:layout_constraintStart_toEndOf="@+id/tvMenuEditItem"
+                app:layout_constraintTop_toBottomOf="@+id/ivMenuWidgets" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </HorizontalScrollView>

@@ -20,7 +20,7 @@
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/coordinatorlayout3">
+        android:id="@+id/viewMenuCoordLayout">
         <include layout="@layout/menu_view"/>
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
@@ -28,14 +28,14 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:visibility="gone"
-        android:id="@+id/coordinatorlayout">
+        android:id="@+id/editMenuCoordLayout">
         <include layout="@layout/menu_edit"/>
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/coordinatorlayout2"
+        android:id="@+id/widgetMenuCoordLayout"
         android:visibility="gone">
         <include layout="@layout/menu_widgets"/>
     </androidx.coordinatorlayout.widget.CoordinatorLayout>

@@ -1,6 +1,5 @@
 package com.example.myapplication
 
-import android.annotation.SuppressLint
 import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.GradientDrawable
@@ -10,7 +9,6 @@ import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
 import com.google.android.material.bottomsheet.BottomSheetBehavior
-import com.google.android.material.slider.Slider
 
 class NoteActivity : AppCompatActivity() {
 
@@ -31,6 +29,11 @@ class NoteActivity : AppCompatActivity() {
             }
         }
 
+        // Set state of widget menu to Expanded
+        val viewBottomSheet = findViewById<ConstraintLayout>(R.id.view_bottom_sheet_layout)
+        val viewBSBehavior = BottomSheetBehavior.from(viewBottomSheet)
+        viewBSBehavior.state = BottomSheetBehavior.STATE_EXPANDED
+
         // Set state of edit menu to Expanded
         val editBottomSheet = findViewById<ConstraintLayout>(R.id.edit_bottom_sheet_layout)
         val editBSBehavior = BottomSheetBehavior.from(editBottomSheet)
@@ -42,22 +45,21 @@ class NoteActivity : AppCompatActivity() {
         widgetBSBehavior.state = BottomSheetBehavior.STATE_EXPANDED
 
         // Switches menu to widget menu
-        val addWidgetButton = findViewById<ImageView>(R.id.iwMenuWidgets)
-        val returnToMainMenuButton = findViewById<ImageView>(R.id.iViewMenuBackArrow)
-        val returnToEditButton  = findViewById<ImageView>(R.id.iWidgetMenuBackArrow)
-        val returnToViewButton = findViewById<ImageView>(R.id.iEditMenuBackArrow)
-        val openEditMenu = findViewById<ImageView>(R.id.iwMenuEdit)
-        val menu_view = findViewById<View>(R.id.coordinatorlayout3)
-        val editMenuLayout = findViewById<View>(R.id.coordinatorlayout)
-        val widgetMenuLayout = findViewById<View>(R.id.coordinatorlayout2)
+        val addWidgetButton = findViewById<ImageView>(R.id.ivMenuWidgets)
+        val returnToMainMenuButton = findViewById<ImageView>(R.id.ivMenuBackArrow)
+        val returnToEditButton  = findViewById<ImageView>(R.id.ivWidgetMenuBackArrow)
+        val returnToViewButton = findViewById<ImageView>(R.id.ivEditMenuBackArrow)
+        val openEditMenu = findViewById<ImageView>(R.id.ivMenuEdit)
+        val menu_view = findViewById<View>(R.id.viewMenuCoordLayout)
+        val editMenuLayout = findViewById<View>(R.id.editMenuCoordLayout)
+        val widgetMenuLayout = findViewById<View>(R.id.widgetMenuCoordLayout)
 
         //Returns the user to the main menu
         returnToMainMenuButton.setOnClickListener {
             editMenuLayout.visibility = View.GONE
             widgetMenuLayout.visibility = View.GONE
             menu_view.visibility = View.GONE
-            //
-            //SaveWidgets()
+            // TODO: SaveWidgets()
             startActivity(Intent(this, MenuActivity::class.java))
         }
 
@@ -88,22 +90,26 @@ class NoteActivity : AppCompatActivity() {
         // Define widgetlayout which we will add widgets to
         val widgetLayout = findViewById<ConstraintLayout>(R.id.widgetLayout)
         // add text
-        val addTextButton = findViewById<ImageView>(R.id.iwMenuText)
+        val addTextButton = findViewById<ImageView>(R.id.ivMenuText)
         addTextButton.setOnClickListener {
             createButtonDynamically(widgetLayout, 0, "text", 500.0f, 300.0f, "Dynamic Text")
         }
+
         // add checkbox
-        val addCbButton = findViewById<ImageView>(R.id.iwMenuCheckbox)
+        val addCbButton = findViewById<ImageView>(R.id.ivMenuCheckbox)
         addCbButton.setOnClickListener {
+            println("widgeecheckboxcheckboxcheckboxcheckboxeeeeet")
             createButtonDynamically(widgetLayout, 0, "checkbox", 500.0f, 300.0f, "Dynamic Text")
         }
+
         // add switch
-        val addSwitchButton = findViewById<ImageView>(R.id.iwMenuSwitch)
+        val addSwitchButton = findViewById<ImageView>(R.id.ivMenuSwitch)
         addSwitchButton.setOnClickListener {
             createButtonDynamically(widgetLayout, 0, "switch", 300.0f, 500.0f)
         }
+
         // add switch
-        val addSwitchButton2 = findViewById<ImageView>(R.id.iwMenuSliderCircle)
+        val addSwitchButton2 = findViewById<ImageView>(R.id.ivMenuSliderCircle)
         addSwitchButton2.setOnClickListener {
             createButtonDynamically(widgetLayout, 0, "switch", 500.0f, 300.0f, "Dynamic Text")
         }
@@ -124,12 +130,11 @@ class NoteActivity : AppCompatActivity() {
         // creating the button
         if (type == "text")
             dynamicElement = TextView(this)
-        else if (type == "checkbox")
+        else if (type == "checkbox") {
+            println("checkbox")
             dynamicElement = CheckBox(this)
-        else if (type == "switch")
+        } else if (type == "switch")
             dynamicElement = Switch(this)
-        else if (type == "slider")
-            dynamicElement = CalendarView(this)
         else
             dynamicElement = TextView(this)
 
@@ -138,10 +143,11 @@ class NoteActivity : AppCompatActivity() {
             LinearLayout.LayoutParams.WRAP_CONTENT,
             LinearLayout.LayoutParams.WRAP_CONTENT,
         )
-        dynamicElement.x = posx
-        dynamicElement.y = posy
         if (text != "")
             dynamicElement.text = text
+
+        dynamicElement.x = posx
+        dynamicElement.y = posy
         dynamicElement.id = id
 
         val radius = 15

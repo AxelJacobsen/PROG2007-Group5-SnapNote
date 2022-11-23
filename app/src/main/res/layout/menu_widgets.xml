@@ -22,7 +22,7 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <ImageView
-            android:id="@+id/iwMenuSliderCircle"
+            android:id="@+id/ivMenuSliderCircle"
             android:layout_width="50dp"
             android:layout_height="30dp"
             app:layout_constraintEnd_toEndOf="parent"
@@ -50,22 +50,22 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/iwMenuSliderCircle"
+            app:layout_constraintTop_toBottomOf="@+id/ivMenuSliderCircle"
             app:srcCompat="@drawable/placeholder">
 
             <ImageView
-                android:id="@+id/iWidgetMenuBackArrow"
+                android:id="@+id/ivWidgetMenuBackArrow"
                 android:layout_width="100dp"
                 android:layout_height="80dp"
                 android:layout_margin="7dp"
                 android:padding="5dp"
-                app:layout_constraintBottom_toBottomOf="@+id/iwMenuCheckbox"
+                app:layout_constraintBottom_toBottomOf="@+id/ivMenuCheckbox"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/iwMenuCheckbox"
+                app:layout_constraintTop_toTopOf="@+id/ivMenuCheckbox"
                 app:srcCompat="@drawable/menu_back_arrow" />
 
             <TextView
-                android:id="@+id/twMenuBackArrow"
+                android:id="@+id/tvMenuBackArrow3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="3dp"
@@ -78,23 +78,23 @@
                 android:textColor="@color/white"
                 android:textSize="18sp"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="@+id/iWidgetMenuBackArrow"
-                app:layout_constraintStart_toStartOf="@+id/iWidgetMenuBackArrow"
-                app:layout_constraintTop_toBottomOf="@+id/iWidgetMenuBackArrow" />
+                app:layout_constraintEnd_toEndOf="@+id/ivWidgetMenuBackArrow"
+                app:layout_constraintStart_toStartOf="@+id/ivWidgetMenuBackArrow"
+                app:layout_constraintTop_toBottomOf="@+id/ivWidgetMenuBackArrow" />
 
 
             <ImageView
-                android:id="@+id/iwMenuCheckbox"
+                android:id="@+id/ivMenuCheckbox"
                 android:layout_width="100dp"
                 android:layout_height="80dp"
                 android:layout_margin="7dp"
                 android:padding="5dp"
-                app:layout_constraintStart_toEndOf="@+id/iWidgetMenuBackArrow"
+                app:layout_constraintStart_toEndOf="@+id/ivWidgetMenuBackArrow"
                 app:layout_constraintTop_toTopOf="parent"
                 app:srcCompat="@drawable/menu_checkbox" />
 
             <TextView
-                android:id="@+id/twMenuCheckbox"
+                android:id="@+id/tvMenuCheckbox"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="3dp"
@@ -107,23 +107,23 @@
                 android:textColor="@color/white"
                 android:textSize="18sp"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="@+id/iwMenuCheckbox"
-                app:layout_constraintStart_toStartOf="@+id/iwMenuCheckbox"
-                app:layout_constraintTop_toBottomOf="@+id/iwMenuCheckbox" />
+                app:layout_constraintEnd_toEndOf="@+id/ivMenuCheckbox"
+                app:layout_constraintStart_toStartOf="@+id/ivMenuCheckbox"
+                app:layout_constraintTop_toBottomOf="@+id/ivMenuCheckbox" />
 
             <ImageView
-                android:id="@+id/iwMenuSwitch"
+                android:id="@+id/ivMenuSwitch"
                 android:layout_width="100dp"
                 android:layout_height="80dp"
                 android:layout_margin="7dp"
                 android:padding="5dp"
-                app:layout_constraintBottom_toBottomOf="@+id/iwMenuCheckbox"
-                app:layout_constraintStart_toEndOf="@+id/iwMenuCheckbox"
-                app:layout_constraintTop_toTopOf="@+id/iwMenuCheckbox"
+                app:layout_constraintBottom_toBottomOf="@+id/ivMenuCheckbox"
+                app:layout_constraintStart_toEndOf="@+id/ivMenuCheckbox"
+                app:layout_constraintTop_toTopOf="@+id/ivMenuCheckbox"
                 app:srcCompat="@drawable/menu_switches" />
 
             <TextView
-                android:id="@+id/twMenuSwitch"
+                android:id="@+id/tvMenuSwitch"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="3dp"
@@ -136,25 +136,25 @@
                 android:textColor="@color/white"
                 android:textSize="18sp"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="@+id/iwMenuSwitch"
-                app:layout_constraintStart_toStartOf="@+id/iwMenuSwitch"
-                app:layout_constraintTop_toBottomOf="@+id/iwMenuSwitch" />
+                app:layout_constraintEnd_toEndOf="@+id/ivMenuSwitch"
+                app:layout_constraintStart_toStartOf="@+id/ivMenuSwitch"
+                app:layout_constraintTop_toBottomOf="@+id/ivMenuSwitch" />
 
             <ImageView
-                android:id="@+id/iwMenuImage2"
+                android:id="@+id/ivMenuImage2"
                 android:layout_width="100dp"
                 android:layout_height="80dp"
                 android:layout_margin="7dp"
                 android:padding="5dp"
-                app:layout_constraintBottom_toBottomOf="@+id/iwMenuCheckbox"
+                app:layout_constraintBottom_toBottomOf="@+id/ivMenuCheckbox"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toEndOf="@+id/iwMenuSwitch"
-                app:layout_constraintTop_toTopOf="@+id/iwMenuCheckbox"
+                app:layout_constraintStart_toEndOf="@+id/ivMenuSwitch"
+                app:layout_constraintTop_toTopOf="@+id/ivMenuCheckbox"
                 app:srcCompat="@drawable/menu_image" />
 
             <TextView
-                android:id="@+id/twMenuImage"
+                android:id="@+id/tvMenuImage2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="3dp"
@@ -167,9 +167,9 @@
                 android:textColor="@color/white"
                 android:textSize="18sp"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="@+id/iwMenuImage2"
-                app:layout_constraintStart_toStartOf="@+id/iwMenuImage2"
-                app:layout_constraintTop_toBottomOf="@+id/iwMenuImage2" />
+                app:layout_constraintEnd_toEndOf="@+id/ivMenuImage2"
+                app:layout_constraintStart_toStartOf="@+id/ivMenuImage2"
+                app:layout_constraintTop_toBottomOf="@+id/ivMenuImage2" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
