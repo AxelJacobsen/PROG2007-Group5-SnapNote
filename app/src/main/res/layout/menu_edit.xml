@@ -1,0 +1,261 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/edit_bottom_sheet_layout"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/menu_background"
+    android:orientation="vertical"
+    app:behavior_hideable="false"
+    app:behavior_peekHeight="30dp"
+    app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/edit_bsl_top_row"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/menu_background_dark"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/ivMenuSliderCircle"
+            android:layout_width="50dp"
+            android:layout_height="30dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/menu_rectangle_circle" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <HorizontalScrollView
+        android:id="@+id/horizontalScrollView"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/edit_bsl_top_row"
+        app:layout_constraintVertical_bias="0.0">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/edit_bsl_menu_items"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/ivMenuSliderCircle"
+            app:srcCompat="@drawable/placeholder">
+
+            <ImageView
+                android:id="@+id/ivEditMenuBackArrow"
+                android:layout_width="100dp"
+                android:layout_height="80dp"
+                android:layout_margin="7dp"
+                android:padding="5dp"
+                app:layout_constraintBottom_toBottomOf="@+id/ivMenuDraw"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/ivMenuDraw"
+                app:srcCompat="@drawable/menu_back_arrow" />
+
+            <TextView
+                android:id="@+id/tvMenuBackArrow2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="3dp"
+                android:padding="5dp"
+                android:shadowColor="@color/black"
+                android:shadowDx="1.7"
+                android:shadowDy="1.7"
+                android:shadowRadius="2"
+                android:text="@string/back"
+                android:textColor="@color/white"
+                android:textSize="18sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="@+id/ivEditMenuBackArrow"
+                app:layout_constraintStart_toStartOf="@+id/ivEditMenuBackArrow"
+                app:layout_constraintTop_toBottomOf="@+id/ivEditMenuBackArrow" />
+
+            <ImageView
+                android:id="@+id/ivMenuDraw"
+                android:layout_width="100dp"
+                android:layout_height="80dp"
+                android:layout_margin="7dp"
+                android:padding="5dp"
+                app:layout_constraintStart_toEndOf="@+id/ivEditMenuBackArrow"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/menu_draw" />
+
+            <TextView
+                android:id="@+id/tvMenuDraw"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="3dp"
+                android:padding="5dp"
+                android:shadowColor="@color/black"
+                android:shadowDx="1.7"
+                android:shadowDy="1.7"
+                android:shadowRadius="2"
+                android:text="@string/draw"
+                android:textColor="@color/white"
+                android:textSize="18sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="@+id/ivMenuDraw"
+                app:layout_constraintStart_toStartOf="@+id/ivMenuDraw"
+                app:layout_constraintTop_toBottomOf="@+id/ivMenuDraw" />
+
+            <ImageView
+                android:id="@+id/ivMenuWidgets"
+                android:layout_width="100dp"
+                android:layout_height="80dp"
+                android:layout_margin="7dp"
+                android:padding="5dp"
+                app:layout_constraintBottom_toBottomOf="@+id/ivMenuDraw"
+                app:layout_constraintStart_toEndOf="@+id/ivMenuDraw"
+                app:layout_constraintTop_toTopOf="@+id/ivMenuDraw"
+                app:srcCompat="@drawable/menu_widgets" />
+
+            <TextView
+                android:id="@+id/tvMenuWidgets"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="3dp"
+                android:padding="5dp"
+                android:shadowColor="@color/black"
+                android:shadowDx="1.7"
+                android:shadowDy="1.7"
+                android:shadowRadius="2"
+                android:text="@string/widgets"
+                android:textColor="@color/white"
+                android:textSize="18sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="@+id/ivMenuWidgets"
+                app:layout_constraintStart_toStartOf="@+id/ivMenuWidgets"
+                app:layout_constraintTop_toBottomOf="@+id/ivMenuWidgets" />
+
+            <ImageView
+                android:id="@+id/ivMenuImage"
+                android:layout_width="100dp"
+                android:layout_height="80dp"
+                android:layout_margin="7dp"
+                android:padding="5dp"
+                app:layout_constraintBottom_toBottomOf="@+id/ivMenuDraw"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toEndOf="@+id/ivMenuWidgets"
+                app:layout_constraintTop_toTopOf="@+id/ivMenuDraw"
+                app:srcCompat="@drawable/menu_image" />
+
+            <TextView
+                android:id="@+id/tvMenuImage"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="3dp"
+                android:padding="5dp"
+                android:shadowColor="@color/black"
+                android:shadowDx="1.7"
+                android:shadowDy="1.7"
+                android:shadowRadius="2"
+                android:text="@string/image"
+                android:textColor="@color/white"
+                android:textSize="18sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="@+id/ivMenuImage"
+                app:layout_constraintStart_toStartOf="@+id/ivMenuImage"
+                app:layout_constraintTop_toBottomOf="@+id/ivMenuImage" />
+
+            <ImageView
+                android:id="@+id/ivMenuText"
+                android:layout_width="100dp"
+                android:layout_height="80dp"
+                android:layout_margin="7dp"
+                android:padding="5dp"
+                app:layout_constraintBottom_toBottomOf="@+id/ivMenuDraw"
+                app:layout_constraintStart_toEndOf="@+id/ivMenuImage"
+                app:layout_constraintTop_toTopOf="@+id/ivMenuDraw"
+                app:srcCompat="@drawable/menu_text" />
+
+            <TextView
+                android:id="@+id/tvMenuText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="3dp"
+                android:padding="5dp"
+                android:shadowColor="@color/black"
+                android:shadowDx="1.7"
+                android:shadowDy="1.7"
+                android:shadowRadius="2"
+                android:text="@string/text"
+                android:textColor="@color/white"
+                android:textSize="18sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="@+id/ivMenuText"
+                app:layout_constraintStart_toEndOf="@+id/ivMenuImage"
+                app:layout_constraintTop_toBottomOf="@+id/ivMenuWidgets" />
+
+            <ImageView
+                android:id="@+id/tvMenuEditItem"
+                android:layout_width="100dp"
+                android:layout_height="80dp"
+                android:layout_margin="7dp"
+                android:padding="5dp"
+                app:layout_constraintBottom_toBottomOf="@+id/ivMenuDraw"
+                app:layout_constraintStart_toEndOf="@+id/ivMenuText"
+                app:layout_constraintTop_toTopOf="@+id/ivMenuDraw"
+                app:srcCompat="@drawable/menu_bin" />
+
+            <TextView
+                android:id="@+id/ivMenuEditItem"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="3dp"
+                android:padding="5dp"
+                android:shadowColor="@color/black"
+                android:shadowDx="1.7"
+                android:shadowDy="1.7"
+                android:shadowRadius="2"
+                android:text="@string/editItem"
+                android:textColor="@color/white"
+                android:textSize="18sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="@+id/tvMenuEditItem"
+                app:layout_constraintStart_toStartOf="@+id/tvMenuEditItem"
+                app:layout_constraintTop_toBottomOf="@+id/ivMenuWidgets" />
+
+            <ImageView
+                android:id="@+id/ivMenuCut"
+                android:layout_width="100dp"
+                android:layout_height="80dp"
+                android:layout_margin="7dp"
+                android:padding="5dp"
+                app:layout_constraintBottom_toBottomOf="@+id/ivMenuDraw"
+                app:layout_constraintStart_toEndOf="@+id/tvMenuEditItem"
+                app:layout_constraintTop_toTopOf="@+id/ivMenuDraw"
+                app:srcCompat="@drawable/menu_bin" />
+
+            <TextView
+                android:id="@+id/tvMenuCut"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="3dp"
+                android:padding="5dp"
+                android:shadowColor="@color/black"
+                android:shadowDx="1.7"
+                android:shadowDy="1.7"
+                android:shadowRadius="2"
+                android:text="@string/cut"
+                android:textColor="@color/white"
+                android:textSize="18sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/tvMenuEditItem"
+                app:layout_constraintTop_toBottomOf="@+id/ivMenuWidgets" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </HorizontalScrollView>
+</androidx.constraintlayout.widget.ConstraintLayout>
