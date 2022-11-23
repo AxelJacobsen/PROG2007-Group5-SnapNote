@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".DrawingOverlay">
+
+    <com.example.myapplication.DrawingCanvas
+        android:id="@+id/drawingCanvas"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent" />
+
+    <SeekBar
+        android:id="@+id/seekBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:max="@integer/seekBarMax"
+        android:min="@integer/seekBarMin"
+        android:progress="@integer/seekBarMin"
+        android:progressDrawable="@drawable/seekbar"
+        android:secondaryProgress="0"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:layout_editor_absoluteX="60dp" />
+
+    <ImageButton
+        android:id="@+id/undoButton"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_margin="250dp"
+        android:contentDescription="undo button"
+        android:scaleType="fitXY"
+        android:src="@drawable/undo" />
+
+    <ImageButton
+        android:id="@+id/saveButton"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_margin="50dp"
+        android:contentDescription="undo button"
+        android:scaleType="fitXY"
+        android:src="@drawable/ic_launcher_background" />
+
+    <ImageButton
+        android:id="@+id/loadButton"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_margin="15dp"
+        android:contentDescription="undo button"
+        android:scaleType="fitXY"
+        android:src="@drawable/ic_launcher_background" />
+
+    <ImageButton
+        android:id="@+id/brushModeButton"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_margin="200dp"
+        android:contentDescription="change brush mode button"
+        android:scaleType="fitXY"
+        android:src="@drawable/eraser" />
+
+</FrameLayout>

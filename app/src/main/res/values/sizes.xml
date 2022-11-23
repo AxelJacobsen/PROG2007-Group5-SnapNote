@@ -1,0 +1,4 @@
+<resources>
+    <integer name="seekBarMin">1</integer>
+    <integer name="seekBarMax">30</integer>
+</resources>
