@@ -1,6 +1,7 @@
 package com.example.myapplication
 
 import android.annotation.SuppressLint
+import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.GradientDrawable
 import android.os.Bundle
@@ -42,11 +43,46 @@ class NoteActivity : AppCompatActivity() {
 
         // Switches menu to widget menu
         val addWidgetButton = findViewById<ImageView>(R.id.iwMenuWidgets)
+        val returnToMainMenuButton = findViewById<ImageView>(R.id.iViewMenuBackArrow)
+        val returnToEditButton  = findViewById<ImageView>(R.id.iWidgetMenuBackArrow)
+        val returnToViewButton = findViewById<ImageView>(R.id.iEditMenuBackArrow)
+        val openEditMenu = findViewById<ImageView>(R.id.iwMenuEdit)
+        val menu_view = findViewById<View>(R.id.coordinatorlayout3)
         val editMenuLayout = findViewById<View>(R.id.coordinatorlayout)
         val widgetMenuLayout = findViewById<View>(R.id.coordinatorlayout2)
+
+        //Returns the user to the main menu
+        returnToMainMenuButton.setOnClickListener {
+            editMenuLayout.visibility = View.GONE
+            widgetMenuLayout.visibility = View.GONE
+            menu_view.visibility = View.GONE
+            //
+            //SaveWidgets()
+            startActivity(Intent(this, MenuActivity::class.java))
+        }
+
+        returnToViewButton.setOnClickListener {
+            editMenuLayout.visibility = View.GONE
+            widgetMenuLayout.visibility = View.GONE
+            menu_view.visibility = View.VISIBLE
+        }
+
+        returnToEditButton.setOnClickListener {
+            editMenuLayout.visibility = View.VISIBLE
+            widgetMenuLayout.visibility = View.GONE
+            menu_view.visibility = View.GONE
+        }
+
+        openEditMenu.setOnClickListener {
+            editMenuLayout.visibility = View.VISIBLE
+            widgetMenuLayout.visibility = View.GONE
+            menu_view.visibility = View.GONE
+        }
+
         addWidgetButton.setOnClickListener {
             editMenuLayout.visibility = View.GONE
             widgetMenuLayout.visibility = View.VISIBLE
+            menu_view.visibility = View.GONE
         }
 
         // Define widgetlayout which we will add widgets to
@@ -71,7 +107,6 @@ class NoteActivity : AppCompatActivity() {
         addSwitchButton2.setOnClickListener {
             createButtonDynamically(widgetLayout, 0, "switch", 500.0f, 300.0f, "Dynamic Text")
         }
-
     }
 
     private fun createButtonDynamically(
