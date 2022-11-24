@@ -207,10 +207,39 @@
                 app:layout_constraintBottom_toBottomOf="@+id/ivMenuDraw"
                 app:layout_constraintStart_toEndOf="@+id/ivMenuText"
                 app:layout_constraintTop_toTopOf="@+id/ivMenuDraw"
-                app:srcCompat="@drawable/menu_bin" />
+                app:srcCompat="@drawable/menu_edit" />
 
             <TextView
                 android:id="@+id/ivMenuEditItem"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="3dp"
+                android:padding="5dp"
+                android:shadowColor="@color/black"
+                android:shadowDx="1.7"
+                android:shadowDy="1.7"
+                android:shadowRadius="2"
+                android:text="@string/toggleFit"
+                android:textColor="@color/white"
+                android:textSize="18sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="@+id/ivEditToggleScreen"
+                app:layout_constraintStart_toStartOf="@+id/ivEditToggleScreen"
+                app:layout_constraintTop_toBottomOf="@+id/ivMenuWidgets" />
+
+            <ImageView
+                android:id="@+id/ivEditToggleScreen"
+                android:layout_width="100dp"
+                android:layout_height="80dp"
+                android:layout_margin="7dp"
+                android:padding="5dp"
+                app:layout_constraintBottom_toBottomOf="@+id/ivMenuDraw"
+                app:layout_constraintStart_toEndOf="@+id/tvMenuEditItem"
+                app:layout_constraintTop_toTopOf="@+id/ivMenuDraw"
+                app:srcCompat="@drawable/menu_toggle_fit" />
+
+            <TextView
+                android:id="@+id/tvEditToggleScreenFit"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="3dp"
@@ -225,7 +254,7 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="@+id/tvMenuEditItem"
                 app:layout_constraintStart_toStartOf="@+id/tvMenuEditItem"
-                app:layout_constraintTop_toBottomOf="@+id/ivMenuWidgets" />
+                app:layout_constraintTop_toBottomOf="@+id/ivEditToggleScreen" />
 
             <ImageView
                 android:id="@+id/ivMenuCut"
@@ -234,7 +263,7 @@
                 android:layout_margin="7dp"
                 android:padding="5dp"
                 app:layout_constraintBottom_toBottomOf="@+id/ivMenuDraw"
-                app:layout_constraintStart_toEndOf="@+id/tvMenuEditItem"
+                app:layout_constraintStart_toEndOf="@+id/ivEditToggleScreen"
                 app:layout_constraintTop_toTopOf="@+id/ivMenuDraw"
                 app:srcCompat="@drawable/menu_bin" />
 
@@ -253,7 +282,7 @@
                 android:textSize="18sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/tvMenuEditItem"
+                app:layout_constraintStart_toStartOf="@+id/ivMenuCut"
                 app:layout_constraintTop_toBottomOf="@+id/ivMenuWidgets" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>

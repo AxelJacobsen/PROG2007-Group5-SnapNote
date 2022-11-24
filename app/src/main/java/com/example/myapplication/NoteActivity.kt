@@ -54,6 +54,8 @@ class NoteActivity : AppCompatActivity() {
         val editMenuLayout = findViewById<View>(R.id.editMenuCoordLayout)
         val widgetMenuLayout = findViewById<View>(R.id.widgetMenuCoordLayout)
 
+        val toggleScreenFit = findViewById<View>(R.id.ivEditToggleScreen)
+
         //Returns the user to the main menu
         returnToMainMenuButton.setOnClickListener {
             editMenuLayout.visibility = View.GONE
@@ -61,6 +63,14 @@ class NoteActivity : AppCompatActivity() {
             menu_view.visibility = View.GONE
             // TODO: SaveWidgets()
             startActivity(Intent(this, MenuActivity::class.java))
+        }
+
+        toggleScreenFit.setOnClickListener {
+            if (imageView.scaleType == ImageView.ScaleType.FIT_CENTER) {
+                imageView.scaleType = ImageView.ScaleType.CENTER_CROP
+            } else {
+                imageView.scaleType = ImageView.ScaleType.FIT_CENTER
+            }
         }
 
         returnToViewButton.setOnClickListener {
