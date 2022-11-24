@@ -28,7 +28,7 @@ class NoteActivity : AppCompatActivity() {
     private lateinit var mViewBinding : MenuViewBinding
     private lateinit var mEditBinding : MenuEditBinding
     private lateinit var mWidgetsBinding : MenuWidgetsBinding
-    private var mDynamicElements = mutableMapOf<String, String>()
+    private var mDynamicElements = mutableListOf<Map<String, String>>()
 
     // Drawing
     private var mDrawingOverlay = DrawingOverlay()
@@ -55,7 +55,6 @@ class NoteActivity : AppCompatActivity() {
         } else if (note != null){
             activityBinding.noteBackground.setImageResource(note.menuItemThumbnail)
         }
-
 
         // Set state of widget menu to Expanded
         val viewBottomSheet = findViewById<ConstraintLayout>(R.id.view_bottom_sheet_layout)
@@ -142,18 +141,12 @@ class NoteActivity : AppCompatActivity() {
         mEditBinding.ivMenuDraw.setOnClickListener {
             val editBSBehavior = BottomSheetBehavior.from(editBottomSheet)
             editBSBehavior.state = BottomSheetBehavior.STATE_COLLAPSED
-            // TODO: DRAWING GETS DELETED WHEN YOU REOPEN DRAW.
-            //  move supportFragManger out of onClick and fix issue,
-            //  drawing menu and interaction doesn't gets started on re-drawing.
-            //supportFragmentManager.beginTransaction().
-           // replace(R.id.drawingOverlay, DrawingOverlay()).commit()
 
             mDrawingOverlay.setCanvasUIEnabled(true)
             mDrawingOverlay.setCanvasEditable(true)
 
             // Start with all toolbars visible, and the colorwheel off
             mDrawingOverlay.getDrawingCanvas().setColorWheelVisible(false)
-
         }
 
         // Save document
@@ -183,12 +176,52 @@ class NoteActivity : AppCompatActivity() {
                 if (outString == ""){
                     Toast.makeText(this, "Saving note with default name", Toast.LENGTH_SHORT).show()
                 }
-                //saveNote(inputField.text.toString())
+                saveNote(inputField.text.toString())
         }
             .setNegativeButton("Cancel") { dialogInterface: DialogInterface, _ ->
                 dialogInterface.dismiss()
         }
         builder.show()
+    }
+
+    /**
+     * Saves the note under a given "key" (unique identifier).
+     *
+     * @param key - The key.
+     */
+    private fun saveNote(key: String?) {
+        // Save dynamic elements
+        saveProps(key, mDynamicElements)
+
+        // Save canvas
+        mDrawingOverlay.save(key)
+
+        loadNote(key)
+    }
+
+    /**
+     * Loads the note from a given "key" (unique identifier).
+     *
+     * @param key - The key.
+     */
+    private fun loadNote(key: String?) {
+        // Load dynamic elements' props
+        val props = loadProps(key) ?: return
+
+        // Recreate objects
+        for (propSet in props) {
+            createWidgetDynamically(
+                activityBinding.widgetLayout,
+                propSet["id"]?.toInt() ?: return,
+                propSet["type"] ?: return,
+                propSet["x"]?.toFloat() ?: return,
+                propSet["y"]?.toFloat() ?: return,
+                propSet["text"] ?: return
+            )
+        }
+
+        // Load canvas
+        mDrawingOverlay.load(key)
     }
 
     private fun createWidgetDynamically(
@@ -202,19 +235,37 @@ class NoteActivity : AppCompatActivity() {
         green: Int = 1,
         blue: Int = 1
     ) {
-        var dynamicElement: TextView?
-        // creating the button
-        if (type == "text")
-            dynamicElement = TextView(this)
-        else if (type == "checkbox") {
-            println("checkbox")
-            dynamicElement = CheckBox(this)
-        } else if (type == "switch")
-            dynamicElement = Switch(this)
-        else
-            dynamicElement = TextView(this)
+        var dynamicElement: TextView? = null
+
+        // Set up props
+        var myProp      = mutableMapOf<String, String>()
+        myProp["id"]    = id.toString()
+        myProp["type"]  = type
+        myProp["x"]     = posx.toString()
+        myProp["y"]     = posx.toString()
+
+        // Cast object dynamically and assign type-specific props
+        when (type) {
+            "text" -> {
+                dynamicElement = TextView(this)
+                myProp["text"] = text
+            }
+
+            "checkbox" -> {
+                dynamicElement = CheckBox(this)
+            }
+
+            "switch" -> {
+                dynamicElement = Switch(this)
+            }
+
+            else -> {
+                Log.e("NoteActivity.createWidgetDynamically", "Object of type $type could not be made!")
+            }
+        }
 
         // setting layout_width and layout_height using layout parameters
+        if (dynamicElement == null) return
         dynamicElement.layoutParams = LinearLayout.LayoutParams(
             LinearLayout.LayoutParams.WRAP_CONTENT,
             LinearLayout.LayoutParams.WRAP_CONTENT,
@@ -222,9 +273,9 @@ class NoteActivity : AppCompatActivity() {
         if (text != "")
             dynamicElement.text = text
 
+        dynamicElement.id = id
         dynamicElement.x = posx
         dynamicElement.y = posy
-        dynamicElement.id = id
 
         val radius = 15
         val strokeWidth = 2
@@ -237,20 +288,26 @@ class NoteActivity : AppCompatActivity() {
         gradientDrawable.cornerRadius = radius.toFloat()
         dynamicElement.background = gradientDrawable
 
-        // add Button to LinearLayout
-        mDynamicElements["x"] = posx.toString()
-        mDynamicElements["y"] = posy.toString()
-        mDynamicElements["id"] = id.toString()
-
+        mDynamicElements.add(myProp)
         mainLayout.addView(dynamicElement)
     }
 
-    private fun saveProps(key: String?, props: Map<String, String>) {
+    /**
+     * Saves a set of properties to file.
+     *
+     * @param key - The "key" to the file.
+     * @param props - A set of properties.
+     */
+    private fun saveProps(key: String?, props: List<Map<String, String>>) {
         // Concatenate props into a tangible string
         var str: String = ""
-        for (k: String in props.keys) {
-            val v = props[k]
-            str += "$k:$v\n"
+
+        for (prop in props) {
+            for (k: String in prop.keys) {
+                val v = prop[k]
+                str += "$k:$v\t"
+            }
+            str += "\n"
         }
 
         // Save that string to file
@@ -273,7 +330,14 @@ class NoteActivity : AppCompatActivity() {
         }
     }
 
-    private fun loadProps(key: String?): Map<String, String>? {
+    /**
+     * Loads a set of properties from file.
+     *
+     * @param key - The "key" to the file.
+     *
+     * @return The list of properties, or null if none could be found.
+     */
+    private fun loadProps(key: String?): List<Map<String, String>>? {
         var str: String = ""
 
         try {
@@ -305,7 +369,27 @@ class NoteActivity : AppCompatActivity() {
             Log.e("NoteActivity","Could not read file: ${e.toString()}")
         }
 
-        Log.d("String: ", str)
-        return null
+        var props = mutableListOf<Map<String, String>>()
+        // Iterate objects
+        val objectStrings = str.split("\n")
+        for (objectString in objectStrings) {
+
+            // Iterate properties
+            val propSet = mutableMapOf<String, String>()
+
+            val objectPropStrings = objectString.split("\t")
+            for (objectPropString in objectPropStrings) {
+                val objectPropPair = objectPropString.split(":")
+                if (objectPropPair.size < 2) continue
+
+                val objectPropKey = objectPropPair[0]
+                val objectPropVal = objectPropPair[1]
+                propSet[objectPropKey] = objectPropVal
+            }
+
+            props.add(propSet)
+        }
+
+        return props
     }
 }
