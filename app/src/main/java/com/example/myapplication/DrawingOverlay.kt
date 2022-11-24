@@ -147,11 +147,10 @@ class DrawingOverlay : Fragment() {
         val fileName = "$key-canvas.PNG"
 
         var fOut: OutputStream? = null
-        val counter = 0
         val file = File(
             path,
             fileName
-        ) // the File to save , append increasing numeric counter to prevent files from getting overwritten.
+        )
 
         fOut = FileOutputStream(file)
 
@@ -159,7 +158,7 @@ class DrawingOverlay : Fragment() {
             Bitmap.CompressFormat.PNG,
             100,
             fOut
-        ) // saving the Bitmap to a file compressed as a JPEG with 85% compression rate
+        )
 
         fOut.flush() // Not really required
         fOut.close() // do not forget to close the stream
