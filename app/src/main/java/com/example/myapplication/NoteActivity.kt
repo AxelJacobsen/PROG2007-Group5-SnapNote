@@ -3,6 +3,8 @@ package com.example.myapplication
 import android.app.AlertDialog
 import android.content.DialogInterface
 import android.content.Intent
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.graphics.Color
 import android.graphics.drawable.GradientDrawable
 import android.os.Bundle
@@ -29,6 +31,7 @@ class NoteActivity : AppCompatActivity() {
     private lateinit var mEditBinding : MenuEditBinding
     private lateinit var mWidgetsBinding : MenuWidgetsBinding
     private var mDynamicElements = mutableListOf<Map<String, String>>()
+    private lateinit var mBackgroundImage : ImageClass
 
     // Drawing
     private var mDrawingOverlay = DrawingOverlay()
@@ -47,6 +50,7 @@ class NoteActivity : AppCompatActivity() {
         val note = intent.getParcelableExtra<NoteListItem>("extraData")
 
         if (image != null) {
+            mBackgroundImage = image
             if (image.bitmap != null){
                 activityBinding.noteBackground.setImageBitmap(image.bitmap)
             } else if (image.uri != null){
@@ -196,7 +200,26 @@ class NoteActivity : AppCompatActivity() {
         // Save canvas
         mDrawingOverlay.save(key)
 
-        loadNote(key)
+        // Save background
+        val path     = getExternalFilesDir(Environment.DIRECTORY_DCIM)
+        val fileName = "$key-background.PNG"
+
+        var fOut: OutputStream? = null
+        val file = File(
+            path,
+            fileName
+        )
+
+        fOut = FileOutputStream(file)
+
+        mBackgroundImage.bitmap?.compress(
+            Bitmap.CompressFormat.PNG,
+            100,
+            fOut
+        )
+
+        fOut.flush() // Not really required
+        fOut.close() // do not forget to close the stream
     }
 
     /**
@@ -212,16 +235,21 @@ class NoteActivity : AppCompatActivity() {
         for (propSet in props) {
             createWidgetDynamically(
                 activityBinding.widgetLayout,
-                propSet["id"]?.toInt() ?: return,
-                propSet["type"] ?: return,
-                propSet["x"]?.toFloat() ?: return,
-                propSet["y"]?.toFloat() ?: return,
-                propSet["text"] ?: return
+                propSet["id"]?.toInt() ?: continue,
+                propSet["type"] ?: continue,
+                propSet["x"]?.toFloat() ?: continue,
+                propSet["y"]?.toFloat() ?: continue,
+                propSet["text"] ?: continue
             )
         }
 
         // Load canvas
         mDrawingOverlay.load(key)
+
+        // Load background - TEMP, MOVE THIS TO PARENT ACTIVITY
+        val path = getExternalFilesDir(Environment.DIRECTORY_DCIM) ?: return
+        val fileName = "$key-background.PNG"
+        val bitmap = BitmapFactory.decodeFile(path.absolutePath + "/$fileName") ?: return
     }
 
     private fun createWidgetDynamically(
