@@ -34,7 +34,7 @@ class MenuActivity : AppCompatActivity() {
                     dialogManager, "Camera Dialog")
             } else {
                 //Initiates NoteDisplay activity with data from iten clicked
-                startActivity(Intent(this, NoteDisplay::class.java).putExtra("extraData", outItem))
+                startActivity(Intent(this, NoteActivity::class.java).putExtra("extraData", outItem))
             }
         }
 
