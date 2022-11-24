@@ -1,7 +1,6 @@
 package com.example.myapplication
 
 import android.annotation.SuppressLint
-import android.app.Dialog
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.os.Bundle
@@ -14,6 +13,7 @@ import android.view.View.OnTouchListener
 import android.view.ViewGroup
 import android.widget.ImageButton
 import android.widget.SeekBar
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.fragment.app.Fragment
 import com.google.android.material.bottomsheet.BottomSheetBehavior
@@ -28,7 +28,8 @@ import java.io.OutputStream
  */
 class DrawingOverlay : Fragment() {
     private lateinit var drawingCanvas: DrawingCanvas
-    private lateinit var drawMenuLayout: CoordinatorLayout
+    private lateinit var drawMenuCoordLayout: CoordinatorLayout
+    private lateinit var drawMenuLayout: ConstraintLayout
     private lateinit var seekBar: SeekBar
     private lateinit var undoButton: ImageButton
     private lateinit var brushModeButton: ImageButton
@@ -68,7 +69,8 @@ class DrawingOverlay : Fragment() {
 
         // Fetch views and holders
         drawingCanvas   = view.findViewById(R.id.drawingCanvas)
-        drawMenuLayout  = view.findViewById(R.id.drawMenuCoordLayout)
+        drawMenuCoordLayout  = view.findViewById(R.id.drawMenuCoordLayout)
+        drawMenuLayout  = view.findViewById(R.id.draw_menu_layout)
         seekBar         = view.findViewById(R.id.seekBar)
         undoButton      = view.findViewById(R.id.undoButton)
         brushModeButton = view.findViewById(R.id.brushModeButton)
@@ -79,6 +81,9 @@ class DrawingOverlay : Fragment() {
         setCanvasUIEnabled(false)
         setCanvasEditable(false)
         drawingCanvas.setColorWheelVisible(false)
+
+        val viewBSBehavior = BottomSheetBehavior.from(drawMenuLayout)
+        viewBSBehavior.state = BottomSheetBehavior.STATE_EXPANDED
 
         // Brush size listener
         drawingCanvas.setBrushSize(seekBar.progress.toFloat())
@@ -137,7 +142,7 @@ class DrawingOverlay : Fragment() {
      */
     fun setCanvasUIEnabled(enabled: Boolean) {
         val visibility = if (enabled) View.VISIBLE else View.GONE
-        drawMenuLayout.visibility   = visibility
+        drawMenuCoordLayout.visibility   = visibility
         drawingCanvas.setColorWheelVisible(enabled)
     }
 
