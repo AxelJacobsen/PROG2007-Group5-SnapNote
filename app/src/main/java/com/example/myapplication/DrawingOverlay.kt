@@ -16,6 +16,7 @@ import android.widget.ImageButton
 import android.widget.SeekBar
 import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.fragment.app.Fragment
+import com.google.android.material.bottomsheet.BottomSheetBehavior
 import java.io.File
 import java.io.FileOutputStream
 import java.io.OutputStream
@@ -73,6 +74,11 @@ class DrawingOverlay : Fragment() {
         brushModeButton = view.findViewById(R.id.brushModeButton)
         colorWheelButton= view.findViewById(R.id.colorWheelButton)
         exitButton      = view.findViewById(R.id.exitButton)
+
+        // Disable canvas by default
+        setCanvasUIEnabled(false)
+        setCanvasEditable(false)
+        drawingCanvas.setColorWheelVisible(false)
 
         // Brush size listener
         drawingCanvas.setBrushSize(seekBar.progress.toFloat())
@@ -133,6 +139,15 @@ class DrawingOverlay : Fragment() {
         val visibility = if (enabled) View.VISIBLE else View.GONE
         drawMenuLayout.visibility   = visibility
         drawingCanvas.setColorWheelVisible(enabled)
+    }
+
+    /**
+     * Gets the drawing canvas.
+     *
+     * @return The drawing canvas.
+     */
+    fun getDrawingCanvas(): DrawingCanvas {
+        return drawingCanvas
     }
 
     /**

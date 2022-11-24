@@ -37,7 +37,7 @@
             android:layout_height="wrap_content"
             android:max="@integer/seekBarMax"
             android:min="@integer/seekBarMin"
-            android:progress="@integer/seekBarMin"
+            android:progress="15"
             android:progressDrawable="@drawable/seekbar"
             android:secondaryProgress="0"
             app:layout_constraintBottom_toBottomOf="parent"

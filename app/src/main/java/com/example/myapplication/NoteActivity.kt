@@ -30,6 +30,9 @@ class NoteActivity : AppCompatActivity() {
     private lateinit var mWidgetsBinding : MenuWidgetsBinding
     private var mDynamicElements = mutableMapOf<String, String>()
 
+    // Drawing
+    private var mDrawingOverlay = DrawingOverlay()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         activityBinding = ActivityDisplayNoteBinding.inflate(layoutInflater)
@@ -130,17 +133,25 @@ class NoteActivity : AppCompatActivity() {
             createWidgetDynamically(activityBinding.widgetLayout, 0, "switch", 500.0f, 300.0f, "Dynamic Text")
         }
 
+        // Get drawing overlay fragment
+        supportFragmentManager.beginTransaction().replace(R.id.drawingOverlay, mDrawingOverlay).commit()
+
         // add drawing
-        activityBinding.drawingOverlay.visibility = View.GONE
         mEditBinding.ivMenuDraw.setOnClickListener {
             val editBSBehavior = BottomSheetBehavior.from(editBottomSheet)
             editBSBehavior.state = BottomSheetBehavior.STATE_COLLAPSED
             // TODO: DRAWING GETS DELETED WHEN YOU REOPEN DRAW.
             //  move supportFragManger out of onClick and fix issue,
             //  drawing menu and interaction doesn't gets started on re-drawing.
-            supportFragmentManager.beginTransaction().
-            replace(R.id.drawingOverlay, DrawingOverlay()).commit()
-            activityBinding.drawingOverlay.visibility = View.VISIBLE
+            //supportFragmentManager.beginTransaction().
+           // replace(R.id.drawingOverlay, DrawingOverlay()).commit()
+
+            mDrawingOverlay.setCanvasUIEnabled(true)
+            mDrawingOverlay.setCanvasEditable(true)
+
+            // Start with all toolbars visible, and the colorwheel off
+            mDrawingOverlay.getDrawingCanvas().setColorWheelVisible(false)
+
         }
 
         // Save document
