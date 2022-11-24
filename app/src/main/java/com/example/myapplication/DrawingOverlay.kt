@@ -1,6 +1,7 @@
 package com.example.myapplication
 
 import android.annotation.SuppressLint
+import android.app.Dialog
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.os.Bundle
@@ -13,11 +14,11 @@ import android.view.View.OnTouchListener
 import android.view.ViewGroup
 import android.widget.ImageButton
 import android.widget.SeekBar
+import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.fragment.app.Fragment
 import java.io.File
 import java.io.FileOutputStream
 import java.io.OutputStream
-
 
 /**
  * A simple [Fragment] subclass for drawing freehand.
@@ -26,6 +27,7 @@ import java.io.OutputStream
  */
 class DrawingOverlay : Fragment() {
     private lateinit var drawingCanvas: DrawingCanvas
+    private lateinit var drawMenuLayout: CoordinatorLayout
     private lateinit var seekBar: SeekBar
     private lateinit var undoButton: ImageButton
     private lateinit var brushModeButton: ImageButton
@@ -65,6 +67,7 @@ class DrawingOverlay : Fragment() {
 
         // Fetch views and holders
         drawingCanvas   = view.findViewById(R.id.drawingCanvas)
+        drawMenuLayout  = view.findViewById(R.id.drawMenuCoordLayout)
         seekBar         = view.findViewById(R.id.seekBar)
         undoButton      = view.findViewById(R.id.undoButton)
         brushModeButton = view.findViewById(R.id.brushModeButton)
@@ -128,11 +131,7 @@ class DrawingOverlay : Fragment() {
      */
     fun setCanvasUIEnabled(enabled: Boolean) {
         val visibility = if (enabled) View.VISIBLE else View.GONE
-        seekBar.visibility          = visibility
-        undoButton.visibility       = visibility
-        brushModeButton.visibility  = visibility
-        colorWheelButton.visibility = visibility
-        exitButton.visibility       = visibility
+        drawMenuLayout.visibility   = visibility
         drawingCanvas.setColorWheelVisible(enabled)
     }
 
@@ -141,7 +140,7 @@ class DrawingOverlay : Fragment() {
      */
     fun save(key: String?) {
         val pictureBitmap = drawingCanvas.getBitmap() ?: return
-
+        
         //val path = Environment.getExternalStorageDirectory().toString() // Illegal?
         val path = activity?.getExternalFilesDir(Environment.DIRECTORY_DCIM)
         val fileName = "$key-canvas.PNG"
