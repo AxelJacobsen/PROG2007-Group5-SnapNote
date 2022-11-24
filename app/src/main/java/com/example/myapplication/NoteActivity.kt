@@ -217,8 +217,6 @@ class NoteActivity : AppCompatActivity() {
 
         fOut.flush() // Not really required
         fOut.close() // do not forget to close the stream
-
-        loadNote(key)
     }
 
     /**
