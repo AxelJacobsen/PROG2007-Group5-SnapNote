@@ -2,6 +2,9 @@ package com.example.myapplication
 
 import android.content.Context
 import android.content.Context.MODE_PRIVATE
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
+import android.os.Environment
 import android.view.View
 import java.io.FileOutputStream
 
@@ -22,34 +25,19 @@ class ReadWriteToStorage() {
 
     public fun readKeyFromStorage(context: Context, filename: String){
         context.openFileInput(filename).bufferedReader().useLines { lines ->
-            lines.forEach { listOfNoteFileNames.add(it) }
+            lines.forEach {
+                println(it)
+                listOfNoteFileNames.add(it)}
         }
-
     }
 
-    public fun getThumbnailImageFromStorage(context: Context){
-
+    public fun getThumbnailImageFromStorage(context: Context, filename: String): Bitmap?{
+        // Load background - TEMP, MOVE THIS TO PARENT ACTIVITY
+        val path = context.getExternalFilesDir(Environment.DIRECTORY_DCIM) ?: return null
+        val fileName = "$filename-background.PNG"
+        return BitmapFactory.decodeFile(path.absolutePath + "/$fileName")
     }
-
 
 }
-
-/*
-    public fun readfromStorage(context: Context): List<Pair<String, String>> {
-        var nameAndContent= mutableListOf<Pair<String, String>>()
-        var files: Array<String> = context.fileList()
-        files.forEach {
-
-            val text = context.openFileInput(it).bufferedReader().useLines { lines ->
-                lines.fold("") { some, text ->
-                    "$some$text"
-                }
-            }
-            println(it + " - " + text)
-            nameAndContent.add(Pair(it, text))
-
-        }
-        return nameAndContent
-    }*/
 
 

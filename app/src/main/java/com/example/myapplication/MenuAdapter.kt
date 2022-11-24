@@ -31,7 +31,7 @@ class MenuAdapter(var dataList: List<NoteListItem>, val onClick:(NoteListItem, I
     override fun onBindViewHolder(holder: ItemViewHolder, position: Int) {
         val item = dataList[holder.adapterPosition]
         holder.itemName.text = item.menuItemName
-        holder.itemImage.setImageResource(item.menuItemThumbnail)
+        holder.itemImage.setImageBitmap(item.menuItemThumbnail)
         holder.itemImage.setOnClickListener { compoundButton ->
             onClick(item, holder.adapterPosition)
         }

@@ -220,6 +220,9 @@ class NoteActivity : AppCompatActivity() {
 
         fOut.flush() // Not really required
         fOut.close() // do not forget to close the stream
+
+        ReadWriteToStorage().listOfNoteFileNames.add(key!!)
+        ReadWriteToStorage().writeKeyfileToStorage(this,"keys")
     }
 
     /**
@@ -246,10 +249,6 @@ class NoteActivity : AppCompatActivity() {
         // Load canvas
         mDrawingOverlay.load(key)
 
-        // Load background - TEMP, MOVE THIS TO PARENT ACTIVITY
-        val path = getExternalFilesDir(Environment.DIRECTORY_DCIM) ?: return
-        val fileName = "$key-background.PNG"
-        val bitmap = BitmapFactory.decodeFile(path.absolutePath + "/$fileName") ?: return
     }
 
     private fun createWidgetDynamically(

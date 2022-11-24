@@ -19,11 +19,17 @@ class MenuActivity : AppCompatActivity() {
 
     val noteList = mutableListOf<NoteListItem>()
 
-    val test = ReadWriteToStorage()
+    val readWrite = ReadWriteToStorage()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_menu)
+
+        //readWrite.writeKeyfileToStorage(this, "keys")
+        readWrite.readKeyFromStorage(this, "keys")
+        readWrite.listOfNoteFileNames.forEach {
+            println(it)
+        }
         //Bind interactables
         noteListRecycler = findViewById(R.id.recyclerMenuList)
         //Set gridlayout
@@ -41,14 +47,10 @@ class MenuActivity : AppCompatActivity() {
             }
         }
 
-        test.writeKeyfileToStorage(this, "keys")
-        test.readKeyFromStorage(this,"keys")
-
-
 
         noteListRecycler.adapter = adapter
-        addNewNoteButton()      //fill recipeList
-        //addSavedNotes(test.readfromStorage(this))
+        addNewNoteButton()
+        addSavedNotes()
         //Update
         adapter.updateData(noteList)
     }
@@ -61,13 +63,13 @@ class MenuActivity : AppCompatActivity() {
         ))
     }
 
-    fun addSavedNotes(savedNotes: List<Pair<String, String>>){
-        savedNotes.forEach{
+    fun addSavedNotes(){
+        readWrite.listOfNoteFileNames.forEach{
             noteList.add(
                 NoteListItem(
-                menuItemName = it.first,
+                menuItemName = it,
                 isFirstItem = false,
-                menuItemThumbnail = null
+                menuItemThumbnail = readWrite.getThumbnailImageFromStorage(this, it)
             )
             )
         }
