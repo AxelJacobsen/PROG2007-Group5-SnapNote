@@ -1,10 +1,15 @@
 package com.example.myapplication
 
 import android.content.Intent
+import android.graphics.Bitmap
 import android.graphics.Color
 import android.graphics.drawable.GradientDrawable
+import android.icu.util.Output
 import android.os.Bundle
+import android.os.Environment
+import android.util.Log
 import android.view.View
+import android.view.View.OnClickListener
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
@@ -13,6 +18,16 @@ import com.example.myapplication.databinding.MenuEditBinding
 import com.example.myapplication.databinding.MenuViewBinding
 import com.example.myapplication.databinding.MenuWidgetsBinding
 import com.google.android.material.bottomsheet.BottomSheetBehavior
+import java.io.BufferedReader
+import java.io.File
+import java.io.FileInputStream
+import java.io.FileNotFoundException
+import java.io.FileOutputStream
+import java.io.IOException
+import java.io.InputStreamReader
+import java.io.OutputStream
+import java.io.OutputStreamWriter
+import java.util.Dictionary
 
 class NoteActivity : AppCompatActivity() {
 
@@ -20,6 +35,7 @@ class NoteActivity : AppCompatActivity() {
     private lateinit var mViewBinding : MenuViewBinding
     private lateinit var mEditBinding : MenuEditBinding
     private lateinit var mWidgetsBinding : MenuWidgetsBinding
+    private var mDynamicElements = mutableMapOf<String, String>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -126,6 +142,13 @@ class NoteActivity : AppCompatActivity() {
             replace(R.id.drawingOverlay, DrawingOverlay()).commit()
             activityBinding.drawingOverlay.visibility = View.VISIBLE
         }
+
+        // Save document
+        mViewBinding.ivMenuSave.setOnClickListener(OnClickListener {
+            val fileName: String? = requestFileName()
+
+            // blablabla
+        })
     }
 
     private fun createWidgetDynamically(
@@ -175,6 +198,83 @@ class NoteActivity : AppCompatActivity() {
         dynamicElement.background = gradientDrawable
 
         // add Button to LinearLayout
+        mDynamicElements["x"] = posx.toString()
+        mDynamicElements["y"] = posy.toString()
+        mDynamicElements["id"] = id.toString()
+
         mainLayout.addView(dynamicElement)
+    }
+
+    private fun saveProps(key: String?, props: Map<String, String>) {
+        // Concatenate props into a tangible string
+        var str: String = ""
+        for (k: String in props.keys) {
+            val v = props[k]
+            str += "$k:$v\n"
+        }
+
+        // Save that string to file
+        try {
+            val path = getExternalFilesDir(Environment.DIRECTORY_DCIM)
+            val fileName = "$key-props.txt"
+
+            var fOut: OutputStream? = null
+            val file = File(
+                path,
+                fileName
+            )
+            fOut = FileOutputStream(file)
+            fOut.write(str.toByteArray())
+
+            fOut.flush()
+            fOut.close()
+        } catch (e: IOException) {
+            e.printStackTrace()
+        }
+    }
+
+    private fun loadProps(key: String?): Map<String, String>? {
+        var str: String = ""
+
+        try {
+            val path = getExternalFilesDir(Environment.DIRECTORY_DCIM) ?: return null
+            val fileName = "$key-props.txt"
+            val file = File(
+                path,
+                fileName
+            )
+
+            val inputStream       = FileInputStream(file)
+            val inputStreamReader = InputStreamReader(inputStream)
+            val bufferedReader    = BufferedReader(inputStreamReader)
+
+            var inString: String? = ""
+            val stringBuilder = StringBuilder()
+
+            while ( inString != null ) {
+                inString = bufferedReader.readLine()
+                if (inString == null) break
+                stringBuilder.append("\n").append(inString)
+            }
+
+            inputStream.close()
+            str = stringBuilder.toString()
+        } catch (e: FileNotFoundException) {
+            Log.e("NoteActivity","File not found: ${e.toString()}")
+        } catch (e: IOException) {
+            Log.e("NoteActivity","Could not read file: ${e.toString()}")
+        }
+
+        Log.d("String: ", str)
+        return null
+    }
+
+    /**
+     * Requests a filename from the user.
+     *
+     * @return The filename given, or null if none.
+     */
+    private fun requestFileName(): String? {
+        return null
     }
 }
