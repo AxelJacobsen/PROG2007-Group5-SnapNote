@@ -65,7 +65,7 @@ class NoteActivity : AppCompatActivity() {
             startActivity(Intent(this, MenuActivity::class.java))
         }
 
-        mEditBinding.ivEditToggleScreen.setOnClickListener {
+        mEditBinding.ivEditMenuBackArrow.setOnClickListener {
             if (activityBinding.noteBackground.scaleType == ImageView.ScaleType.FIT_CENTER) {
                 activityBinding.noteBackground.scaleType = ImageView.ScaleType.CENTER_CROP
             } else {
@@ -122,6 +122,11 @@ class NoteActivity : AppCompatActivity() {
         // add drawing
         activityBinding.drawingOverlay.visibility = View.GONE
         mEditBinding.ivMenuDraw.setOnClickListener {
+            val editBSBehavior = BottomSheetBehavior.from(editBottomSheet)
+            editBSBehavior.state = BottomSheetBehavior.STATE_COLLAPSED
+            // TODO: DRAWING GETS DELETED WHEN YOU REOPEN DRAW.
+            //  move supportFragManger out of onClick and fix issue,
+            //  drawing menu and interaction doesn't gets started on re-drawing.
             supportFragmentManager.beginTransaction().
             replace(R.id.drawingOverlay, DrawingOverlay()).commit()
             activityBinding.drawingOverlay.visibility = View.VISIBLE
