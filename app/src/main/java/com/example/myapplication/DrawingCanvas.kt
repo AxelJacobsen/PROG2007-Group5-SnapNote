@@ -26,6 +26,7 @@ class DrawingCanvas : View {
 
     // Color wheel
     private var colorWheelEnabled: Boolean = true
+    private var colorWheelVisible: Boolean = true
     private var colorWheel: Bitmap? = null
     private var colorWheelR: Int    = -1
     private var colorWheelX: Float  = -1f
@@ -35,6 +36,9 @@ class DrawingCanvas : View {
     private var drawing: Boolean = false
     private var strokePaint: Paint = Paint()
     private var strokeType: StrokeType = StrokeType.PAINT
+
+    // Callbacks / onEvents
+    private lateinit var onDrawCallback: (isDrawing: Boolean) -> Unit
 
     constructor(
         ctx: Context,
@@ -152,6 +156,27 @@ class DrawingCanvas : View {
     }
 
     /**
+     * Sets the on-draw-listener.
+     * This function is automatically invoked whenever the user starts/stops drawing.
+     * The variable `isDrawing` represents whether or not the user has started/stopped drawing.
+     *
+     * @param callback - The function. Takes a boolean, returns nothing.
+     */
+    fun setOnDrawListener(callback: (isDrawing: Boolean) -> Unit) {
+        onDrawCallback = callback
+    }
+
+    /**
+     *  Sets visibility of the colorwheel.
+     *
+     *  @param visible - True if the colorwheel should be visible, false otherwise.
+     */
+    fun setColorWheelVisible(visible: Boolean) {
+        colorWheelVisible = visible
+        invalidate()
+    }
+
+    /**
      * Generates the colorwheel at the given position.
      * x and y can be changed later without calling this function by changing [colorWheelX] and [colorWheelY].
      *
@@ -217,7 +242,7 @@ class DrawingCanvas : View {
         }
 
         // Draw colorwheel
-        if (colorWheel != null) {
+        if (colorWheel != null && colorWheelVisible) {
             var matrix = Matrix()
             matrix.setTranslate(colorWheelX,colorWheelY)
             var colorWheelPaint = Paint()
@@ -262,7 +287,10 @@ class DrawingCanvas : View {
                     strokePath.lineTo(x, y)
                     strokes.add(Stroke(Paint(strokePaint), strokePath))
 
-                    drawing = true
+                    if (!drawing) {
+                        drawing = true
+                        onDrawCallback(drawing)
+                    }
                 }
             }
 
@@ -279,7 +307,10 @@ class DrawingCanvas : View {
                 if (drawing) {
                     var stroke: Stroke = strokes.last()
                     stroke.completed = true
-                    drawing = false
+                    if (drawing) {
+                        drawing = false
+                        onDrawCallback(drawing)
+                    }
                 }
             }
         }

@@ -109,6 +109,25 @@ class DrawingOverlay : Fragment() {
         loadButton.setOnClickListener(OnClickListener {
             load()
         })
+
+        // On draw/stop draw listener
+        drawingCanvas.setOnDrawListener { isDrawing ->
+            if (isDrawing) {
+                seekBar.visibility          = View.GONE
+                undoButton.visibility       = View.GONE
+                brushModeButton.visibility  = View.GONE
+                saveButton.visibility       = View.GONE
+                loadButton.visibility       = View.GONE
+                drawingCanvas.setColorWheelVisible(false)
+            } else {
+                seekBar.visibility          = View.VISIBLE
+                undoButton.visibility       = View.VISIBLE
+                brushModeButton.visibility  = View.VISIBLE
+                saveButton.visibility       = View.VISIBLE
+                loadButton.visibility       = View.VISIBLE
+                drawingCanvas.setColorWheelVisible(true)
+            }
+        }
     }
 
     /**
