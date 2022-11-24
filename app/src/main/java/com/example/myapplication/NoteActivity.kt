@@ -48,6 +48,7 @@ class NoteActivity : AppCompatActivity() {
 
         //Recieves parcel and binds image data
         val image = intent.getParcelableExtra<ImageClass>("picture")
+        val note = intent.getParcelableExtra<NoteListItem>("extraData")
 
         if (image != null) {
             if (image.bitmap != null){
@@ -55,6 +56,8 @@ class NoteActivity : AppCompatActivity() {
             } else if (image.uri != null){
                 activityBinding.noteBackground.setImageURI(image.uri)
             }
+        } else if (note != null){
+            activityBinding.noteBackground.setImageResource(note.menuItemThumbnail)
         }
 
         // Set state of widget menu to Expanded

@@ -18,6 +18,8 @@ class MenuActivity : AppCompatActivity() {
 
     val noteList = mutableListOf<NoteListItem>()
 
+    val test = ReadWriteToStorage()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_menu)
@@ -34,12 +36,30 @@ class MenuActivity : AppCompatActivity() {
                     dialogManager, "Camera Dialog")
             } else {
                 //Initiates NoteDisplay activity with data from iten clicked
-                startActivity(Intent(this, NoteDisplay::class.java).putExtra("extraData", outItem))
+                startActivity(Intent(this, NoteActivity::class.java).putExtra("extraData", outItem))
             }
         }
 
+        val Testfiles = listOf<Pair<String, String>>(
+            Pair("file1", "content1"),
+            Pair("file2", "content2"),
+            Pair("file3", "content3"),
+            Pair("file4", "content1"),
+            Pair("file5", "content2"),
+            Pair("file6", "content3"),
+            Pair("file7", "content1"),
+            Pair("file8", "content2"),
+            Pair("file9", "content3"),
+        )
+
+        Testfiles.forEach {
+            test.writetoStorage(this, it.first, it.second)
+        }
+
+
         noteListRecycler.adapter = adapter
         addNewNoteButton()      //fill recipeList
+        addSavedNotes(test.readfromStorage(this))
         //Update
         adapter.updateData(noteList)
     }
@@ -50,16 +70,18 @@ class MenuActivity : AppCompatActivity() {
             isFirstItem = true,
             menuItemThumbnail = R.drawable.new_note
         ))
-        noteList.add(NoteListItem(
-            menuItemName = "New note",
-            isFirstItem = true,
-            menuItemThumbnail = R.drawable.new_note
-        ))
-        noteList.add(NoteListItem(
-            menuItemName = "New note",
-            isFirstItem = true,
-            menuItemThumbnail = R.drawable.new_note
-        ))
+    }
+
+    fun addSavedNotes(savedNotes: List<Pair<String, String>>){
+        savedNotes.forEach{
+            noteList.add(
+                NoteListItem(
+                menuItemName = it.first,
+                isFirstItem = false,
+                menuItemThumbnail = R.drawable.new_note
+            )
+            )
+        }
     }
 
     /**
