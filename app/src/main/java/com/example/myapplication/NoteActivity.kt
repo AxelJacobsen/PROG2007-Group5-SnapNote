@@ -56,9 +56,6 @@ class NoteActivity : AppCompatActivity() {
         val widgetBSBehavior = BottomSheetBehavior.from(widgetBottomSheet)
         widgetBSBehavior.state = BottomSheetBehavior.STATE_EXPANDED
 
-        //@TODO Update to binding
-        val toggleScreenFit = findViewById<View>(R.id.ivEditToggleScreen)
-
         //Returns the user to the main menu
         mViewBinding.ivMenuBackArrow.setOnClickListener {
             activityBinding.editMenuCoordLayout.visibility = View.GONE
@@ -68,11 +65,11 @@ class NoteActivity : AppCompatActivity() {
             startActivity(Intent(this, MenuActivity::class.java))
         }
 
-        toggleScreenFit.setOnClickListener {
-            if (imageView.scaleType == ImageView.ScaleType.FIT_CENTER) {
-                imageView.scaleType = ImageView.ScaleType.CENTER_CROP
+        mEditBinding.ivEditToggleScreen.setOnClickListener {
+            if (activityBinding.noteBackground.scaleType == ImageView.ScaleType.FIT_CENTER) {
+                activityBinding.noteBackground.scaleType = ImageView.ScaleType.CENTER_CROP
             } else {
-                imageView.scaleType = ImageView.ScaleType.FIT_CENTER
+                activityBinding.noteBackground.scaleType = ImageView.ScaleType.FIT_CENTER
             }
         }
         
