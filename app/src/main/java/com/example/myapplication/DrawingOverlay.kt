@@ -30,10 +30,8 @@ class DrawingOverlay : Fragment() {
     private lateinit var seekBar: SeekBar
     private lateinit var undoButton: ImageButton
     private lateinit var brushModeButton: ImageButton
-
-    // TEMP
-    private lateinit var saveButton: ImageButton
-    private lateinit var loadButton: ImageButton
+    private lateinit var colorWheelButton: ImageButton
+    private lateinit var exitButton: ImageButton
 
     /**
      * When the fragment is created.
@@ -71,10 +69,8 @@ class DrawingOverlay : Fragment() {
         seekBar         = view.findViewById(R.id.seekBar)
         undoButton      = view.findViewById(R.id.undoButton)
         brushModeButton = view.findViewById(R.id.brushModeButton)
-
-        // TEMP
-        saveButton = view.findViewById(R.id.saveButton)
-        loadButton = view.findViewById(R.id.loadButton)
+        colorWheelButton= view.findViewById(R.id.colorWheelButton)
+        exitButton      = view.findViewById(R.id.exitButton)
 
         // Brush size listener
         drawingCanvas.setBrushSize(seekBar.progress.toFloat())
@@ -101,33 +97,44 @@ class DrawingOverlay : Fragment() {
             drawingCanvas.changeBrushMode()
         })
 
-        // TEMP
-        saveButton.setOnClickListener(OnClickListener {
-            save(null)
-        })
-
-        loadButton.setOnClickListener(OnClickListener {
-            load(null)
+        // Color wheel button listener
+        colorWheelButton.setOnClickListener(OnClickListener {
+            drawingCanvas.setColorWheelLocked(false)
+            drawingCanvas.setColorWheelVisible(!drawingCanvas.getColorWheelVisible())
+            drawingCanvas.setColorWheelLocked(!drawingCanvas.getColorWheelVisible())
         })
 
         // On draw/stop draw listener
         drawingCanvas.setOnDrawListener { isDrawing ->
-            if (isDrawing) {
-                seekBar.visibility          = View.GONE
-                undoButton.visibility       = View.GONE
-                brushModeButton.visibility  = View.GONE
-                saveButton.visibility       = View.GONE
-                loadButton.visibility       = View.GONE
-                drawingCanvas.setColorWheelVisible(false)
-            } else {
-                seekBar.visibility          = View.VISIBLE
-                undoButton.visibility       = View.VISIBLE
-                brushModeButton.visibility  = View.VISIBLE
-                saveButton.visibility       = View.VISIBLE
-                loadButton.visibility       = View.VISIBLE
-                drawingCanvas.setColorWheelVisible(true)
-            }
+            if (isDrawing)  setCanvasUIEnabled(false)
+            else            setCanvasUIEnabled(true)
         }
+
+        // Exit button listener
+        exitButton.setOnClickListener(OnClickListener {
+            setCanvasEditable(false)
+            setCanvasUIEnabled(false)
+        })
+    }
+
+    /**
+     * Sets if the canvas can be edited.
+     */
+    fun setCanvasEditable(editable: Boolean) {
+        drawingCanvas.canEdit = editable
+    }
+
+    /**
+     * Sets if the canvas' UI is enabled.
+     */
+    fun setCanvasUIEnabled(enabled: Boolean) {
+        val visibility = if (enabled) View.VISIBLE else View.GONE
+        seekBar.visibility          = visibility
+        undoButton.visibility       = visibility
+        brushModeButton.visibility  = visibility
+        colorWheelButton.visibility = visibility
+        exitButton.visibility       = visibility
+        drawingCanvas.setColorWheelVisible(enabled)
     }
 
     /**

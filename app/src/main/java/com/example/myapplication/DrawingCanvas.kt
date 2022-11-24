@@ -16,6 +16,10 @@ import kotlin.math.*
  * Class for drawing onto a Canvas.
  */
 class DrawingCanvas : View {
+    // Public
+    var canEdit: Boolean = true
+
+    // Buffers
     private var strokes: ArrayList<Stroke> = ArrayList()
     private var cacheCanvas: Canvas? = null
     private var cacheBitmap: Bitmap? = null
@@ -27,6 +31,7 @@ class DrawingCanvas : View {
     // Color wheel
     private var colorWheelEnabled: Boolean = true
     private var colorWheelVisible: Boolean = true
+    private var colorWheelLocked: Boolean = false
     private var colorWheel: Bitmap? = null
     private var colorWheelR: Int    = -1
     private var colorWheelX: Float  = -1f
@@ -167,13 +172,43 @@ class DrawingCanvas : View {
     }
 
     /**
+     * Sets colorwheel lock.
+     * A locked colorwheel cant be altered.
+     *
+     * @param locked - True to lock the colorwheel, false to unlock.
+     */
+    fun setColorWheelLocked(locked: Boolean) {
+        colorWheelLocked = locked
+    }
+
+    /**
+     * Gets colorwheel lock.
+     *
+     * @return True if the colorwheel is locked.
+     */
+    fun getColorWheelLocked(): Boolean {
+        return colorWheelLocked
+    }
+
+    /**
      *  Sets visibility of the colorwheel.
+     *  Can't be done if it's locked.
      *
      *  @param visible - True if the colorwheel should be visible, false otherwise.
      */
     fun setColorWheelVisible(visible: Boolean) {
+        if (colorWheelLocked) return
         colorWheelVisible = visible
         invalidate()
+    }
+
+    /**
+     * Gets if the colorwheel is visible.
+     *
+     * @return True if the colorwheel is visible, false otherwise.
+     */
+    fun getColorWheelVisible(): Boolean {
+        return colorWheelVisible
     }
 
     /**
@@ -256,6 +291,7 @@ class DrawingCanvas : View {
      * When the screen is touched.
      */
     override fun onTouchEvent(event: MotionEvent?): Boolean {
+        if (!canEdit) return false
         if (event == null) return false
 
         val action: Int = event.action
@@ -268,7 +304,7 @@ class DrawingCanvas : View {
                 var dontDraw = false
 
                 // Check if the touch is within the color wheel, if it's enabled and generated
-                if (colorWheelEnabled && colorWheel != null) {
+                if (colorWheelEnabled && colorWheel != null && colorWheelVisible) {
                     val xLocal = x - colorWheelX - colorWheelR
                     val yLocal = y - colorWheelY - colorWheelR
                     val d = sqrt(xLocal*xLocal + yLocal*yLocal)
