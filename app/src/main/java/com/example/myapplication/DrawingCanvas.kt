@@ -16,6 +16,10 @@ import kotlin.math.*
  * Class for drawing onto a Canvas.
  */
 class DrawingCanvas : View {
+    // Public
+    var canEdit: Boolean = true
+
+    // Buffers
     private var strokes: ArrayList<Stroke> = ArrayList()
     private var cacheCanvas: Canvas? = null
     private var cacheBitmap: Bitmap? = null
@@ -26,6 +30,8 @@ class DrawingCanvas : View {
 
     // Color wheel
     private var colorWheelEnabled: Boolean = true
+    private var colorWheelVisible: Boolean = true
+    private var colorWheelLocked: Boolean = false
     private var colorWheel: Bitmap? = null
     private var colorWheelR: Int    = -1
     private var colorWheelX: Float  = -1f
@@ -35,6 +41,9 @@ class DrawingCanvas : View {
     private var drawing: Boolean = false
     private var strokePaint: Paint = Paint()
     private var strokeType: StrokeType = StrokeType.PAINT
+
+    // Callbacks / onEvents
+    private lateinit var onDrawCallback: (isDrawing: Boolean) -> Unit
 
     constructor(
         ctx: Context,
@@ -152,6 +161,57 @@ class DrawingCanvas : View {
     }
 
     /**
+     * Sets the on-draw-listener.
+     * This function is automatically invoked whenever the user starts/stops drawing.
+     * The variable `isDrawing` represents whether or not the user has started/stopped drawing.
+     *
+     * @param callback - The function. Takes a boolean, returns nothing.
+     */
+    fun setOnDrawListener(callback: (isDrawing: Boolean) -> Unit) {
+        onDrawCallback = callback
+    }
+
+    /**
+     * Sets colorwheel lock.
+     * A locked colorwheel cant be altered.
+     *
+     * @param locked - True to lock the colorwheel, false to unlock.
+     */
+    fun setColorWheelLocked(locked: Boolean) {
+        colorWheelLocked = locked
+    }
+
+    /**
+     * Gets colorwheel lock.
+     *
+     * @return True if the colorwheel is locked.
+     */
+    fun getColorWheelLocked(): Boolean {
+        return colorWheelLocked
+    }
+
+    /**
+     *  Sets visibility of the colorwheel.
+     *  Can't be done if it's locked.
+     *
+     *  @param visible - True if the colorwheel should be visible, false otherwise.
+     */
+    fun setColorWheelVisible(visible: Boolean) {
+        if (colorWheelLocked) return
+        colorWheelVisible = visible
+        invalidate()
+    }
+
+    /**
+     * Gets if the colorwheel is visible.
+     *
+     * @return True if the colorwheel is visible, false otherwise.
+     */
+    fun getColorWheelVisible(): Boolean {
+        return colorWheelVisible
+    }
+
+    /**
      * Generates the colorwheel at the given position.
      * x and y can be changed later without calling this function by changing [colorWheelX] and [colorWheelY].
      *
@@ -217,7 +277,7 @@ class DrawingCanvas : View {
         }
 
         // Draw colorwheel
-        if (colorWheel != null) {
+        if (colorWheel != null && colorWheelVisible) {
             var matrix = Matrix()
             matrix.setTranslate(colorWheelX,colorWheelY)
             var colorWheelPaint = Paint()
@@ -231,6 +291,7 @@ class DrawingCanvas : View {
      * When the screen is touched.
      */
     override fun onTouchEvent(event: MotionEvent?): Boolean {
+        if (!canEdit) return false
         if (event == null) return false
 
         val action: Int = event.action
@@ -243,7 +304,7 @@ class DrawingCanvas : View {
                 var dontDraw = false
 
                 // Check if the touch is within the color wheel, if it's enabled and generated
-                if (colorWheelEnabled && colorWheel != null) {
+                if (colorWheelEnabled && colorWheel != null && colorWheelVisible) {
                     val xLocal = x - colorWheelX - colorWheelR
                     val yLocal = y - colorWheelY - colorWheelR
                     val d = sqrt(xLocal*xLocal + yLocal*yLocal)
@@ -262,7 +323,10 @@ class DrawingCanvas : View {
                     strokePath.lineTo(x, y)
                     strokes.add(Stroke(Paint(strokePaint), strokePath))
 
-                    drawing = true
+                    if (!drawing) {
+                        drawing = true
+                        onDrawCallback(drawing)
+                    }
                 }
             }
 
@@ -279,7 +343,10 @@ class DrawingCanvas : View {
                 if (drawing) {
                     var stroke: Stroke = strokes.last()
                     stroke.completed = true
-                    drawing = false
+                    if (drawing) {
+                        drawing = false
+                        onDrawCallback(drawing)
+                    }
                 }
             }
         }
