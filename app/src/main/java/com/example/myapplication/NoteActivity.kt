@@ -54,7 +54,6 @@ class NoteActivity : AppCompatActivity() {
         }
 
 
-
         // Set state of widget menu to Expanded
         val viewBottomSheet = findViewById<ConstraintLayout>(R.id.view_bottom_sheet_layout)
         val viewBSBehavior = BottomSheetBehavior.from(viewBottomSheet)
