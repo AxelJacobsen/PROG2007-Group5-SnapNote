@@ -19,6 +19,7 @@
     <string name="text">Text</string>
     <string name="editItem">Edit Item</string>
     <string name="cut">Cut</string>
+    <string name="toggleFit">Toggle Fit</string>
 
     <!-- Widgets menu -->
     <string name="sCh3ckbox">Checkbox</string>
