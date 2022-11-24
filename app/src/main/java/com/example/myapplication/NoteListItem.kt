@@ -1,5 +1,6 @@
 package com.example.myapplication
 
+import android.graphics.Bitmap
 import android.os.Build
 import android.os.Parcel
 import android.os.Parcelable
@@ -9,19 +10,19 @@ import androidx.appcompat.view.menu.MenuView
 data class NoteListItem(
     var menuItemName: String,
     var isFirstItem: Boolean,
-    var menuItemThumbnail: Int
+    var menuItemThumbnail: Bitmap?
 ) : Parcelable {
     constructor(parcel: Parcel) : this(
         parcel.readString().toString(),
         parcel.readBoolean(),
-        parcel.readInt()
+        parcel.readParcelable(Bitmap::class.java.classLoader)
     ) {
     }
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
         parcel.writeString(menuItemName)
         parcel.writeBoolean(isFirstItem)
-        parcel.writeInt(menuItemThumbnail)
+        parcel.writeParcelable(menuItemThumbnail, flags)
     }
 
     override fun describeContents(): Int {

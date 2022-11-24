@@ -3,6 +3,7 @@ package com.example.myapplication
 import android.app.Activity
 import android.content.Intent
 import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.net.Uri
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
@@ -40,26 +41,14 @@ class MenuActivity : AppCompatActivity() {
             }
         }
 
-        val Testfiles = listOf<Pair<String, String>>(
-            Pair("file1", "content1"),
-            Pair("file2", "content2"),
-            Pair("file3", "content3"),
-            Pair("file4", "content1"),
-            Pair("file5", "content2"),
-            Pair("file6", "content3"),
-            Pair("file7", "content1"),
-            Pair("file8", "content2"),
-            Pair("file9", "content3"),
-        )
+        test.writeKeyfileToStorage(this, "keys")
+        test.readKeyFromStorage(this,"keys")
 
-        Testfiles.forEach {
-            test.writetoStorage(this, it.first, it.second)
-        }
 
 
         noteListRecycler.adapter = adapter
         addNewNoteButton()      //fill recipeList
-        addSavedNotes(test.readfromStorage(this))
+        //addSavedNotes(test.readfromStorage(this))
         //Update
         adapter.updateData(noteList)
     }
@@ -68,7 +57,7 @@ class MenuActivity : AppCompatActivity() {
         noteList.add(NoteListItem(
             menuItemName = "New note",
             isFirstItem = true,
-            menuItemThumbnail = R.drawable.new_note
+            menuItemThumbnail = BitmapFactory.decodeResource(this.getResources(), R.drawable.new_note)
         ))
     }
 
@@ -78,7 +67,7 @@ class MenuActivity : AppCompatActivity() {
                 NoteListItem(
                 menuItemName = it.first,
                 isFirstItem = false,
-                menuItemThumbnail = R.drawable.new_note
+                menuItemThumbnail = null
             )
             )
         }

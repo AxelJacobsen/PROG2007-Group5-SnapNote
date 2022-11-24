@@ -53,7 +53,7 @@ class NoteActivity : AppCompatActivity() {
                 activityBinding.noteBackground.setImageURI(image.uri)
             }
         } else if (note != null){
-            activityBinding.noteBackground.setImageResource(note.menuItemThumbnail)
+            activityBinding.noteBackground.setImageBitmap(note.menuItemThumbnail)
         }
 
         // Set state of widget menu to Expanded

@@ -7,12 +7,34 @@ import java.io.FileOutputStream
 
 class ReadWriteToStorage() {
 
-    public fun writetoStorage(context: Context, filename: String, filecontent: String){
+    public var listOfNoteFileNames = mutableListOf<String>()
+
+    public fun writeKeyfileToStorage(context: Context, filename: String){
+        var file: String = ""
+        listOfNoteFileNames.forEach{
+            file += "$it\n"
+        }
+
         context.openFileOutput(filename, Context.MODE_PRIVATE).use {
-            it.write(filecontent.toByteArray())
+            it.write(file.toByteArray())
         }
     }
 
+    public fun readKeyFromStorage(context: Context, filename: String){
+        context.openFileInput(filename).bufferedReader().useLines { lines ->
+            lines.forEach { listOfNoteFileNames.add(it) }
+        }
+
+    }
+
+    public fun getThumbnailImageFromStorage(context: Context){
+
+    }
+
+
+}
+
+/*
     public fun readfromStorage(context: Context): List<Pair<String, String>> {
         var nameAndContent= mutableListOf<Pair<String, String>>()
         var files: Array<String> = context.fileList()
@@ -28,7 +50,6 @@ class ReadWriteToStorage() {
 
         }
         return nameAndContent
-    }
+    }*/
 
 
-}
