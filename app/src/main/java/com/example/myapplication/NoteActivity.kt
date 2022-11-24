@@ -8,24 +8,36 @@ import android.view.View
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
+import com.example.myapplication.databinding.ActivityDisplayNoteBinding
+import com.example.myapplication.databinding.MenuEditBinding
+import com.example.myapplication.databinding.MenuViewBinding
+import com.example.myapplication.databinding.MenuWidgetsBinding
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 
 class NoteActivity : AppCompatActivity() {
 
-    private lateinit var imageView: ImageView
+    private lateinit var activityBinding : ActivityDisplayNoteBinding
+    private lateinit var mViewBinding : MenuViewBinding
+    private lateinit var mEditBinding : MenuEditBinding
+    private lateinit var mWidgetsBinding : MenuWidgetsBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_display_note)
-        imageView = findViewById(R.id.noteBackground)
+        activityBinding = ActivityDisplayNoteBinding.inflate(layoutInflater)
+        val view = activityBinding.root
+        mViewBinding = MenuViewBinding.bind(view)
+        mEditBinding = MenuEditBinding.bind(view)
+        mWidgetsBinding = MenuWidgetsBinding.bind(view)
+        setContentView(view)
+
         //Recieves parcel and binds image data
         val image = intent.getParcelableExtra<ImageClass>("picture")
 
         if (image != null) {
             if (image.bitmap != null){
-                imageView.setImageBitmap(image.bitmap)
+                activityBinding.noteBackground.setImageBitmap(image.bitmap)
             } else if (image.uri != null){
-                imageView.setImageURI(image.uri)
+                activityBinding.noteBackground.setImageURI(image.uri)
             }
         }
 
@@ -44,78 +56,70 @@ class NoteActivity : AppCompatActivity() {
         val widgetBSBehavior = BottomSheetBehavior.from(widgetBottomSheet)
         widgetBSBehavior.state = BottomSheetBehavior.STATE_EXPANDED
 
-        // Switches menu to widget menu
-        val addWidgetButton = findViewById<ImageView>(R.id.ivMenuWidgets)
-        val returnToMainMenuButton = findViewById<ImageView>(R.id.ivMenuBackArrow)
-        val returnToEditButton  = findViewById<ImageView>(R.id.ivWidgetMenuBackArrow)
-        val returnToViewButton = findViewById<ImageView>(R.id.ivEditMenuBackArrow)
-        val openEditMenu = findViewById<ImageView>(R.id.ivMenuEdit)
-        val menu_view = findViewById<View>(R.id.viewMenuCoordLayout)
-        val editMenuLayout = findViewById<View>(R.id.editMenuCoordLayout)
-        val widgetMenuLayout = findViewById<View>(R.id.widgetMenuCoordLayout)
-
         //Returns the user to the main menu
-        returnToMainMenuButton.setOnClickListener {
-            editMenuLayout.visibility = View.GONE
-            widgetMenuLayout.visibility = View.GONE
-            menu_view.visibility = View.GONE
+        mViewBinding.ivMenuBackArrow.setOnClickListener {
+            activityBinding.editMenuCoordLayout.visibility = View.GONE
+            activityBinding.widgetMenuCoordLayout.visibility = View.GONE
+            activityBinding.viewMenuCoordLayout.visibility = View.GONE
             // TODO: SaveWidgets()
             startActivity(Intent(this, MenuActivity::class.java))
         }
 
-        returnToViewButton.setOnClickListener {
-            editMenuLayout.visibility = View.GONE
-            widgetMenuLayout.visibility = View.GONE
-            menu_view.visibility = View.VISIBLE
+        mEditBinding.ivEditMenuBackArrow.setOnClickListener {
+            activityBinding.editMenuCoordLayout.visibility = View.GONE
+            activityBinding.widgetMenuCoordLayout.visibility = View.GONE
+            activityBinding.viewMenuCoordLayout.visibility = View.VISIBLE
         }
 
-        returnToEditButton.setOnClickListener {
-            editMenuLayout.visibility = View.VISIBLE
-            widgetMenuLayout.visibility = View.GONE
-            menu_view.visibility = View.GONE
+        mWidgetsBinding.ivWidgetMenuBackArrow.setOnClickListener {
+            activityBinding.editMenuCoordLayout.visibility = View.VISIBLE
+            activityBinding.widgetMenuCoordLayout.visibility = View.GONE
+            activityBinding.viewMenuCoordLayout.visibility = View.GONE
         }
 
-        openEditMenu.setOnClickListener {
-            editMenuLayout.visibility = View.VISIBLE
-            widgetMenuLayout.visibility = View.GONE
-            menu_view.visibility = View.GONE
+        mViewBinding.ivMenuEdit.setOnClickListener {
+            activityBinding.editMenuCoordLayout.visibility = View.VISIBLE
+            activityBinding.widgetMenuCoordLayout.visibility = View.GONE
+            activityBinding.viewMenuCoordLayout.visibility = View.GONE
         }
 
-        addWidgetButton.setOnClickListener {
-            editMenuLayout.visibility = View.GONE
-            widgetMenuLayout.visibility = View.VISIBLE
-            menu_view.visibility = View.GONE
+        mEditBinding.ivMenuWidgets.setOnClickListener {
+            activityBinding.editMenuCoordLayout.visibility = View.GONE
+            activityBinding.widgetMenuCoordLayout.visibility = View.VISIBLE
+            activityBinding.viewMenuCoordLayout.visibility = View.GONE
         }
 
         // Define widgetlayout which we will add widgets to
-        val widgetLayout = findViewById<ConstraintLayout>(R.id.widgetLayout)
         // add text
-        val addTextButton = findViewById<ImageView>(R.id.ivMenuText)
-        addTextButton.setOnClickListener {
-            createButtonDynamically(widgetLayout, 0, "text", 500.0f, 300.0f, "Dynamic Text")
+        mEditBinding.ivMenuText.setOnClickListener {
+            createWidgetDynamically(activityBinding.widgetLayout, 0, "text", 500.0f, 300.0f, "Dynamic Text")
         }
 
         // add checkbox
-        val addCbButton = findViewById<ImageView>(R.id.ivMenuCheckbox)
-        addCbButton.setOnClickListener {
-            println("widgeecheckboxcheckboxcheckboxcheckboxeeeeet")
-            createButtonDynamically(widgetLayout, 0, "checkbox", 500.0f, 300.0f, "Dynamic Text")
+        mWidgetsBinding.ivMenuCheckbox.setOnClickListener {
+            createWidgetDynamically(activityBinding.widgetLayout, 0, "checkbox", 500.0f, 300.0f, "Dynamic Text")
         }
 
         // add switch
-        val addSwitchButton = findViewById<ImageView>(R.id.ivMenuSwitch)
-        addSwitchButton.setOnClickListener {
-            createButtonDynamically(widgetLayout, 0, "switch", 300.0f, 500.0f)
+        mWidgetsBinding.ivMenuSwitch.setOnClickListener {
+            createWidgetDynamically(activityBinding.widgetLayout, 0, "switch", 300.0f, 500.0f)
         }
 
         // add switch
-        val addSwitchButton2 = findViewById<ImageView>(R.id.ivMenuSliderCircle)
-        addSwitchButton2.setOnClickListener {
-            createButtonDynamically(widgetLayout, 0, "switch", 500.0f, 300.0f, "Dynamic Text")
+        mWidgetsBinding.ivMenuSliderCircle.setOnClickListener {
+            createWidgetDynamically(activityBinding.widgetLayout, 0, "switch", 500.0f, 300.0f, "Dynamic Text")
+        }
+
+        // add drawing
+        activityBinding.drawingOverlay.visibility = View.GONE
+        mEditBinding.ivMenuDraw.setOnClickListener {
+            supportFragmentManager.beginTransaction().
+            replace(R.id.drawingOverlay, DrawingOverlay()).commit()
+            activityBinding.drawingOverlay.visibility = View.VISIBLE
         }
     }
 
-    private fun createButtonDynamically(
+    private fun createWidgetDynamically(
         mainLayout: ConstraintLayout,
         id : Int,
         type : String,

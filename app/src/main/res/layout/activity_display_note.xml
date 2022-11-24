@@ -45,4 +45,12 @@
         android:layout_height="match_parent"
         android:id="@+id/widgetLayout">
     </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <FrameLayout
+        android:name="com.example.myapplication.DrawingOverlay"
+        android:id="@+id/drawingOverlay"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+    </FrameLayout>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -90,9 +90,9 @@
             android:layout_height="80dp"
             android:layout_margin="7dp"
             android:padding="5dp"
-            app:layout_constraintBottom_toBottomOf="@+id/ivMenuCheckbox"
+            app:layout_constraintBottom_toBottomOf="@+id/ivMenuBin"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/ivMenuCheckbox"
+            app:layout_constraintTop_toTopOf="@+id/ivMenuBin"
             app:srcCompat="@drawable/menu_back_arrow" />
 
         <TextView
@@ -201,7 +201,7 @@
             app:layout_constraintEnd_toEndOf="@+id/ivMenuBin"
             app:layout_constraintStart_toStartOf="@+id/ivMenuBin"
             app:layout_constraintTop_toBottomOf="@+id/ivMenuBin" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </HorizontalScrollView>
 
