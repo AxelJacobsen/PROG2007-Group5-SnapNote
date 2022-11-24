@@ -103,28 +103,48 @@ class DrawingOverlay : Fragment() {
 
         // TEMP
         saveButton.setOnClickListener(OnClickListener {
-            save()
+            save(null)
         })
 
         loadButton.setOnClickListener(OnClickListener {
-            load()
+            load(null)
         })
+
+        // On draw/stop draw listener
+        drawingCanvas.setOnDrawListener { isDrawing ->
+            if (isDrawing) {
+                seekBar.visibility          = View.GONE
+                undoButton.visibility       = View.GONE
+                brushModeButton.visibility  = View.GONE
+                saveButton.visibility       = View.GONE
+                loadButton.visibility       = View.GONE
+                drawingCanvas.setColorWheelVisible(false)
+            } else {
+                seekBar.visibility          = View.VISIBLE
+                undoButton.visibility       = View.VISIBLE
+                brushModeButton.visibility  = View.VISIBLE
+                saveButton.visibility       = View.VISIBLE
+                loadButton.visibility       = View.VISIBLE
+                drawingCanvas.setColorWheelVisible(true)
+            }
+        }
     }
 
     /**
      * Saves the bitmap of the drawing canvas to file.
      */
-    fun save() {
+    fun save(key: String?) {
         val pictureBitmap = drawingCanvas.getBitmap() ?: return
 
         //val path = Environment.getExternalStorageDirectory().toString() // Illegal?
         val path = activity?.getExternalFilesDir(Environment.DIRECTORY_DCIM)
+        val fileName = "$key-canvas.PNG"
 
         var fOut: OutputStream? = null
         val counter = 0
         val file = File(
             path,
-            "canvas.PNG"
+            fileName
         ) // the File to save , append increasing numeric counter to prevent files from getting overwritten.
 
         fOut = FileOutputStream(file)
@@ -137,38 +157,16 @@ class DrawingOverlay : Fragment() {
 
         fOut.flush() // Not really required
         fOut.close() // do not forget to close the stream
-
-
-
-        /*try {
-            FileOutputStream("canvas.PNG").use { out ->
-                bitmap.compress(Bitmap.CompressFormat.PNG, 100, out)
-            }
-        } catch (e: IOException) {
-            e.printStackTrace()
-        }*/
-
-        /*
-        try (val out = FileOutputStream("canvas.PNG")) {
-            bitmap.compress(Bitmap.CompressFormat.PNG, 100, it)
-
-            /*context?.openFileOutput("canvas.PNG", Context.MODE_PRIVATE).use {
-                //it?.write(fileContents.toByteArray())
-                bitmap.compress(Bitmap.CompressFormat.PNG, 100, it)
-            }*/
-        } catch (e: IOException) {
-            e.printStackTrace()
-        }
-        */
     }
 
     /**
      * Loads the bitmap of the drawing canvas from file.
      */
-    fun load() {
+    fun load(key: String?) {
         //val test = context?.openFileInput("canvas.PNG")?.bufferedReader()
         val path = activity?.getExternalFilesDir(Environment.DIRECTORY_DCIM) ?: return
-        val bitmap = BitmapFactory.decodeFile(path.absolutePath + "/canvas.PNG") ?: return
+        val fileName = "$key-canvas.PNG"
+        val bitmap = BitmapFactory.decodeFile(path.absolutePath + "/$fileName") ?: return
         drawingCanvas.loadBitmap(bitmap)
     }
 }
