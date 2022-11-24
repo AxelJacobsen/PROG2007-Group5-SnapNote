@@ -32,6 +32,7 @@ class NoteActivity : AppCompatActivity() {
     private lateinit var mWidgetsBinding : MenuWidgetsBinding
     private var mDynamicElements = mutableListOf<Map<String, String>>()
     private lateinit var mBackgroundImage : ImageClass
+    private var noteName: String? = null
 
     // Drawing
     private var mDrawingOverlay = DrawingOverlay()
@@ -48,6 +49,7 @@ class NoteActivity : AppCompatActivity() {
         //Recieves parcel and binds image data
         val image = intent.getParcelableExtra<ImageClass>("picture")
         val note = intent.getParcelableExtra<NoteListItem>("extraData")
+        var noteName: String? = null
 
         if (image != null) {
             mBackgroundImage = image
@@ -58,6 +60,7 @@ class NoteActivity : AppCompatActivity() {
             }
         } else if (note != null){
             activityBinding.noteBackground.setImageBitmap(note.menuItemThumbnail)
+            noteName = note.menuItemName
         }
 
         // Set state of widget menu to Expanded
@@ -160,6 +163,8 @@ class NoteActivity : AppCompatActivity() {
             //HA ER 3. funksjon som KALLES AV POSITIVE BUTTON
             // blablabla
         })
+
+        view.post { loadNote(noteName) }
     }
 
     /**
@@ -221,8 +226,7 @@ class NoteActivity : AppCompatActivity() {
         fOut.flush() // Not really required
         fOut.close() // do not forget to close the stream
 
-        ReadWriteToStorage().listOfNoteFileNames.add(key!!)
-        ReadWriteToStorage().writeKeyfileToStorage(this,"keys")
+        ReadWriteToStorage().addKeyToStorage(this, "keys", key!!)
     }
 
     /**
@@ -242,13 +246,12 @@ class NoteActivity : AppCompatActivity() {
                 propSet["type"] ?: continue,
                 propSet["x"]?.toFloat() ?: continue,
                 propSet["y"]?.toFloat() ?: continue,
-                propSet["text"] ?: continue
+                propSet["text"] ?: ""
             )
         }
 
         // Load canvas
-        mDrawingOverlay.load(key)
-
+        mDrawingOverlay.load(this, key)
     }
 
     private fun createWidgetDynamically(

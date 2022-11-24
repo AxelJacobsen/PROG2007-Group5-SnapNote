@@ -25,11 +25,6 @@ class MenuActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_menu)
 
-        //readWrite.writeKeyfileToStorage(this, "keys")
-        readWrite.readKeyFromStorage(this, "keys")
-        readWrite.listOfNoteFileNames.forEach {
-            println(it)
-        }
         //Bind interactables
         noteListRecycler = findViewById(R.id.recyclerMenuList)
         //Set gridlayout
@@ -47,10 +42,13 @@ class MenuActivity : AppCompatActivity() {
             }
         }
 
-
         noteListRecycler.adapter = adapter
         addNewNoteButton()
-        addSavedNotes()
+
+        // Fetch keys and add them as notes
+        val keys = readWrite.readKeyFromStorage(this, "keys")
+        addSavedNotes(keys)
+
         //Update
         adapter.updateData(noteList)
     }
@@ -63,8 +61,8 @@ class MenuActivity : AppCompatActivity() {
         ))
     }
 
-    fun addSavedNotes(){
-        readWrite.listOfNoteFileNames.forEach{
+    fun addSavedNotes(keys: List<String>){
+        keys.forEach{
             noteList.add(
                 NoteListItem(
                 menuItemName = it,

@@ -1,6 +1,7 @@
 package com.example.myapplication
 
 import android.annotation.SuppressLint
+import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.os.Bundle
@@ -186,9 +187,9 @@ class DrawingOverlay : Fragment() {
     /**
      * Loads the bitmap of the drawing canvas from file.
      */
-    fun load(key: String?) {
+    fun load(context: Context, key: String?) {
         //val test = context?.openFileInput("canvas.PNG")?.bufferedReader()
-        val path = activity?.getExternalFilesDir(Environment.DIRECTORY_DCIM) ?: return
+        val path = context.getExternalFilesDir(Environment.DIRECTORY_DCIM) ?: return
         val fileName = "$key-canvas.PNG"
         val bitmap = BitmapFactory.decodeFile(path.absolutePath + "/$fileName") ?: return
         drawingCanvas.loadBitmap(bitmap)
