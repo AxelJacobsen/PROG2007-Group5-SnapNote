@@ -319,6 +319,9 @@ class NoteActivity : AppCompatActivity() {
      * @param key - The key.
      */
     private fun saveNote(key: String?) {
+        // Try adding the key, if it fails, abort
+        if (!ReadWriteToStorage().addKeyToStorage(this, "keys", key!!)) return
+
         // Save dynamic elements
         saveProps(key, mProps)
 
@@ -345,8 +348,6 @@ class NoteActivity : AppCompatActivity() {
 
         fOut.flush() // Not really required
         fOut.close() // do not forget to close the stream
-
-        ReadWriteToStorage().addKeyToStorage(this, "keys", key!!)
     }
 
     /**

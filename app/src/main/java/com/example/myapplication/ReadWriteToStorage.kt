@@ -17,11 +17,19 @@ class ReadWriteToStorage() {
      * @param context - The context.
      * @param filename - The file to write to.
      * @param key - The key.
+     *
+     * @return true if the key was successfully added, false otherwise.
      */
-    public fun addKeyToStorage(context: Context, filename: String, key: String){
+    public fun addKeyToStorage(context: Context, filename: String, key: String): Boolean{
+        // Check if the key already is in storage, if so, return false
+        val keys = readKeyFromStorage(context, filename)
+        for (key_t in keys) if (key_t == key) return false
+
+        // Otherwise, add it
         context.openFileOutput(filename, Context.MODE_APPEND).use {
             it.write("$key\n".toByteArray())
         }
+        return true
     }
 
     /**
