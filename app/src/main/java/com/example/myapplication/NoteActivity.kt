@@ -87,7 +87,7 @@ class NoteActivity : AppCompatActivity() {
             startActivity(Intent(this, MenuActivity::class.java))
         }
 
-        mEditBinding.ivEditMenuBackArrow.setOnClickListener {
+        mEditBinding.ivEditToggleScreen.setOnClickListener {
             if (activityBinding.noteBackground.scaleType == ImageView.ScaleType.FIT_CENTER) {
                 activityBinding.noteBackground.scaleType = ImageView.ScaleType.CENTER_CROP
             } else {
@@ -169,18 +169,16 @@ class NoteActivity : AppCompatActivity() {
 
     /**
      * Requests a filename from the user.
-     *
-     * @return The filename given, or null if none.
      */
     private fun showInputDialog() {
         var builder = AlertDialog.Builder(this);
         builder.setTitle("Input note name")
         var inputField = EditText(this)
+        //Initialize EditText
         inputField.inputType = InputType.TYPE_CLASS_TEXT
 
         builder.setView(inputField)
             .setPositiveButton("Save") { _, _ ->
-                //KALL FUNKSJONEN DU VIL TRIGGRE HER
                 var outString = inputField.text.toString()
                 if (outString == ""){
                     Toast.makeText(this, "Saving note with default name", Toast.LENGTH_SHORT).show()
