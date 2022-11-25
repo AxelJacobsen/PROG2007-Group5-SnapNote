@@ -11,8 +11,10 @@ import android.os.Bundle
 import android.os.Environment
 import android.text.InputType
 import android.util.Log
+import android.view.MotionEvent
 import android.view.View
 import android.view.View.OnClickListener
+import android.view.View.VISIBLE
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
@@ -22,6 +24,7 @@ import com.example.myapplication.databinding.MenuViewBinding
 import com.example.myapplication.databinding.MenuWidgetsBinding
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import java.io.*
+import kotlin.math.sqrt
 
 
 class NoteActivity : AppCompatActivity() {
@@ -30,9 +33,18 @@ class NoteActivity : AppCompatActivity() {
     private lateinit var mViewBinding : MenuViewBinding
     private lateinit var mEditBinding : MenuEditBinding
     private lateinit var mWidgetsBinding : MenuWidgetsBinding
-    private var mDynamicElements = mutableListOf<Map<String, String>>()
+    private var mDynamicElements = mutableListOf<View>()
+    private var mProps = mutableListOf<Map<String, String>>()
     private lateinit var mBackgroundImage : ImageClass
-    private var noteName: String? = null
+
+    // Editing widgets
+    private var editing: Boolean = false
+    private var moving: Boolean = false
+    private var moveStartX: Float? = null
+    private var moveStartY: Float? = null
+    private var moveOffsetX: Float? = null
+    private var moveOffsetY: Float? = null
+    private var widgetSelected: View? = null
 
     // Drawing
     private var mDrawingOverlay = DrawingOverlay()
@@ -100,6 +112,8 @@ class NoteActivity : AppCompatActivity() {
             activityBinding.widgetMenuCoordLayout.visibility = View.GONE
             activityBinding.viewMenuCoordLayout.visibility = View.VISIBLE
 
+            // make widgets tangible
+            setDynamicElementsEnabled(true)
         }
 
         mWidgetsBinding.ivWidgetMenuBackArrow.setOnClickListener {
@@ -112,6 +126,9 @@ class NoteActivity : AppCompatActivity() {
             activityBinding.editMenuCoordLayout.visibility = View.VISIBLE
             activityBinding.widgetMenuCoordLayout.visibility = View.GONE
             activityBinding.viewMenuCoordLayout.visibility = View.GONE
+
+            // Make widgets intangible
+            setDynamicElementsEnabled(false)
         }
 
         mEditBinding.ivMenuWidgets.setOnClickListener {
@@ -154,6 +171,7 @@ class NoteActivity : AppCompatActivity() {
 
             // Start with all toolbars visible, and the colorwheel off
             mDrawingOverlay.getDrawingCanvas().setColorWheelVisible(false)
+            mDrawingOverlay.getDrawingCanvas().setColorWheelLocked(true)
         }
 
         // Save document
@@ -165,6 +183,102 @@ class NoteActivity : AppCompatActivity() {
         })
 
         view.post { loadNote(noteName) }
+    }
+
+    /**
+     * When the user touches the screen.
+     */
+    override fun onTouchEvent(event: MotionEvent?): Boolean {
+        super.onTouchEvent(event)
+
+        // If not in edit mode, return (don't do anything special)
+        if (!editing) return false
+        if (event == null) return false
+
+        val action: Int = event.action
+        val x: Float = event.x
+        val y: Float = event.y
+
+        when (action) {
+            // Touch begin
+            MotionEvent.ACTION_DOWN -> {
+                // Find the nearest dynamic element
+                var closestDistSqr: Float? = null
+                var closestDynamicElement: View? = null
+                for (dynamicElement in mDynamicElements) {
+                    var dynamicElementCoords = IntArray(2)
+                    dynamicElement.getLocationOnScreen(dynamicElementCoords)
+                    val dx = x - dynamicElementCoords[0]
+                    val dy = y - dynamicElementCoords[1]
+                    val distSqr = dx*dx + dy*dy
+                    if (closestDistSqr == null || distSqr < closestDistSqr) {
+                        closestDistSqr = distSqr
+                        closestDynamicElement = dynamicElement
+                    }
+                }
+
+                // If it's close enough, start select it
+                if (closestDistSqr != null && closestDynamicElement != null && sqrt(closestDistSqr) <= 150f) {
+                    widgetSelected = closestDynamicElement
+                    moveStartX = widgetSelected?.x
+                    moveStartY = widgetSelected?.y
+
+                    // Calculate offset
+                    var dynamicElementCoords = IntArray(2)
+                    closestDynamicElement.getLocationOnScreen(dynamicElementCoords)
+                    moveOffsetX = closestDynamicElement.x - dynamicElementCoords[0]
+                    moveOffsetY = closestDynamicElement.y - dynamicElementCoords[1]
+                }
+            }
+
+            // Touch during
+            MotionEvent.ACTION_MOVE -> {
+                if (widgetSelected == null) return false
+
+                // If we've moved more than a given amount, set widget as "moving"
+                val dx = x - moveStartX!!
+                val dy = y - moveStartY!!
+               // Log.d("dist: ", sqrt(dx*dx + dy*dy).toString())
+                if (sqrt(dx*dx + dy*dy) >= 15f) {
+                    moving = true
+                }
+
+                // If we're moving, move
+                if (!moving) return false
+                widgetSelected!!.x = x + moveOffsetX!!
+                widgetSelected!!.y = y + moveOffsetY!!
+            }
+
+            // Touch end
+            MotionEvent.ACTION_UP -> {
+                // If we tapped, but didn't move, "delete" widget (hide it and remove from lists)
+                if (!moving) {
+                    widgetSelected?.visibility = View.GONE
+                    mDynamicElements.remove(widgetSelected)
+                }
+                moving = false
+                moveStartX = null
+                moveStartY = null
+                widgetSelected = null
+                moveOffsetX = null
+                moveOffsetY = null
+            }
+        }
+
+        return true
+    }
+
+    /**
+     * Sets if dynamic elements are enabled (possible to interact with).
+     * Additionally, enables/disables editor mode.
+     *
+     * @param enabled - True to enable dynamic elements' interaction, false otherwise.
+     */
+    private fun setDynamicElementsEnabled(enabled: Boolean) {
+        editing = !enabled
+        for (dynamicElement in mDynamicElements) {
+            dynamicElement.isEnabled = enabled
+        }
     }
 
     /**
@@ -200,7 +314,7 @@ class NoteActivity : AppCompatActivity() {
      */
     private fun saveNote(key: String?) {
         // Save dynamic elements
-        saveProps(key, mDynamicElements)
+        saveProps(key, mProps)
 
         // Save canvas
         mDrawingOverlay.save(key)
@@ -318,7 +432,8 @@ class NoteActivity : AppCompatActivity() {
         gradientDrawable.cornerRadius = radius.toFloat()
         dynamicElement.background = gradientDrawable
 
-        mDynamicElements.add(myProp)
+        mProps.add(myProp)
+        mDynamicElements.add(dynamicElement)
         mainLayout.addView(dynamicElement)
     }
 
