@@ -1,20 +1,21 @@
 package com.example.myapplication
 
+import android.R.attr.data
 import android.app.AlertDialog
 import android.content.DialogInterface
 import android.content.Intent
 import android.graphics.Bitmap
-import android.graphics.BitmapFactory
 import android.graphics.Color
 import android.graphics.drawable.GradientDrawable
+import android.net.Uri
 import android.os.Bundle
 import android.os.Environment
+import android.provider.MediaStore
 import android.text.InputType
 import android.util.Log
 import android.view.MotionEvent
 import android.view.View
 import android.view.View.OnClickListener
-import android.view.View.VISIBLE
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
@@ -64,6 +65,12 @@ class NoteActivity : AppCompatActivity() {
         var noteName: String? = null
 
         if (image != null) {
+            // Fetch bitmap if it isn't supplied
+            if (image.bitmap == null) {
+                val uri: Uri? = image.uri
+                if (uri != null) image.bitmap = MediaStore.Images.Media.getBitmap(this.contentResolver, uri)
+            }
+
             mBackgroundImage = image
             if (image.bitmap != null){
                 activityBinding.noteBackground.setImageBitmap(image.bitmap)
@@ -296,8 +303,9 @@ class NoteActivity : AppCompatActivity() {
                 var outString = inputField.text.toString()
                 if (outString == ""){
                     Toast.makeText(this, "Saving note with default name", Toast.LENGTH_SHORT).show()
+                    outString = "new page"
                 }
-                saveNote(inputField.text.toString())
+                saveNote(outString)
         }
             .setNegativeButton("Cancel") { dialogInterface: DialogInterface, _ ->
                 dialogInterface.dismiss()

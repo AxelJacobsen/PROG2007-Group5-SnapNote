@@ -72,7 +72,7 @@
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:scaleType="fitXY"
-            android:src="@drawable/ic_launcher_background"
+            android:src="@drawable/menu_back_arrow"
             app:layout_constraintBottom_toTopOf="@+id/seekBar"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/edit_bsl_top_row"
