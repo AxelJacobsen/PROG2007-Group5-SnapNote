@@ -427,6 +427,7 @@ class NoteActivity : AppCompatActivity() {
         dynamicElement.id = id
         dynamicElement.x = posx
         dynamicElement.y = posy
+        dynamicElement.isEnabled = !editing
 
         val radius = 15
         val strokeWidth = 2
