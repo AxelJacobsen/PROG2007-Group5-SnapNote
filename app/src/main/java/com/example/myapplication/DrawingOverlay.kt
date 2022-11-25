@@ -37,6 +37,8 @@ class DrawingOverlay : Fragment() {
     private lateinit var colorWheelButton: ImageButton
     private lateinit var exitButton: ImageButton
 
+    private var colorWheelToggle = false
+
     /**
      * When the fragment is created.
      */
@@ -113,9 +115,14 @@ class DrawingOverlay : Fragment() {
 
         // Color wheel button listener
         colorWheelButton.setOnClickListener(OnClickListener {
-            drawingCanvas.setColorWheelLocked(false)
-            drawingCanvas.setColorWheelVisible(!drawingCanvas.getColorWheelVisible())
-            drawingCanvas.setColorWheelLocked(!drawingCanvas.getColorWheelVisible())
+            colorWheelToggle = !colorWheelToggle
+            if (colorWheelToggle) {
+                drawingCanvas.setColorWheelLocked(false)
+                drawingCanvas.setColorWheelVisible(true)
+            } else {
+                drawingCanvas.setColorWheelVisible(false)
+                drawingCanvas.setColorWheelLocked(true)
+            }
         })
 
         // On draw/stop draw listener

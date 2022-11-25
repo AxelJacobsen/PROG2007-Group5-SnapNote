@@ -21,6 +21,7 @@
         android:layout_height="match_parent"
         android:id="@+id/viewMenuCoordLayout">
         <include layout="@layout/menu_view"/>
+
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
