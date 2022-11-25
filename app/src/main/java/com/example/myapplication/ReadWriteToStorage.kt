@@ -1,14 +1,10 @@
 package com.example.myapplication
 
 import android.content.Context
-import android.content.Context.MODE_PRIVATE
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.os.Environment
-import android.util.Log
-import android.view.View
 import java.io.FileNotFoundException
-import java.io.FileOutputStream
 
 class ReadWriteToStorage() {
     /**

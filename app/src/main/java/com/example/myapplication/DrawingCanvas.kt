@@ -2,12 +2,9 @@ package com.example.myapplication
 
 import android.content.Context
 import android.graphics.*
-import android.os.Parcelable
 import android.util.AttributeSet
-import android.util.Log
 import android.view.MotionEvent
 import android.view.View
-import androidx.annotation.ColorInt
 import androidx.core.graphics.get
 import androidx.core.graphics.set
 import kotlin.math.*
@@ -316,7 +313,6 @@ class DrawingCanvas : View {
                         strokePaint.color = colorInt
                     }
                 }
-
                 if (!dontDraw) {
                     var strokePath: Path = Path()
                     strokePath.moveTo(x, y)

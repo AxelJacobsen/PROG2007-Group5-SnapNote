@@ -10,7 +10,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 
-
 /**
  * This activity controls the initial menu where you select your desired note
  */
@@ -18,7 +17,6 @@ class MenuActivity : AppCompatActivity() {
     lateinit var noteListRecycler: RecyclerView
 
     val noteList = mutableListOf<NoteListItem>()
-
     val readWrite = ReadWriteToStorage()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -52,7 +50,10 @@ class MenuActivity : AppCompatActivity() {
         //Update
         adapter.updateData(noteList)
     }
-    // Adds "New Note" item into the list
+
+    /**
+     * Adds "New Note" item into the list
+     */
     fun addNewNoteButton(){
         noteList.add(NoteListItem(
             menuItemName = "New note",
@@ -61,6 +62,11 @@ class MenuActivity : AppCompatActivity() {
         ))
     }
 
+    /**
+     * Adds saved notes to noteList, so we can se them in menuActivity.
+     *
+     * @param keys - The name/key of the saved notes.
+     */
     fun addSavedNotes(keys: List<String>){
         keys.forEach{
             noteList.add(
@@ -74,11 +80,16 @@ class MenuActivity : AppCompatActivity() {
     }
 
     /**
-     * This is hell, and should not work. Why it works is a mystery
+     * This is the only image parsing which we could get working,
+     * we tried many different solutions to this deprecated solution without any luck.
+     *
+     * @param requestCode - Type of request
+     * @param resultCode - Result of permission request
+     * @param data - Image source
      */
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         var image = ImageClass(null, null)
-        println(requestCode)
+
         if (resultCode == Activity.RESULT_OK) {
             if (data?.data == null) {
                 image.bitmap = data?.extras?.get("data") as Bitmap

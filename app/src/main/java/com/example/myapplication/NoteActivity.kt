@@ -1,6 +1,5 @@
 package com.example.myapplication
 
-import android.R.attr.data
 import android.app.AlertDialog
 import android.content.DialogInterface
 import android.content.Intent
@@ -27,7 +26,6 @@ import com.google.android.material.bottomsheet.BottomSheetBehavior
 import java.io.*
 import kotlin.math.sqrt
 
-
 class NoteActivity : AppCompatActivity() {
 
     private lateinit var activityBinding : ActivityDisplayNoteBinding
@@ -46,6 +44,7 @@ class NoteActivity : AppCompatActivity() {
     private var moveOffsetX: Float? = null
     private var moveOffsetY: Float? = null
     private var widgetSelected: View? = null
+    private var counter = 0
 
     // Drawing
     private var mDrawingOverlay = DrawingOverlay()
@@ -97,7 +96,7 @@ class NoteActivity : AppCompatActivity() {
         val widgetBSBehavior = BottomSheetBehavior.from(widgetBottomSheet)
         widgetBSBehavior.state = BottomSheetBehavior.STATE_EXPANDED
 
-        //Returns the user to the main menu
+        // Returns the user to the main menu
         mViewBinding.ivMenuBackArrow.setOnClickListener {
             activityBinding.editMenuCoordLayout.visibility = View.GONE
             activityBinding.widgetMenuCoordLayout.visibility = View.GONE
@@ -106,6 +105,7 @@ class NoteActivity : AppCompatActivity() {
             startActivity(Intent(this, MenuActivity::class.java))
         }
 
+        // Changes scale type
         mEditBinding.ivEditToggleScreen.setOnClickListener {
             if (activityBinding.noteBackground.scaleType == ImageView.ScaleType.FIT_CENTER) {
                 activityBinding.noteBackground.scaleType = ImageView.ScaleType.CENTER_CROP
@@ -113,7 +113,7 @@ class NoteActivity : AppCompatActivity() {
                 activityBinding.noteBackground.scaleType = ImageView.ScaleType.FIT_CENTER
             }
         }
-        
+        // Navigate back to view menu from edit
         mEditBinding.ivEditMenuBackArrow.setOnClickListener {
             activityBinding.editMenuCoordLayout.visibility = View.GONE
             activityBinding.widgetMenuCoordLayout.visibility = View.GONE
@@ -123,12 +123,14 @@ class NoteActivity : AppCompatActivity() {
             setDynamicElementsEnabled(true)
         }
 
+        // Navigate back to edit menu from draw
         mWidgetsBinding.ivWidgetMenuBackArrow.setOnClickListener {
             activityBinding.editMenuCoordLayout.visibility = View.VISIBLE
             activityBinding.widgetMenuCoordLayout.visibility = View.GONE
             activityBinding.viewMenuCoordLayout.visibility = View.GONE
         }
 
+        // Navigate to edit menu from view
         mViewBinding.ivMenuEdit.setOnClickListener {
             activityBinding.editMenuCoordLayout.visibility = View.VISIBLE
             activityBinding.widgetMenuCoordLayout.visibility = View.GONE
@@ -138,31 +140,30 @@ class NoteActivity : AppCompatActivity() {
             setDynamicElementsEnabled(false)
         }
 
+        // Navigate to widget menu from edit
         mEditBinding.ivMenuWidgets.setOnClickListener {
             activityBinding.editMenuCoordLayout.visibility = View.GONE
             activityBinding.widgetMenuCoordLayout.visibility = View.VISIBLE
             activityBinding.viewMenuCoordLayout.visibility = View.GONE
         }
 
-        // Define widgetlayout which we will add widgets to
-        // add text
+        // Add text widget
         mEditBinding.ivMenuText.setOnClickListener {
-            createWidgetDynamically(activityBinding.widgetLayout, 0, "text", 500.0f, 300.0f, "Dynamic Text")
+            addTextToWidget(counter, "text")
+            counter += 1
         }
 
-        // add checkbox
+        // Add checkbox widget
         mWidgetsBinding.ivMenuCheckbox.setOnClickListener {
-            createWidgetDynamically(activityBinding.widgetLayout, 0, "checkbox", 500.0f, 300.0f, "Dynamic Text")
+            addTextToWidget(counter, "checkbox")
+            counter += 1
+
         }
 
-        // add switch
+        // Add switch widget
         mWidgetsBinding.ivMenuSwitch.setOnClickListener {
-            createWidgetDynamically(activityBinding.widgetLayout, 0, "switch", 300.0f, 500.0f)
-        }
-
-        // add switch
-        mWidgetsBinding.ivMenuSliderCircle.setOnClickListener {
-            createWidgetDynamically(activityBinding.widgetLayout, 0, "switch", 500.0f, 300.0f, "Dynamic Text")
+            addTextToWidget(counter, "switch")
+            counter += 1
         }
 
         // Get drawing overlay fragment
@@ -183,12 +184,10 @@ class NoteActivity : AppCompatActivity() {
 
         // Save document
         mViewBinding.ivMenuSave.setOnClickListener(OnClickListener {
-            showInputDialog()
-            //DETTE BLIR GJORT ASYNC BTW, omdu vil calle en funksjon ikke gjør det sånn her
-            //HA ER 3. funksjon som KALLES AV POSITIVE BUTTON
-            // blablabla
+            showInputDialog()   // This function is async
         })
 
+        // Loads the note which was selected
         view.post { loadNote(noteName) }
     }
 
@@ -362,7 +361,6 @@ class NoteActivity : AppCompatActivity() {
         // Recreate objects
         for (propSet in props) {
             createWidgetDynamically(
-                activityBinding.widgetLayout,
                 propSet["id"]?.toInt() ?: continue,
                 propSet["type"] ?: continue,
                 propSet["x"]?.toFloat() ?: continue,
@@ -375,19 +373,66 @@ class NoteActivity : AppCompatActivity() {
         mDrawingOverlay.load(this, key)
     }
 
+    /**
+     * Asks user for text input for widget, if input is empty text is not added.
+     *
+     * @param id - The id of the dynamic widget.
+     * @param type - The type of dynamic widget.
+     * @param posx - The x-position of the dynamic widget, default 500.
+     * @param posy - The x-position of the dynamic widget, default 500.
+     * @param red - The R-component of RGB-color of the dynamic widget, default 1.
+     * @param green - The G-component of RGB-color of the dynamic widget, default 1.
+     * @param blue - The B-component of RGB-color of the dynamic widget, default 1.
+     */
+    private fun addTextToWidget(
+        id : Int,
+        type : String,
+        posx : Float = 500.0f,
+        posy : Float = 500.0f,
+        red: Int = 1,
+        green: Int = 1,
+        blue: Int = 1
+    ) {
+        val builder = AlertDialog.Builder(this);
+        builder.setTitle("Input text (or leave empty)")
+        val textField = EditText(this)
+
+        //Initialize EditText
+        textField.inputType = InputType.TYPE_CLASS_TEXT
+
+        builder.setView(textField)
+            .setPositiveButton("Save") { _, _ ->
+                var outString = textField.text.toString()
+                createWidgetDynamically(id, type, posx, posy, outString, red, green, blue)
+            }
+            .setNegativeButton("Cancel") { dialogInterface: DialogInterface, _ ->
+                dialogInterface.dismiss()
+            }
+        builder.show()
+    }
+    /**
+     * Adds a dynamic widget on screen after the user has chosen to give text input.
+     *
+     * @param id - The id of the dynamic widget.
+     * @param type - The type of dynamic widget.
+     * @param posx - The x-position of the dynamic widget, default 500.
+     * @param posy - The x-position of the dynamic widget, default 500.
+     * @param text - The text-input which the user has given, empty will not add text.
+     * @param red - The R-component of RGB-color of the dynamic widget, default 1.
+     * @param green - The G-component of RGB-color of the dynamic widget, default 1.
+     * @param blue - The B-component of RGB-color of the dynamic widget, default 1.
+     */
     private fun createWidgetDynamically(
-        mainLayout: ConstraintLayout,
         id : Int,
         type : String,
         posx : Float,
         posy : Float,
-        text : String = "",
+        text : String,
         red: Int = 1,
         green: Int = 1,
         blue: Int = 1
     ) {
         var dynamicElement: TextView? = null
-
         // Set up props
         var myProp      = mutableMapOf<String, String>()
         myProp["id"]    = id.toString()
@@ -401,15 +446,12 @@ class NoteActivity : AppCompatActivity() {
                 dynamicElement = TextView(this)
                 myProp["text"] = text
             }
-
             "checkbox" -> {
                 dynamicElement = CheckBox(this)
             }
-
             "switch" -> {
                 dynamicElement = Switch(this)
             }
-
             else -> {
                 Log.e("NoteActivity.createWidgetDynamically", "Object of type $type could not be made!")
             }
@@ -421,14 +463,15 @@ class NoteActivity : AppCompatActivity() {
             LinearLayout.LayoutParams.WRAP_CONTENT,
             LinearLayout.LayoutParams.WRAP_CONTENT,
         )
+        // Define attributes
         if (text != "")
             dynamicElement.text = text
-
         dynamicElement.id = id
         dynamicElement.x = posx
         dynamicElement.y = posy
         dynamicElement.isEnabled = !editing
 
+        // Add color, stroke and corner-radius.
         val radius = 15
         val strokeWidth = 2
         val gradientDrawable = GradientDrawable()
@@ -442,7 +485,7 @@ class NoteActivity : AppCompatActivity() {
 
         mProps.add(myProp)
         mDynamicElements.add(dynamicElement)
-        mainLayout.addView(dynamicElement)
+        activityBinding.widgetLayout.addView(dynamicElement)
     }
 
     /**
