@@ -45,7 +45,7 @@ class CameraButtonFragment : DialogFragment() {
             val cameraIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
             getResult.launch(cameraIntent)
         } else {
-            //Updates public permstring since you cant retrieve parameter in function variable
+            //Updates public permstring
             currentPermString = CAMERA_STRING
             requestPermission.launch(CAMERA_STRING)
         }
@@ -56,7 +56,7 @@ class CameraButtonFragment : DialogFragment() {
      */
     private fun uploadFromGallery(){
         if (context?.checkSelfPermission(GALLERY_STRING) == PackageManager.PERMISSION_GRANTED){
-            //Opens gallery, due to lack of images saving this is untested
+            //Opens gallery
             val galleryIntent =
                 Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
             getResult.launch(galleryIntent)
@@ -109,7 +109,6 @@ class CameraButtonFragment : DialogFragment() {
             if (gotPermission){
                 if (currentPermString ==CAMERA_STRING) {
                     val takePicIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
-                    Toast.makeText(requireContext(), "Entered camera", Toast.LENGTH_SHORT).show()
                     getResult.launch(takePicIntent)
                 } else if (currentPermString == GALLERY_STRING){
                     val galleryIntent =
