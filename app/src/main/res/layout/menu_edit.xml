@@ -139,44 +139,13 @@
                 app:layout_constraintTop_toBottomOf="@+id/ivMenuWidgets" />
 
             <ImageView
-                android:id="@+id/ivMenuImage"
-                android:layout_width="100dp"
-                android:layout_height="80dp"
-                android:layout_margin="7dp"
-                android:padding="5dp"
-                app:layout_constraintBottom_toBottomOf="@+id/ivMenuDraw"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toEndOf="@+id/ivMenuWidgets"
-                app:layout_constraintTop_toTopOf="@+id/ivMenuDraw"
-                app:srcCompat="@drawable/menu_image" />
-
-            <TextView
-                android:id="@+id/tvMenuImage"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="3dp"
-                android:padding="5dp"
-                android:shadowColor="@color/black"
-                android:shadowDx="1.7"
-                android:shadowDy="1.7"
-                android:shadowRadius="2"
-                android:text="@string/image"
-                android:textColor="@color/white"
-                android:textSize="18sp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="@+id/ivMenuImage"
-                app:layout_constraintStart_toStartOf="@+id/ivMenuImage"
-                app:layout_constraintTop_toBottomOf="@+id/ivMenuImage" />
-
-            <ImageView
                 android:id="@+id/ivMenuText"
                 android:layout_width="100dp"
                 android:layout_height="80dp"
                 android:layout_margin="7dp"
                 android:padding="5dp"
                 app:layout_constraintBottom_toBottomOf="@+id/ivMenuDraw"
-                app:layout_constraintStart_toEndOf="@+id/ivMenuImage"
+                app:layout_constraintStart_toEndOf="@+id/ivMenuWidgets"
                 app:layout_constraintTop_toTopOf="@+id/ivMenuDraw"
                 app:srcCompat="@drawable/menu_text" />
 
@@ -195,22 +164,23 @@
                 android:textSize="18sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="@+id/ivMenuText"
-                app:layout_constraintStart_toEndOf="@+id/ivMenuImage"
-                app:layout_constraintTop_toBottomOf="@+id/ivMenuWidgets" />
+                app:layout_constraintStart_toStartOf="@+id/ivMenuText"
+                app:layout_constraintTop_toBottomOf="@+id/ivMenuText" />
 
             <ImageView
-                android:id="@+id/tvMenuEditItem"
+                android:id="@+id/ivEditToggleScreen"
                 android:layout_width="100dp"
                 android:layout_height="80dp"
                 android:layout_margin="7dp"
+                android:layout_marginStart="114dp"
                 android:padding="5dp"
                 app:layout_constraintBottom_toBottomOf="@+id/ivMenuDraw"
                 app:layout_constraintStart_toEndOf="@+id/ivMenuText"
                 app:layout_constraintTop_toTopOf="@+id/ivMenuDraw"
-                app:srcCompat="@drawable/menu_edit" />
+                app:srcCompat="@drawable/menu_toggle_fit" />
 
             <TextView
-                android:id="@+id/ivMenuEditItem"
+                android:id="@+id/tvEditToggleScreenFit"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="3dp"
@@ -225,65 +195,7 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="@+id/ivEditToggleScreen"
                 app:layout_constraintStart_toStartOf="@+id/ivEditToggleScreen"
-                app:layout_constraintTop_toBottomOf="@+id/ivMenuWidgets" />
-
-            <ImageView
-                android:id="@+id/ivEditToggleScreen"
-                android:layout_width="100dp"
-                android:layout_height="80dp"
-                android:layout_margin="7dp"
-                android:padding="5dp"
-                app:layout_constraintBottom_toBottomOf="@+id/ivMenuDraw"
-                app:layout_constraintStart_toEndOf="@+id/tvMenuEditItem"
-                app:layout_constraintTop_toTopOf="@+id/ivMenuDraw"
-                app:srcCompat="@drawable/menu_toggle_fit" />
-
-            <TextView
-                android:id="@+id/tvEditToggleScreenFit"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="3dp"
-                android:padding="5dp"
-                android:shadowColor="@color/black"
-                android:shadowDx="1.7"
-                android:shadowDy="1.7"
-                android:shadowRadius="2"
-                android:text="@string/editItem"
-                android:textColor="@color/white"
-                android:textSize="18sp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="@+id/tvMenuEditItem"
-                app:layout_constraintStart_toStartOf="@+id/tvMenuEditItem"
                 app:layout_constraintTop_toBottomOf="@+id/ivEditToggleScreen" />
-
-            <ImageView
-                android:id="@+id/ivMenuCut"
-                android:layout_width="100dp"
-                android:layout_height="80dp"
-                android:layout_margin="7dp"
-                android:padding="5dp"
-                app:layout_constraintBottom_toBottomOf="@+id/ivMenuDraw"
-                app:layout_constraintStart_toEndOf="@+id/ivEditToggleScreen"
-                app:layout_constraintTop_toTopOf="@+id/ivMenuDraw"
-                app:srcCompat="@drawable/menu_bin" />
-
-            <TextView
-                android:id="@+id/tvMenuCut"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="3dp"
-                android:padding="5dp"
-                android:shadowColor="@color/black"
-                android:shadowDx="1.7"
-                android:shadowDy="1.7"
-                android:shadowRadius="2"
-                android:text="@string/cut"
-                android:textColor="@color/white"
-                android:textSize="18sp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="@+id/ivMenuCut"
-                app:layout_constraintTop_toBottomOf="@+id/ivMenuWidgets" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </HorizontalScrollView>
